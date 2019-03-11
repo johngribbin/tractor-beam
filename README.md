@@ -1,1 +1,1 @@
-# KuiperEx2
+# Kuiper Mobile DApp
