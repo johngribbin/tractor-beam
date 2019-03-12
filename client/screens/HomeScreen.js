@@ -15,15 +15,16 @@ import { MonoText } from "../components/StyledText";
 //const bip39 = require("react-native-bip39");
 //const hdKey = require("ethereumjs-wallet/hdkey");
 
-export default class HomeScreen extends React.Component {
-  state = {
-    count: 0,
-    nativeAddress: "0x123"
-  };
+import { connect } from "react-redux";
+import { incrementCounter, decrementCounter } from "../redux/actions";
 
+const HomeScreen = ({ count, incrementCounter, decrementCounter }) => {
+  //const store = this.context;
+  /*
   static navigationOptions = {
     header: null
   };
+  */
 
   /*
   async componentDidMount() {
@@ -74,38 +75,44 @@ export default class HomeScreen extends React.Component {
   };
   */
 
+  /*
   _handleIncrement = () => {
-    this.setState(prevState => ({ count: this.state.count + 1 }));
+    console.log(count);
+    incrementCounter();
   };
 
   _handleDecrement = () => {
-    this.setState(prevState => ({ count: this.state.count - 1 }));
+    decrementCounter();
   };
+  */
 
-  render() {
-    return (
-      <View style={styles.homeContainer}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <View style={styles.headerContainer}>
-            <Text style={styles.mainHeader}>Welcome to Counter App!</Text>
-            <Text>Your native address is {this.state.nativeAddress}</Text>
-          </View>
+  return (
+    <View style={styles.homeContainer}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <View style={styles.headerContainer}>
+          <Text style={styles.mainHeader}>Welcome to Counter App!</Text>
+          <Text>Your native address is </Text>
+        </View>
 
-          <View style={styles.counterContainer}>
-            <Text>Counter value is {this.state.count}</Text>
-            <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                onPress={this._handleIncrement}
-                title="+"
-              />
-              <Button onPress={this._handleDecrement} title="-" />
-            </View>
+        <View style={styles.counterContainer}>
+          <Text>Counter value is {count}</Text>
+          <View style={styles.buttonContainer}>
+            <Button
+              style={styles.button}
+              onPress={() => incrementCounter()}
+              title="+"
+            />
+            <Button
+              style={styles.button}
+              onPress={() => decrementCounter()}
+              title="-"
+            />
           </View>
-          {/*
+        </View>
+        {/*
           <View style={styles.welcomeContainer}>
             <Image
               source={
@@ -144,9 +151,9 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </View>
           */}
-        </ScrollView>
+      </ScrollView>
 
-        {/*}
+      {/*}
         <View style={styles.tabBarInfoContainer}>
           <Text style={styles.tabBarInfoText}>
             This is a tab bar. You can edit it in:
@@ -162,10 +169,9 @@ export default class HomeScreen extends React.Component {
           
         </View>  
         */}
-      </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   homeContainer: {
@@ -282,3 +288,15 @@ const styles = StyleSheet.create({
   }
   */
 });
+
+// Add this function:
+function mapStateToProps(state) {
+  return {
+    count: state.count
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { incrementCounter, decrementCounter }
+)(HomeScreen);
