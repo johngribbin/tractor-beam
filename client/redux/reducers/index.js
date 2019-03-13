@@ -1,11 +1,17 @@
 import { combineReducers } from "redux";
-import { INCREMENT_COUNTER, DECREMENT_COUNTER } from "../actions/types";
+import {
+  INCREMENT_COUNTER,
+  DECREMENT_COUNTER,
+  SET_NATIVE_ADDRESS
+} from "../actions/types";
 
 const initialState = {
-  count: 0
+  count: 0,
+  nativeAddress: "",
+  email: ""
 };
 
-const counterReducer = (state = 0, action) => {
+const counterReducer = (state = initialState.count, action) => {
   switch (action.type) {
     case INCREMENT_COUNTER:
       return state + 1;
@@ -16,6 +22,16 @@ const counterReducer = (state = 0, action) => {
   }
 };
 
+const nativeAddressReducer = (state = initialState.nativeAddress, action) => {
+  switch (action.type) {
+    case SET_NATIVE_ADDRESS:
+      return (state = action.payload);
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
-  count: counterReducer
+  count: counterReducer,
+  nativeAddress: nativeAddressReducer
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Image,
   Platform,
@@ -16,29 +16,20 @@ import { MonoText } from "../components/StyledText";
 //const hdKey = require("ethereumjs-wallet/hdkey");
 
 import { connect } from "react-redux";
-import { incrementCounter, decrementCounter } from "../redux/actions";
+import {
+  incrementCounter,
+  decrementCounter,
+  setNativeAddress
+} from "../redux/actions";
 
-const HomeScreen = ({ count, incrementCounter, decrementCounter }) => {
-  //const store = this.context;
-  /*
+class HomeScreen extends Component {
   static navigationOptions = {
     header: null
   };
-  */
 
-  /*
-  async componentDidMount() {
-    const mnemonic = await bip39.generateMnemonic();
-    const seed = bip39.mnemonicToSeed(mnemonic);
-    const ethereumHDKey = hdKey.fromMasterSeed(seed);
-    const ethereumHDWallet = ethereumHDKey.getWallet();
-    const nativeAddress = ethereumHDWallet.getAddressString();
-
-    this.setState({
-      nativeAddress: nativeAddress
-    });
+  componentDidMount() {
+    this.props.setNativeAddress("0x123");
   }
-  */
 
   /*
   _maybeRenderDevelopmentModeWarning() {
@@ -85,93 +76,101 @@ const HomeScreen = ({ count, incrementCounter, decrementCounter }) => {
     decrementCounter();
   };
   */
+  render() {
+    const {
+      count,
+      incrementCounter,
+      decrementCounter,
+      nativeAddress
+    } = this.props;
 
-  return (
-    <View style={styles.homeContainer}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.headerContainer}>
-          <Text style={styles.mainHeader}>Welcome to Counter App!</Text>
-          <Text>Your native address is </Text>
-        </View>
-
-        <View style={styles.counterContainer}>
-          <Text>Counter value is {count}</Text>
-          <View style={styles.buttonContainer}>
-            <Button
-              style={styles.button}
-              onPress={() => incrementCounter()}
-              title="+"
-            />
-            <Button
-              style={styles.button}
-              onPress={() => decrementCounter()}
-              title="-"
-            />
-          </View>
-        </View>
-        {/*
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require("../assets/images/robot-dev.png")
-                  : require("../assets/images/robot-prod.png")
-              }
-              style={styles.welcomeImage}
-            />
+    return (
+      <View style={styles.homeContainer}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <View style={styles.headerContainer}>
+            <Text style={styles.mainHeader}>Welcome to Counter App!</Text>
+            <Text>Your native address is {nativeAddress}</Text>
           </View>
 
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
+          <View style={styles.counterContainer}>
+            <Text>Counter value is {count}</Text>
+            <View style={styles.buttonContainer}>
+              <Button
+                style={styles.button}
+                onPress={() => incrementCounter()}
+                title="+"
+              />
+              <Button
+                style={styles.button}
+                onPress={() => decrementCounter()}
+                title="-"
+              />
+            </View>
+          </View>
+          {/*
+            <View style={styles.welcomeContainer}>
+              <Image
+                source={
+                  __DEV__
+                    ? require("../assets/images/robot-dev.png")
+                    : require("../assets/images/robot-prod.png")
+                }
+                style={styles.welcomeImage}
+              />
+            </View>
+  
+            <View style={styles.getStartedContainer}>
+              {this._maybeRenderDevelopmentModeWarning()}
+  
+              <Text style={styles.getStartedText}>Get started by opening</Text>
+  
+              <View
+                style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+              >
+                <MonoText style={styles.codeHighlightText}>
+                  screens/HomeScreen.js
+                </MonoText>
+              </View>
+  
+              <Text style={styles.getStartedText}>Hello World!</Text>
+            </View>
+  
+            <View style={styles.helpContainer}>
+              <TouchableOpacity
+                onPress={this._handleHelpPress}
+                style={styles.helpLink}
+              >
+                <Text style={styles.helpLinkText}>
+                  Help, it didn’t automatically reload!
+                </Text>
+              </TouchableOpacity>
+            </View>
+            */}
+        </ScrollView>
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
+        {/*}
+          <View style={styles.tabBarInfoContainer}>
+            <Text style={styles.tabBarInfoText}>
+              This is a tab bar. You can edit it in:
+            </Text>
+  
             <View
-              style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+              style={[styles.codeHighlightContainer, styles.navigationFilename]}
             >
               <MonoText style={styles.codeHighlightText}>
-                screens/HomeScreen.js
+                navigation/MainTabNavigator.js
               </MonoText>
             </View>
-
-            <Text style={styles.getStartedText}>Hello World!</Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity
-              onPress={this._handleHelpPress}
-              style={styles.helpLink}
-            >
-              <Text style={styles.helpLinkText}>
-                Help, it didn’t automatically reload!
-              </Text>
-            </TouchableOpacity>
-          </View>
+            
+          </View>  
           */}
-      </ScrollView>
-
-      {/*}
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>
-            This is a tab bar. You can edit it in:
-          </Text>
-
-          <View
-            style={[styles.codeHighlightContainer, styles.navigationFilename]}
-          >
-            <MonoText style={styles.codeHighlightText}>
-              navigation/MainTabNavigator.js
-            </MonoText>
-          </View>
-          
-        </View>  
-        */}
-    </View>
-  );
-};
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   homeContainer: {
@@ -289,14 +288,28 @@ const styles = StyleSheet.create({
   */
 });
 
-// Add this function:
-function mapStateToProps(state) {
+// Add this function to every component
+const mapStateToProps = state => {
+  console.log(state);
+
+  return { count: state.count, nativeAddress: state.nativeAddress };
+};
+
+const mapDispatchToProps = dispatch => {
   return {
-    count: state.count
+    incrementCounter: () => {
+      dispatch(incrementCounter());
+    },
+    decrementCounter: () => {
+      dispatch(decrementCounter());
+    },
+    setNativeAddress: address => {
+      dispatch(setNativeAddress(address));
+    }
   };
-}
+};
 
 export default connect(
   mapStateToProps,
-  { incrementCounter, decrementCounter }
+  mapDispatchToProps
 )(HomeScreen);
