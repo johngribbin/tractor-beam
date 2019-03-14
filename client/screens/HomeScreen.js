@@ -19,7 +19,12 @@ import { connect } from "react-redux";
 import {
   incrementCounter,
   decrementCounter,
-  setNativeAddress
+  addRecoveryPhrases,
+  setNativeAccount,
+  setContractAccount,
+  addExternalAccount,
+  chooseDefaultExternalAccount,
+  deleteExternalAccount
 } from "../redux/actions";
 
 class HomeScreen extends Component {
@@ -28,7 +33,48 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    this.props.setNativeAddress("0x123");
+    this.props.setNativeAccount({
+      address: "0x123",
+      balance: 0,
+      linkedContract: "0x321"
+    });
+
+    this.props.setContractAccount({
+      address: "0x321",
+      balance: 0,
+      permissionedAddresses: ["0x321"]
+    });
+
+    // accepts an array of recovery phrases
+    this.props.addRecoveryPhrases([
+      "oh happy days",
+      "hello darkness my old friend"
+    ]);
+
+    // accepts an array of account objects
+    this.props.addExternalAccount([
+      {
+        name: "Coinbase",
+        address: "0x111",
+        default: false
+      },
+      {
+        name: "Kraken",
+        address: "0x222",
+        default: true
+      },
+      {
+        name: "Balance",
+        address: "0x333",
+        default: false
+      }
+    ]);
+
+    // accepts "name" prop of the external account added by user
+    this.props.chooseDefaultExternalAccount("Coinbase");
+
+    // accepts "name" prop of the external account added by user
+    this.props.deleteExternalAccount("Balance");
   }
 
   /*
@@ -76,12 +122,13 @@ class HomeScreen extends Component {
     decrementCounter();
   };
   */
+
   render() {
     const {
       count,
       incrementCounter,
       decrementCounter,
-      nativeAddress
+      nativeAccount
     } = this.props;
 
     return (
@@ -92,7 +139,7 @@ class HomeScreen extends Component {
         >
           <View style={styles.headerContainer}>
             <Text style={styles.mainHeader}>Welcome to Counter App!</Text>
-            <Text>Your native address is {nativeAddress}</Text>
+            <Text>Your native address is {nativeAccount.address}</Text>
           </View>
 
           <View style={styles.counterContainer}>
@@ -292,7 +339,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   console.log(state);
 
-  return { count: state.count, nativeAddress: state.nativeAddress };
+  return {
+    count: state.count,
+    recoveryPhrases: state.recoveryPhrases,
+    nativeAccount: state.nativeAccount
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -303,8 +354,23 @@ const mapDispatchToProps = dispatch => {
     decrementCounter: () => {
       dispatch(decrementCounter());
     },
-    setNativeAddress: address => {
-      dispatch(setNativeAddress(address));
+    addRecoveryPhrases: recoveryPhrases => {
+      dispatch(addRecoveryPhrases(recoveryPhrases));
+    },
+    setNativeAccount: account => {
+      dispatch(setNativeAccount(account));
+    },
+    setContractAccount: account => {
+      dispatch(setContractAccount(account));
+    },
+    addExternalAccount: account => {
+      dispatch(addExternalAccount(account));
+    },
+    chooseDefaultExternalAccount: accountName => {
+      dispatch(chooseDefaultExternalAccount(accountName));
+    },
+    deleteExternalAccount: accountName => {
+      dispatch(deleteExternalAccount(accountName));
     }
   };
 };
