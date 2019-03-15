@@ -1,6 +1,7 @@
-// for counterReducer
-export const INCREMENT_COUNTER = "INCREMENT_COUNTER";
-export const DECREMENT_COUNTER = "DECREMENT_COUNTER";
+// for emailDetailsReducer
+export const ADD_EMAIL = "ADD_EMAIL";
+export const EDIT_EMAIL = "EDIT_EMAIL";
+export const DELETE_EMAIL = "DELETE_EMAIL";
 
 // for recoveryPhrasesReducer
 export const ADD_RECOVERY_PHRASE = "ADD_RECOVERY_PHRASE";

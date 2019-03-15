@@ -17,8 +17,7 @@ import { MonoText } from "../components/StyledText";
 
 import { connect } from "react-redux";
 import {
-  incrementCounter,
-  decrementCounter,
+  addEmail,
   addRecoveryPhrases,
   setNativeAccount,
   setContractAccount,
@@ -33,6 +32,13 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
+    this.props.addEmail([
+      {
+        address: "bob@noob.com",
+        default: false
+      }
+    ]);
+
     this.props.setNativeAccount({
       address: "0x123",
       balance: 0,
@@ -42,7 +48,7 @@ class HomeScreen extends Component {
     this.props.setContractAccount({
       address: "0x321",
       balance: 0,
-      permissionedAddresses: ["0x321"]
+      permissionedAddresses: ["0x123"]
     });
 
     // accepts an array of recovery phrases
@@ -140,22 +146,6 @@ class HomeScreen extends Component {
           <View style={styles.headerContainer}>
             <Text style={styles.mainHeader}>Welcome to Counter App!</Text>
             <Text>Your native address is {nativeAccount.address}</Text>
-          </View>
-
-          <View style={styles.counterContainer}>
-            <Text>Counter value is {count}</Text>
-            <View style={styles.buttonContainer}>
-              <Button
-                style={styles.button}
-                onPress={() => incrementCounter()}
-                title="+"
-              />
-              <Button
-                style={styles.button}
-                onPress={() => decrementCounter()}
-                title="-"
-              />
-            </View>
           </View>
           {/*
             <View style={styles.welcomeContainer}>
@@ -348,11 +338,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    incrementCounter: () => {
-      dispatch(incrementCounter());
-    },
-    decrementCounter: () => {
-      dispatch(decrementCounter());
+    addEmail: email => {
+      dispatch(addEmail(email));
     },
     addRecoveryPhrases: recoveryPhrases => {
       dispatch(addRecoveryPhrases(recoveryPhrases));

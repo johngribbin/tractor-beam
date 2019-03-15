@@ -1,6 +1,5 @@
 import {
-  INCREMENT_COUNTER,
-  DECREMENT_COUNTER,
+  ADD_EMAIL,
   ADD_RECOVERY_PHRASE,
   SET_NATIVE_ACCOUNT,
   SET_CONTRACT_ACCOUNT,
@@ -9,20 +8,15 @@ import {
   DELETE_EXTERNAL_ACCOUNT
 } from "./types";
 
-// action creators for counterReducer
-export const incrementCounter = () => {
+// action creator for emailDetailsReducer
+export const addEmail = email => {
   return {
-    type: INCREMENT_COUNTER
+    type: ADD_EMAIL,
+    payload: email
   };
 };
 
-export const decrementCounter = () => {
-  return {
-    type: DECREMENT_COUNTER
-  };
-};
-
-// action creator for recoveryPhraseReducer - accepts an array of strings
+// action creator for recoveryPhraseReducer
 export const addRecoveryPhrases = recoveryPhrases => {
   return {
     type: ADD_RECOVERY_PHRASE,

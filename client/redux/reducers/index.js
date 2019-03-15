@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import {
-  INCREMENT_COUNTER,
-  DECREMENT_COUNTER,
+  ADD_EMAIL,
   ADD_RECOVERY_PHRASE,
   SET_NATIVE_ACCOUNT,
   ADD_EXTERNAL_ACCOUNT,
@@ -11,19 +10,21 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  count: 0,
+  emailAddresses: [],
+  // array of strings
   recoveryPhrases: [],
-  nativeAccount: [],
-  contractAccount: [],
+  // array of objects
+  nativeAccount: {},
+  // object
+  contractAccount: {},
+  // array of objects
   externalAccounts: []
 };
 
-const counterReducer = (state = initialState.count, action) => {
+const emailAddressesReducer = (state = initialState.emailAddresses, action) => {
   switch (action.type) {
-    case INCREMENT_COUNTER:
-      return state + 1;
-    case DECREMENT_COUNTER:
-      return state - 1;
+    case ADD_EMAIL:
+      return [...state, ...action.payload];
     default:
       return state;
   }
@@ -93,7 +94,7 @@ const externalAccountsReducer = (
 };
 
 export default combineReducers({
-  count: counterReducer,
+  emailAddresses: emailAddressesReducer,
   recoveryPhrases: recoveryPhrasesReducer,
   nativeAccount: nativeAccountReducer,
   contractAccount: contractAccountReducer,
