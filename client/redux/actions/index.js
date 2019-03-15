@@ -1,5 +1,7 @@
 import {
   ADD_EMAIL,
+  SET_DEFAULT_EMAIL,
+  DELETE_EMAIL,
   ADD_RECOVERY_PHRASE,
   SET_NATIVE_ACCOUNT,
   SET_CONTRACT_ACCOUNT,
@@ -8,11 +10,25 @@ import {
   DELETE_EXTERNAL_ACCOUNT
 } from "./types";
 
-// action creator for emailDetailsReducer
+// action creator for emailAddressesReducer
 export const addEmail = email => {
   return {
     type: ADD_EMAIL,
     payload: email
+  };
+};
+
+export const setDefaultEmail = emailAddress => {
+  return {
+    type: SET_DEFAULT_EMAIL,
+    payload: emailAddress
+  };
+};
+
+export const deleteEmail = emailAddress => {
+  return {
+    type: DELETE_EMAIL,
+    payload: emailAddress
   };
 };
 

@@ -18,6 +18,8 @@ import { MonoText } from "../components/StyledText";
 import { connect } from "react-redux";
 import {
   addEmail,
+  setDefaultEmail,
+  deleteEmail,
   addRecoveryPhrases,
   setNativeAccount,
   setContractAccount,
@@ -32,32 +34,47 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
+    // emailReducer tests
     this.props.addEmail([
       {
-        address: "bob@noob.com",
+        address: "bob@cryptonoob.com",
+        default: false
+      },
+      {
+        address: "bob@cryptoexpert.com",
+        default: false
+      },
+      {
+        address: "bob@gmail.com",
         default: false
       }
     ]);
 
+    this.props.setDefaultEmail("bob@cryptoexpert.com");
+
+    this.props.deleteEmail("bob@gmail.com");
+
+    // recoveryPhrasesReducer tests
+    this.props.addRecoveryPhrases([
+      "oh happy days",
+      "hello darkness my old friend"
+    ]);
+
+    // nativeAccountReducer tests
     this.props.setNativeAccount({
       address: "0x123",
       balance: 0,
       linkedContract: "0x321"
     });
 
+    // contractAccountRTeducer tests
     this.props.setContractAccount({
       address: "0x321",
       balance: 0,
       permissionedAddresses: ["0x123"]
     });
 
-    // accepts an array of recovery phrases
-    this.props.addRecoveryPhrases([
-      "oh happy days",
-      "hello darkness my old friend"
-    ]);
-
-    // accepts an array of account objects
+    // externalAccountsReducer tests
     this.props.addExternalAccount([
       {
         name: "Coinbase",
@@ -76,10 +93,8 @@ class HomeScreen extends Component {
       }
     ]);
 
-    // accepts "name" prop of the external account added by user
     this.props.chooseDefaultExternalAccount("Coinbase");
 
-    // accepts "name" prop of the external account added by user
     this.props.deleteExternalAccount("Balance");
   }
 
@@ -330,8 +345,7 @@ const mapStateToProps = state => {
   console.log(state);
 
   return {
-    count: state.count,
-    recoveryPhrases: state.recoveryPhrases,
+    // key name should match name of key for the reducer in combineReducers function in /reducer/index
     nativeAccount: state.nativeAccount
   };
 };
@@ -340,6 +354,12 @@ const mapDispatchToProps = dispatch => {
   return {
     addEmail: email => {
       dispatch(addEmail(email));
+    },
+    setDefaultEmail: emailAddress => {
+      dispatch(setDefaultEmail(emailAddress));
+    },
+    deleteEmail: emailAddress => {
+      dispatch(deleteEmail(emailAddress));
     },
     addRecoveryPhrases: recoveryPhrases => {
       dispatch(addRecoveryPhrases(recoveryPhrases));

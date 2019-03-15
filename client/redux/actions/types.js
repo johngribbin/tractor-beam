@@ -1,6 +1,7 @@
 // for emailDetailsReducer
 export const ADD_EMAIL = "ADD_EMAIL";
 export const EDIT_EMAIL = "EDIT_EMAIL";
+export const SET_DEFAULT_EMAIL = "SET_DEFAULT_EMAIL";
 export const DELETE_EMAIL = "DELETE_EMAIL";
 
 // for recoveryPhrasesReducer

@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import {
   ADD_EMAIL,
+  SET_DEFAULT_EMAIL,
+  DELETE_EMAIL,
   ADD_RECOVERY_PHRASE,
   SET_NATIVE_ACCOUNT,
   ADD_EXTERNAL_ACCOUNT,
@@ -21,10 +23,28 @@ const initialState = {
   externalAccounts: []
 };
 
-const emailAddressesReducer = (state = initialState.emailAddresses, action) => {
+const emailsReducer = (state = initialState.emailAddresses, action) => {
   switch (action.type) {
     case ADD_EMAIL:
       return [...state, ...action.payload];
+
+    case SET_DEFAULT_EMAIL:
+      return state.map(email => {
+        if (email.address !== action.payload) {
+          return {
+            ...email,
+            default: false
+          };
+        } else
+          return {
+            ...email,
+            default: true
+          };
+      });
+
+    case DELETE_EMAIL:
+      return state.filter(email => email.address !== action.payload);
+
     default:
       return state;
   }
@@ -37,6 +57,7 @@ const recoveryPhrasesReducer = (
   switch (action.type) {
     case ADD_RECOVERY_PHRASE:
       return [...state, ...action.payload];
+
     default:
       return state;
   }
@@ -46,6 +67,7 @@ const nativeAccountReducer = (state = initialState.nativeAccount, action) => {
   switch (action.type) {
     case SET_NATIVE_ACCOUNT:
       return (state = action.payload);
+
     default:
       return state;
   }
@@ -58,6 +80,7 @@ const contractAccountReducer = (
   switch (action.type) {
     case SET_CONTRACT_ACCOUNT:
       return (state = action.payload);
+
     default:
       return state;
   }
@@ -81,7 +104,7 @@ const externalAccountsReducer = (
         } else
           return {
             ...account,
-            default: !account.default
+            default: true
           };
       });
 
@@ -94,7 +117,7 @@ const externalAccountsReducer = (
 };
 
 export default combineReducers({
-  emailAddresses: emailAddressesReducer,
+  emails: emailsReducer,
   recoveryPhrases: recoveryPhrasesReducer,
   nativeAccount: nativeAccountReducer,
   contractAccount: contractAccountReducer,
