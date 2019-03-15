@@ -15,6 +15,9 @@ import { MonoText } from "../components/StyledText";
 //const bip39 = require("react-native-bip39");
 //const hdKey = require("ethereumjs-wallet/hdkey");
 
+import "ethers/dist/shims.js";
+import { Wallet } from "ethers";
+
 import { connect } from "react-redux";
 import {
   addEmail,
@@ -34,6 +37,13 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
+    const mnemonic =
+      "source grow child fatal cloth reason bunker zebra panel fluid toast wheat";
+    const mnemonicWallet = Wallet.fromMnemonic(mnemonic);
+    console.log(`mnemonic is ${mnemonicWallet.mnemonic}`);
+    console.log(`private key is ${mnemonicWallet.privateKey}`);
+    console.log(`address is ${mnemonicWallet.address}`);
+
     // emailReducer tests
     this.props.addEmail([
       {
@@ -56,8 +66,7 @@ class HomeScreen extends Component {
 
     // recoveryPhrasesReducer tests
     this.props.addRecoveryPhrases([
-      "oh happy days",
-      "hello darkness my old friend"
+      "source grow child fatal cloth reason bunker zebra panel fluid toast wheat"
     ]);
 
     // nativeAccountReducer tests
@@ -67,7 +76,7 @@ class HomeScreen extends Component {
       linkedContract: "0x321"
     });
 
-    // contractAccountRTeducer tests
+    // contractAccountReducer tests
     this.props.setContractAccount({
       address: "0x321",
       balance: 0,
