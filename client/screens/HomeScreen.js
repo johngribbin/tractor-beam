@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { colors } from "../constants/";
+
+import Header from "../components/Header";
+import GiftIcon from "../components/GiftIcon";
+
 import {
   Image,
   Platform,
@@ -65,9 +70,7 @@ class HomeScreen extends Component {
     this.props.deleteEmail("bob@gmail.com");
 
     // recoveryPhrasesReducer tests
-    this.props.addRecoveryPhrases([
-      "source grow child fatal cloth reason bunker zebra panel fluid toast wheat"
-    ]);
+    this.props.addRecoveryPhrases([mnemonic]);
 
     // nativeAccountReducer tests
     this.props.setNativeAccount({
@@ -142,24 +145,8 @@ class HomeScreen extends Component {
   };
   */
 
-  /*
-  _handleIncrement = () => {
-    console.log(count);
-    incrementCounter();
-  };
-
-  _handleDecrement = () => {
-    decrementCounter();
-  };
-  */
-
   render() {
-    const {
-      count,
-      incrementCounter,
-      decrementCounter,
-      nativeAccount
-    } = this.props;
+    const { nativeAccount } = this.props;
 
     return (
       <View style={styles.homeContainer}>
@@ -167,22 +154,10 @@ class HomeScreen extends Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <View style={styles.headerContainer}>
-            <Text style={styles.mainHeader}>Welcome to Counter App!</Text>
-            <Text>Your native address is {nativeAccount.address}</Text>
-          </View>
+          <Header />
+          <GiftIcon giftMessage={"Someone sent you a gift!"} />
+
           {/*
-            <View style={styles.welcomeContainer}>
-              <Image
-                source={
-                  __DEV__
-                    ? require("../assets/images/robot-dev.png")
-                    : require("../assets/images/robot-prod.png")
-                }
-                style={styles.welcomeImage}
-              />
-            </View>
-  
             <View style={styles.getStartedContainer}>
               {this._maybeRenderDevelopmentModeWarning()}
   
@@ -236,7 +211,7 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: colors.mainBackground
   },
   contentContainer: {
     alignItems: "center",
@@ -244,28 +219,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderColor: "red",
     borderStyle: "solid",
-    borderWidth: 1,
-    paddingTop: 30
+    borderWidth: 1
+    //paddingTop: 30
   },
-  headerContainer: {
-    borderColor: "black",
-    borderStyle: "solid",
-    borderWidth: 1,
-    marginTop: 30
-  },
+  headerContainer: {},
   mainHeader: {
     fontWeight: "bold"
   },
-  counterContainer: {
-    marginTop: 10
-  },
-  buttonContainer: {
-    justifyContent: "space-around",
-    flexDirection: "row"
-  },
-  button: {
-    //margin: 5
-  }
+  giftContainer: {},
+  giftImage: {}
   /*
   developmentModeText: {
     marginBottom: 20,
