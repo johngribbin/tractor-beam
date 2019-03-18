@@ -3,6 +3,7 @@ import { colors } from "../constants/";
 
 import Header from "../components/Header";
 import GiftIcon from "../components/GiftIcon";
+import MainButton from "../components/MainButton";
 
 import {
   Image,
@@ -156,6 +157,7 @@ class HomeScreen extends Component {
         >
           <Header />
           <GiftIcon giftMessage={"Someone sent you a gift!"} />
+          <MainButton title={"CLAIM GIFT"} />
 
           {/*
             <View style={styles.getStartedContainer}>
