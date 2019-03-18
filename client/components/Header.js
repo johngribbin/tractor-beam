@@ -24,16 +24,16 @@ const styles = StyleSheet.create({
   appTitle: {
     backgroundColor: colors.grey,
     color: "white",
+    flex: 3,
     padding: 10,
-    paddingTop: 40,
-    width: "60%"
+    paddingTop: 40
   },
   balance: {
     backgroundColor: colors.orange,
     color: "white",
+    flex: 2,
     padding: 10,
-    paddingTop: 40,
-    width: "40%"
+    paddingTop: 40
   }
 });
 
