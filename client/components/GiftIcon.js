@@ -20,8 +20,7 @@ const styles = StyleSheet.create({
   giftContainer: {
     alignItems: "center",
     display: "flex",
-    marginBottom: 20,
-    marginTop: 100
+    marginBottom: 20
   },
   giftMessage: {
     marginTop: 5,
