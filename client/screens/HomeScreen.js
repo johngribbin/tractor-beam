@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import { colors } from "../constants/";
 
 import Header from "../components/Header";
-import GiftIcon from "../components/GiftIcon";
-import MainButton from "../components/MainButton";
+import ClaimGift from "../components/ClaimGift";
 
 import {
   Image,
@@ -26,6 +27,8 @@ import { Wallet } from "ethers";
 
 import { connect } from "react-redux";
 import {
+  logIn,
+  logOut,
   addEmail,
   setDefaultEmail,
   deleteEmail,
@@ -42,13 +45,24 @@ class HomeScreen extends Component {
     header: null
   };
 
-  componentDidMount() {
-    const mnemonic =
-      "source grow child fatal cloth reason bunker zebra panel fluid toast wheat";
-    const mnemonicWallet = Wallet.fromMnemonic(mnemonic);
-    console.log(`mnemonic is ${mnemonicWallet.mnemonic}`);
-    console.log(`private key is ${mnemonicWallet.privateKey}`);
-    console.log(`address is ${mnemonicWallet.address}`);
+  async componentDidMount() {
+    let mnemonic =
+      "youth retire wise sense garbage range pause desk question narrow spin cliff";
+
+    /*  
+    let mnemonicObj = "";
+
+    
+    await axios
+      .post("http://3.17.65.140:8080/generateMnemonic")
+      .then(response => console.log(response))
+      .catch(error => console.log(`error is ${error}`));
+
+    console.log(mnemonicObj);
+    */
+
+    /* isLoggedInReducer tests
+    //this.props.logIn();
 
     // emailReducer tests
     this.props.addEmail([
@@ -66,12 +80,21 @@ class HomeScreen extends Component {
       }
     ]);
 
+    
     this.props.setDefaultEmail("bob@cryptoexpert.com");
 
     this.props.deleteEmail("bob@gmail.com");
+    */
 
     // recoveryPhrasesReducer tests
     this.props.addRecoveryPhrases([mnemonic]);
+
+    /*
+    const mnemonicWallet = Wallet.fromMnemonic(mnemonic);
+    console.log(`mnemonic is ${mnemonicWallet.mnemonic}`);
+    console.log(`private key is ${mnemonicWallet.privateKey}`);
+    console.log(`address is ${mnemonicWallet.address}`);
+    */
 
     // nativeAccountReducer tests
     this.props.setNativeAccount({
@@ -147,17 +170,17 @@ class HomeScreen extends Component {
   */
 
   render() {
-    const { nativeAccount } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <View style={styles.homeContainer}>
+        <Header />
+
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Header />
-          <GiftIcon giftMessage={"Someone sent you a gift!"} />
-          <MainButton title={"CLAIM GIFT"} />
+          <ClaimGift />
 
           {/*
             <View style={styles.getStartedContainer}>
@@ -227,9 +250,7 @@ const styles = StyleSheet.create({
   headerContainer: {},
   mainHeader: {
     fontWeight: "bold"
-  },
-  giftContainer: {},
-  giftImage: {}
+  }
   /*
   developmentModeText: {
     marginBottom: 20,
@@ -319,12 +340,19 @@ const mapStateToProps = state => {
 
   return {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index
+    isLoggedIn: state.isLoggedIn,
     nativeAccount: state.nativeAccount
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    logIn: () => {
+      dispatch(logIn());
+    },
+    logOut: () => {
+      dispatch(logOut());
+    },
     addEmail: email => {
       dispatch(addEmail(email));
     },
