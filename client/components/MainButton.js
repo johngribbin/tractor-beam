@@ -9,13 +9,14 @@ import {
 } from "react-native";
 
 export default function MainButton(props) {
-  _onPressButton = () => {
-    Alert.alert("you pressed a button!");
-  };
-
   return (
-    <View style={styles.buttonContainer}>
-      <TouchableHighlight style={styles.button} onPress={_onPressButton}>
+    <View>
+      <TouchableHighlight
+        style={
+          props.style ? { ...styles.button, ...props.style } : styles.button
+        }
+        onPress={props.onPress}
+      >
         <Text style={styles.buttonText}>{props.title}</Text>
       </TouchableHighlight>
     </View>
@@ -23,7 +24,6 @@ export default function MainButton(props) {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {},
   button: {
     borderRadius: 5,
     backgroundColor: colors.orange,
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "600",
     fontSize: 14,
-    lineHeight: 15
+    lineHeight: 15,
+    textAlign: "center"
   }
 });
