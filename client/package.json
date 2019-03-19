@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "axios": "^0.18.0",
     "ethers": "^4.0.27",
     "expo": "^32.0.0",
     "expokit": "32.0.6",
