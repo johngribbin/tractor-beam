@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { colors } from "../constants/";
 import { StyleSheet, View, Text, StatusBar } from "react-native";
 import { connect } from "react-redux";
@@ -9,7 +9,13 @@ function Header(props) {
       <StatusBar barStyle="light-content" />
       <Text style={styles.appTitle}>TRACTOR BEAM</Text>
       <Text style={styles.balance}>
-        YOUR ACCOUNT ${props.nativeAccount.balance}
+        {props.emails.length === 0
+          ? `YOUR ACCOUNT $${props.nativeAccount.balance}`
+          : props.emails.map(email => {
+              if (email.default === true) {
+                return `${email.address} $${props.nativeAccount.balance}`;
+              }
+            })}
       </Text>
     </View>
   );
@@ -19,10 +25,10 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     flexDirection: "row",
-    height: 70
+    position: "absolute"
   },
   appTitle: {
-    backgroundColor: colors.grey,
+    backgroundColor: colors.darkGrey,
     color: "white",
     flex: 3,
     padding: 10,
@@ -41,7 +47,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index
-    nativeAccount: state.nativeAccount
+    nativeAccount: state.nativeAccount,
+    emails: state.emails
   };
 };
 
