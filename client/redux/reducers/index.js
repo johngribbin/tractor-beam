@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 import {
+  LOG_IN,
+  LOG_OUT,
   ADD_EMAIL,
   SET_DEFAULT_EMAIL,
   DELETE_EMAIL,
@@ -12,6 +14,8 @@ import {
 } from "../actions/types";
 
 const initialState = {
+  isLoggedIn: false,
+  // array of objects
   emailAddresses: [],
   // array of strings
   recoveryPhrases: [],
@@ -21,6 +25,17 @@ const initialState = {
   contractAccount: {},
   // array of objects
   externalAccounts: []
+};
+
+const isLoggedInReducer = (state = initialState.isLoggedIn, action) => {
+  switch (action.type) {
+    case LOG_IN:
+      return (state = true);
+    case LOG_OUT:
+      return (state = false);
+    default:
+      return state;
+  }
 };
 
 const emailsReducer = (state = initialState.emailAddresses, action) => {
@@ -117,6 +132,7 @@ const externalAccountsReducer = (
 };
 
 export default combineReducers({
+  isLoggedIn: isLoggedInReducer,
   emails: emailsReducer,
   recoveryPhrases: recoveryPhrasesReducer,
   nativeAccount: nativeAccountReducer,

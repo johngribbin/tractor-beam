@@ -1,3 +1,7 @@
+// for isLoggedIn reducer
+export const LOG_IN = "LOG_IN";
+export const LOG_OUT = "LOG_OUT";
+
 // for emailDetailsReducer
 export const ADD_EMAIL = "ADD_EMAIL";
 export const EDIT_EMAIL = "EDIT_EMAIL";

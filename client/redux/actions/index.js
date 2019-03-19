@@ -1,4 +1,6 @@
 import {
+  LOG_IN,
+  LOG_OUT,
   ADD_EMAIL,
   SET_DEFAULT_EMAIL,
   DELETE_EMAIL,
@@ -9,6 +11,19 @@ import {
   CHOOSE_DEFAULT_EXTERNAL_ACCOUNT,
   DELETE_EXTERNAL_ACCOUNT
 } from "./types";
+
+// action creators for isLoggedInReducer
+export const logIn = () => {
+  return {
+    type: LOG_IN
+  };
+};
+
+export const logOut = () => {
+  return {
+    type: LOG_OUT
+  };
+};
 
 // action creator for emailAddressesReducer
 export const addEmail = email => {
