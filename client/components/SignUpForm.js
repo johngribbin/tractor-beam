@@ -15,15 +15,18 @@ class SignUpForm extends Component {
   };
 
   _submitForm = () => {
-    // if user has provided email and password, log them in and hide the form
+    // when user has provided email and password, log them in and hide the form
     if (this.state.email && this.state.password) {
+      // add email to app state and set to default email
       this.props.addEmail([
         {
           address: this.state.email,
           default: true
         }
       ]);
+      // switch isLoggedIn state property to true
       this.props.logIn();
+      // hide the form component from ClaimGift component
       this.props.hideForm();
     }
   };

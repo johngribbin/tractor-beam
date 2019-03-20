@@ -241,15 +241,12 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: "center",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "center"
+    /*
     borderColor: "red",
     borderStyle: "solid",
     borderWidth: 1
-    //paddingTop: 30
-  },
-  headerContainer: {},
-  mainHeader: {
-    fontWeight: "bold"
+    */
   }
   /*
   developmentModeText: {

@@ -1,12 +1,6 @@
 import React from "react";
 import { colors } from "../constants";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  Alert
-} from "react-native";
+import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 
 export default function MainButton(props) {
   return (
@@ -17,7 +11,7 @@ export default function MainButton(props) {
         }
         onPress={props.onPress}
       >
-        <Text style={styles.buttonText}>{props.title}</Text>
+        <Text style={{ ...styles.buttonText }}>{props.title}</Text>
       </TouchableHighlight>
     </View>
   );
@@ -27,15 +21,18 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 5,
     backgroundColor: colors.orange,
+    shadowOpacity: 0.75,
+    shadowRadius: 5,
+    shadowColor: colors.lightGrey,
+    shadowOffset: { height: 0, width: 0 },
     padding: 10
   },
   buttonText: {
-    color: "white",
-    //fontFamily: "Barlow"
-    fontStyle: "normal",
-    fontWeight: "600",
+    fontFamily: "barlow-bold",
     fontSize: 14,
+    fontWeight: "600",
     lineHeight: 15,
+    color: "white",
     textAlign: "center"
   }
 });

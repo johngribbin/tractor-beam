@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { colors } from "../constants/";
+import { colors, largeText, largeTextBold } from "../constants/";
 import { StyleSheet, View, Text, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
@@ -7,16 +7,21 @@ function Header(props) {
   return (
     <View style={styles.headerContainer}>
       <StatusBar barStyle="light-content" />
-      <Text style={styles.appTitle}>TRACTOR BEAM</Text>
-      <Text style={styles.balance}>
-        {props.emails.length === 0
-          ? `YOUR ACCOUNT $${props.nativeAccount.balance}`
-          : props.emails.map(email => {
-              if (email.default === true) {
-                return `${email.address} $${props.nativeAccount.balance}`;
-              }
-            })}
-      </Text>
+      <Text style={{ ...largeTextBold, ...styles.appTitle }}>TRACTOR BEAM</Text>
+      <View style={styles.balanceWrapper}>
+        <Text style={{ ...largeText, ...styles.balanceText }}>
+          {props.emails.length === 0
+            ? `YOUR ACCOUNT `
+            : props.emails.map(email => {
+                if (email.default === true) {
+                  return `${email.address} `;
+                }
+              })}
+        </Text>
+        <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
+          ${props.nativeAccount.balance}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -30,16 +35,23 @@ const styles = StyleSheet.create({
   appTitle: {
     backgroundColor: colors.darkGrey,
     color: "white",
-    flex: 3,
-    padding: 10,
-    paddingTop: 40
-  },
-  balance: {
-    backgroundColor: colors.orange,
-    color: "white",
     flex: 2,
     padding: 10,
     paddingTop: 40
+  },
+  balanceWrapper: {
+    backgroundColor: colors.orange,
+    flex: 3,
+    display: "flex",
+    flexDirection: "row",
+    padding: 10,
+    paddingTop: 40
+  },
+  balanceText: {
+    color: "white"
+  },
+  balanceValue: {
+    color: "white"
   }
 });
 

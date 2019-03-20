@@ -1,5 +1,5 @@
 import React from "react";
-import { colors } from "../constants/";
+import { colors, mediumTextBold } from "../constants/";
 import { StyleSheet, View, Text, Image } from "react-native";
 
 import { connect } from "react-redux";
@@ -11,7 +11,9 @@ function GiftIcon(props) {
         source={require("../assets/images/GiftBlack.png")}
         style={styles.giftImage}
       />
-      <Text style={styles.giftMessage}>{props.giftMessage}</Text>
+      <Text style={{ ...mediumTextBold, ...styles.giftMessage }}>
+        {props.giftMessage}
+      </Text>
     </View>
   );
 }
