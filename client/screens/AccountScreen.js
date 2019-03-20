@@ -9,7 +9,8 @@ import {
 } from "../constants";
 
 import Header from "../components/Header";
-import { ExpoLinksView } from "@expo/samples";
+import LinkExternalAccount from "../components/LinkExternalAccount";
+//import { ExpoLinksView } from "@expo/samples";
 
 import { connect } from "react-redux";
 
@@ -55,6 +56,7 @@ class AccountScreen extends React.Component {
             <Text style={mediumText}> {contractAccount.address}...</Text>
             <Text style={{ ...smallText, ...styles.changeText }}>reveal</Text>
           </View>
+          <LinkExternalAccount />
         </ScrollView>
       </View>
     );
@@ -100,7 +102,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: 40
   }
 });
 
