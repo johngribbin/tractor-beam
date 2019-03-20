@@ -113,6 +113,7 @@ class HomeScreen extends Component {
     });
 
     // externalAccountsReducer tests
+    /*
     this.props.addExternalAccount([
       {
         name: "Coinbase",
@@ -134,6 +135,7 @@ class HomeScreen extends Component {
     this.props.chooseDefaultExternalAccount("Coinbase");
 
     this.props.deleteExternalAccount("Balance");
+    */
   }
 
   /*
