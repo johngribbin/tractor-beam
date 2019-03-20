@@ -22,10 +22,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: colors.orange,
     borderWidth: 5,
+    /*
     shadowOpacity: 0.75,
     shadowRadius: 5,
     shadowColor: colors.lightGrey,
     shadowOffset: { height: 0, width: 0 },
+    */
     padding: 10
   },
   buttonText: {
