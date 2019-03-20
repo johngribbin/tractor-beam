@@ -63,6 +63,7 @@ class HomeScreen extends Component {
 
     /* isLoggedInReducer tests
     //this.props.logIn();
+    */
 
     // emailReducer tests
     this.props.addEmail([
@@ -80,11 +81,12 @@ class HomeScreen extends Component {
       }
     ]);
 
-    
     this.props.setDefaultEmail("bob@cryptoexpert.com");
 
+    /*
     this.props.deleteEmail("bob@gmail.com");
-    */
+    
+
 
     // recoveryPhrasesReducer tests
     this.props.addRecoveryPhrases([mnemonic]);
@@ -241,7 +243,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: "center",
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingTop: 200
     /*
     borderColor: "red",
     borderStyle: "solid",
@@ -333,7 +336,7 @@ const styles = StyleSheet.create({
 
 // Add this function to every component
 const mapStateToProps = state => {
-  console.log(state);
+  //console.log(state);
 
   return {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index

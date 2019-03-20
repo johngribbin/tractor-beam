@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { colors, largeText, largeTextBold } from "../constants/";
 import { StyleSheet, View, Text, StatusBar } from "react-native";
 import { connect } from "react-redux";
@@ -14,7 +14,7 @@ function Header(props) {
             ? `YOUR ACCOUNT `
             : props.emails.map(email => {
                 if (email.default === true) {
-                  return `${email.address} `;
+                  return `${email.address.substr(0, 11)}... `;
                 }
               })}
         </Text>
@@ -28,12 +28,12 @@ function Header(props) {
 
 const styles = StyleSheet.create({
   headerContainer: {
+    backgroundColor: colors.darkGrey,
     flex: 1,
     flexDirection: "row",
     position: "absolute"
   },
   appTitle: {
-    backgroundColor: colors.darkGrey,
     color: "white",
     flex: 2,
     padding: 10,
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     flex: 3,
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
     paddingTop: 40
   },

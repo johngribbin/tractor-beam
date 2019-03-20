@@ -57,9 +57,7 @@ class ClaimGift extends Component {
 }
 
 const styles = StyleSheet.create({
-  claimGiftContainer: {
-    marginTop: 200
-  }
+  claimGiftContainer: {}
 });
 
 // Add this function to every component
