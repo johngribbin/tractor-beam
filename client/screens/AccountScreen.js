@@ -10,13 +10,14 @@ import {
 
 import Header from "../components/Header";
 import LinkExternalAccount from "../components/LinkExternalAccount";
+import UpgradeSecurity from "../components/UpgradeSecurity";
 //import { ExpoLinksView } from "@expo/samples";
 
 import { connect } from "react-redux";
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    header: props => <Header {...props} />
   };
 
   render() {
@@ -24,7 +25,6 @@ class AccountScreen extends React.Component {
 
     return (
       <View style={styles.accountContainer}>
-        <Header />
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {/* Go ahead and delete ExpoLinksView and replace it with your
            * content, we just wanted to provide you with some helpful links 
@@ -56,7 +56,10 @@ class AccountScreen extends React.Component {
             <Text style={mediumText}> {contractAccount.address}...</Text>
             <Text style={{ ...smallText, ...styles.changeText }}>reveal</Text>
           </View>
-          <LinkExternalAccount />
+          <View style={styles.buttonContainer}>
+            <LinkExternalAccount />
+            <UpgradeSecurity />
+          </View>
         </ScrollView>
       </View>
     );
@@ -104,6 +107,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 40
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around"
   }
 });
 
