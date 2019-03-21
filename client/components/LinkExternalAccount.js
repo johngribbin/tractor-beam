@@ -28,7 +28,8 @@ function LinkExternalAccount(props) {
 const styles = StyleSheet.create({
   linkExternalAccountContainer: {
     alignItems: "center",
-    display: "flex"
+    display: "flex",
+    marginBottom: 20
   },
   image: {
     marginBottom: 10
