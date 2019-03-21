@@ -42,12 +42,15 @@ import {
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    header: null
+    header: props => <Header {...props} />
   };
 
   async componentDidMount() {
     let mnemonic =
       "youth retire wise sense garbage range pause desk question narrow spin cliff";
+
+    // recoveryPhrasesReducer tests
+    this.props.addRecoveryPhrases([mnemonic]);
 
     /*  
     let mnemonicObj = "";
@@ -59,11 +62,11 @@ class HomeScreen extends Component {
       .catch(error => console.log(`error is ${error}`));
 
     console.log(mnemonicObj);
-    */
+    
 
-    /* isLoggedInReducer tests
-    //this.props.logIn();
-    */
+    //isLoggedInReducer tests
+    this.props.logIn();
+    
 
     // emailReducer tests
     this.props.addEmail([
@@ -82,14 +85,14 @@ class HomeScreen extends Component {
     ]);
 
     this.props.setDefaultEmail("bob@cryptoexpert.com");
+    
 
     /*
     this.props.deleteEmail("bob@gmail.com");
     
 
 
-    // recoveryPhrasesReducer tests
-    this.props.addRecoveryPhrases([mnemonic]);
+    
 
     /*
     const mnemonicWallet = Wallet.fromMnemonic(mnemonic);
@@ -178,8 +181,6 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.homeContainer}>
-        <Header />
-
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
