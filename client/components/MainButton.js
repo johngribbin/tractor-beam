@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 
 export default function MainButton(props) {
   return (
-    <View>
+    <View style={styles.componentWrapper}>
       <TouchableHighlight
         style={
           props.style ? { ...styles.button, ...props.style } : styles.button
@@ -18,6 +18,9 @@ export default function MainButton(props) {
 }
 
 const styles = StyleSheet.create({
+  componentWrapper: {
+    flex: 1
+  },
   button: {
     borderRadius: 5,
     backgroundColor: colors.orange,
