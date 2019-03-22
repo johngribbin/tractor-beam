@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { ScrollView, View, Image, Text, StyleSheet } from "react-native";
 import AltButton from "../components/AltButton";
 
 import { colors, smallText } from "../constants";
@@ -11,22 +11,27 @@ function LinkExternalAccount(props) {
 
   return (
     <View style={styles.linkExternalAccountContainer}>
-      <Image
-        style={styles.image}
-        source={require("../assets/images/LinkSymbol.png")}
-      />
-      <AltButton title={"LINK EXTERNAL ACCOUNT"} />
-      {externalAccounts.length === 0 ? (
-        <Text style={{ ...smallText, ...styles.message }}>
-          you haven't linked an external account yet
-        </Text>
-      ) : null}
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <Image
+          style={styles.image}
+          source={require("../assets/images/LinkSymbol.png")}
+        />
+        <AltButton title={"LINK EXTERNAL ACCOUNT"} />
+        {externalAccounts.length === 0 ? (
+          <Text style={{ ...smallText, ...styles.message }}>
+            you haven't linked an external account yet
+          </Text>
+        ) : null}
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   linkExternalAccountContainer: {
+    flex: 1
+  },
+  contentContainer: {
     alignItems: "center",
     display: "flex",
     marginBottom: 20
