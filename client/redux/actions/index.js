@@ -8,7 +8,7 @@ import {
   SET_NATIVE_ACCOUNT,
   SET_CONTRACT_ACCOUNT,
   ADD_EXTERNAL_ACCOUNT,
-  CHOOSE_DEFAULT_EXTERNAL_ACCOUNT,
+  SET_DEFAULT_EXTERNAL_ACCOUNT,
   DELETE_EXTERNAL_ACCOUNT
 } from "./types";
 
@@ -79,9 +79,9 @@ export const addExternalAccount = account => {
   };
 };
 
-export const chooseDefaultExternalAccount = accountName => {
+export const setDefaultExternalAccount = accountName => {
   return {
-    type: CHOOSE_DEFAULT_EXTERNAL_ACCOUNT,
+    type: SET_DEFAULT_EXTERNAL_ACCOUNT,
     payload: accountName
   };
 };

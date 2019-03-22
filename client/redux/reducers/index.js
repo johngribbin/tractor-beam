@@ -8,7 +8,7 @@ import {
   ADD_RECOVERY_PHRASE,
   SET_NATIVE_ACCOUNT,
   ADD_EXTERNAL_ACCOUNT,
-  CHOOSE_DEFAULT_EXTERNAL_ACCOUNT,
+  SET_DEFAULT_EXTERNAL_ACCOUNT,
   DELETE_EXTERNAL_ACCOUNT,
   SET_CONTRACT_ACCOUNT
 } from "../actions/types";
@@ -109,7 +109,7 @@ const externalAccountsReducer = (
     case ADD_EXTERNAL_ACCOUNT:
       return [...state, ...action.payload];
 
-    case CHOOSE_DEFAULT_EXTERNAL_ACCOUNT:
+    case SET_DEFAULT_EXTERNAL_ACCOUNT:
       return state.map(account => {
         if (account.name !== action.payload) {
           return {
