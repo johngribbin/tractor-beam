@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { checkbox, CheckBox } from "react-native-elements";
+import { CheckBox } from "react-native-elements";
 
 import { connect } from "react-redux";
 
@@ -8,7 +8,10 @@ import { View, Text, TextInput } from "react-native";
 
 import MainButton from "../components/MainButton";
 
-import { addExternalAccount } from "../redux/actions";
+import {
+  addExternalAccount,
+  setDefaultExternalAccount
+} from "../redux/actions";
 
 class NewExternalAccountForm extends Component {
   state = {
@@ -25,9 +28,13 @@ class NewExternalAccountForm extends Component {
         {
           name: this.state.accountNickname,
           address: this.state.accountAddress,
-          default: this.state.checked
+          default: false
         }
       ]);
+    }
+
+    if (this.state.checked) {
+      this.props.setDefaultExternalAccount(this.state.accountNickname);
     }
   };
 
@@ -79,15 +86,15 @@ class NewExternalAccountForm extends Component {
 
 const styles = {
   componentWrapper: {
+    alignItems: "center",
     backgroundColor: colors.darkGrey,
     borderRadius: 5,
     display: "flex",
-    justifyContent: "column",
-    alignItems: "center",
-    padding: 5,
-    width: "100%"
+    flex: 1,
+    padding: 5
   },
   formWrapper: {
+    flex: 1,
     paddingBottom: 30,
     paddingTop: 10,
     width: "90%"
@@ -96,7 +103,6 @@ const styles = {
     color: "white",
     paddingBottom: 10
   },
-  subHeader: {},
   label: {
     color: "white"
   },
@@ -122,6 +128,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addExternalAccount: externalAccount => {
       dispatch(addExternalAccount(externalAccount));
+    },
+    setDefaultExternalAccount: accountName => {
+      dispatch(setDefaultExternalAccount(accountName));
     }
   };
 };
