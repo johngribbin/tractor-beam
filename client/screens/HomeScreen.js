@@ -36,7 +36,7 @@ import {
   setNativeAccount,
   setContractAccount,
   addExternalAccount,
-  chooseDefaultExternalAccount,
+  setDefaultExternalAccount,
   deleteExternalAccount
 } from "../redux/actions";
 
@@ -116,6 +116,7 @@ class HomeScreen extends Component {
     });
 
     // externalAccountsReducer tests
+
     /*
     this.props.addExternalAccount([
       {
@@ -126,18 +127,13 @@ class HomeScreen extends Component {
       {
         name: "Kraken",
         address: "0x222",
-        default: true
-      },
-      {
-        name: "Balance",
-        address: "0x333",
         default: false
       }
     ]);
 
-    this.props.chooseDefaultExternalAccount("Coinbase");
+    this.props.setDefaultExternalAccount("Coinbase");
 
-    this.props.deleteExternalAccount("Balance");
+    //this.props.deleteExternalAccount("Balance");
     */
   }
 
@@ -181,10 +177,7 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.homeContainer}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
+        <ScrollView contentContainerStyle={styles.contentContainer}>
           <ClaimGift />
 
           {/*
@@ -377,8 +370,8 @@ const mapDispatchToProps = dispatch => {
     addExternalAccount: account => {
       dispatch(addExternalAccount(account));
     },
-    chooseDefaultExternalAccount: accountName => {
-      dispatch(chooseDefaultExternalAccount(accountName));
+    setDefaultExternalAccount: accountName => {
+      dispatch(setDefaultExternalAccount(accountName));
     },
     deleteExternalAccount: accountName => {
       dispatch(deleteExternalAccount(accountName));
