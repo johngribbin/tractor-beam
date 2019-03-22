@@ -35,22 +35,32 @@ class AccountScreen extends React.Component {
             {`$ `}
             {contractAccount.balance}
           </Text>
-          <View style={styles.emailInfoContainer}>
-            <Text style={mediumTextBold}>Email</Text>
-            <Text>
-              {emails.map(email => {
-                if (email.default === true) {
-                  return email.address;
-                }
-              })}
-            </Text>
-            <Text style={{ ...smallText, ...styles.changeText }}>change</Text>
-          </View>
-          <View style={styles.passwordInfoContainer}>
-            <Text style={mediumTextBold}>Password</Text>
-            <Text>*************</Text>
-            <Text style={{ ...smallText, ...styles.changeText }}>change</Text>
-          </View>
+
+          {emails.length ? (
+            <View>
+              <View style={styles.emailInfoContainer}>
+                <Text style={mediumTextBold}>Email</Text>
+                <Text>
+                  {emails.map(email => {
+                    if (email.default === true) {
+                      return email.address;
+                    }
+                  })}
+                </Text>
+                <Text style={{ ...smallText, ...styles.changeText }}>
+                  change
+                </Text>
+              </View>
+              <View style={styles.passwordInfoContainer}>
+                <Text style={mediumTextBold}>Password</Text>
+                <Text>*************</Text>
+                <Text style={{ ...smallText, ...styles.changeText }}>
+                  change
+                </Text>
+              </View>
+            </View>
+          ) : null}
+
           <View style={styles.contractAccountInfoContainer}>
             <Text style={mediumTextBold}>Account Address</Text>
             <Text style={mediumText}> {contractAccount.address}...</Text>
