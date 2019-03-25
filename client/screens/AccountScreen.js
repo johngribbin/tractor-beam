@@ -5,7 +5,7 @@ import {
   headlineText,
   mediumText,
   mediumTextBold,
-  smallText
+  smallTextItalic
 } from "../constants";
 
 import Header from "../components/Header";
@@ -64,8 +64,11 @@ class AccountScreen extends React.Component {
           <View style={styles.contractAccountInfoContainer}>
             <Text style={mediumTextBold}>Account Address</Text>
             <Text style={mediumText}> {contractAccount.address}...</Text>
-            <Text style={{ ...smallText, ...styles.changeText }}>reveal</Text>
+            <Text style={{ ...smallTextItalic, ...styles.changeText }}>
+              reveal
+            </Text>
           </View>
+
           <View style={styles.buttonContainer}>
             <LinkExternalAccount />
             <UpgradeSecurity />
