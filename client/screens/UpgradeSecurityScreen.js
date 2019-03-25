@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet, Text } from "react-native";
 import { colors, headlineText, mediumText } from "../constants";
 
 import Header from "../components/Header";
-import RecoveryPhrases from "../components/RecoveryPhrases";
+import RecoveryPhrasesDropdown from "../components/RecoveryPhrasesDropdown";
 
 import { connect } from "react-redux";
 
@@ -30,7 +30,7 @@ class UpgradeSecurityScreen extends React.Component {
               account type as soon as possible.
             </Text>
           </View>
-          <RecoveryPhrases />
+          <RecoveryPhrasesDropdown />
         </ScrollView>
       </View>
     );
