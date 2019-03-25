@@ -32,8 +32,7 @@ import {
   addEmail,
   setDefaultEmail,
   deleteEmail,
-  addRecoveryPhrases,
-  setNativeAccount,
+  addPermissionedAccount,
   setContractAccount,
   addExternalAccount,
   setDefaultExternalAccount,
@@ -42,16 +41,11 @@ import {
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    header: props => <Header {...props} />
+    header: props => <Header {...props} />,
+    title: "Home"
   };
 
   async componentDidMount() {
-    let mnemonic =
-      "youth retire wise sense garbage range pause desk question narrow spin cliff";
-
-    // recoveryPhrasesReducer tests
-    this.props.addRecoveryPhrases([mnemonic]);
-
     /*  
     let mnemonicObj = "";
 
@@ -100,13 +94,19 @@ class HomeScreen extends Component {
     console.log(`private key is ${mnemonicWallet.privateKey}`);
     console.log(`address is ${mnemonicWallet.address}`);
     */
+    let mnemonic =
+      "youth retire wise sense garbage range pause desk question narrow spin cliff";
 
     // nativeAccountReducer tests
-    this.props.setNativeAccount({
-      address: "0x123",
-      balance: 0,
-      linkedContract: "0x321"
-    });
+    this.props.addPermissionedAccount([
+      {
+        recoveryPhrase: mnemonic,
+        address: "0x123",
+        balance: 0,
+        linkedContract: "0x321",
+        default: true
+      }
+    ]);
 
     // contractAccountReducer tests
     this.props.setContractAccount({
@@ -133,8 +133,8 @@ class HomeScreen extends Component {
 
     this.props.setDefaultExternalAccount("Coinbase");
 
-    //this.props.deleteExternalAccount("Balance");
     */
+    //this.props.deleteExternalAccount("Balance");
   }
 
   /*
@@ -358,11 +358,8 @@ const mapDispatchToProps = dispatch => {
     deleteEmail: emailAddress => {
       dispatch(deleteEmail(emailAddress));
     },
-    addRecoveryPhrases: recoveryPhrases => {
-      dispatch(addRecoveryPhrases(recoveryPhrases));
-    },
-    setNativeAccount: account => {
-      dispatch(setNativeAccount(account));
+    addPermissionedAccount: account => {
+      dispatch(addPermissionedAccount(account));
     },
     setContractAccount: account => {
       dispatch(setContractAccount(account));
