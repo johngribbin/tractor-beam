@@ -8,11 +8,8 @@ export const EDIT_EMAIL = "EDIT_EMAIL";
 export const SET_DEFAULT_EMAIL = "SET_DEFAULT_EMAIL";
 export const DELETE_EMAIL = "DELETE_EMAIL";
 
-// for recoveryPhrasesReducer
-export const ADD_RECOVERY_PHRASE = "ADD_RECOVERY_PHRASE";
-
 // for nativeAddressReducer
-export const SET_NATIVE_ACCOUNT = "SET_NATIVE_ACCOUNT";
+export const ADD_PERMISSIONED_ACCOUNT = "ADD_PERMISSIONED_ACCOUNT";
 
 // for contractAccountReducer
 export const SET_CONTRACT_ACCOUNT = "SET_CONTRACT_ACCOUNT";

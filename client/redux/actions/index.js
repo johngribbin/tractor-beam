@@ -4,8 +4,7 @@ import {
   ADD_EMAIL,
   SET_DEFAULT_EMAIL,
   DELETE_EMAIL,
-  ADD_RECOVERY_PHRASE,
-  SET_NATIVE_ACCOUNT,
+  ADD_PERMISSIONED_ACCOUNT,
   SET_CONTRACT_ACCOUNT,
   ADD_EXTERNAL_ACCOUNT,
   SET_DEFAULT_EXTERNAL_ACCOUNT,
@@ -47,18 +46,10 @@ export const deleteEmail = emailAddress => {
   };
 };
 
-// action creator for recoveryPhraseReducer
-export const addRecoveryPhrases = recoveryPhrases => {
-  return {
-    type: ADD_RECOVERY_PHRASE,
-    payload: recoveryPhrases
-  };
-};
-
 // action creators for nativeAccountReducer
-export const setNativeAccount = account => {
+export const addPermissionedAccount = account => {
   return {
-    type: SET_NATIVE_ACCOUNT,
+    type: ADD_PERMISSIONED_ACCOUNT,
     payload: account
   };
 };

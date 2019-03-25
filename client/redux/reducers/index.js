@@ -5,8 +5,7 @@ import {
   ADD_EMAIL,
   SET_DEFAULT_EMAIL,
   DELETE_EMAIL,
-  ADD_RECOVERY_PHRASE,
-  SET_NATIVE_ACCOUNT,
+  ADD_PERMISSIONED_ACCOUNT,
   ADD_EXTERNAL_ACCOUNT,
   SET_DEFAULT_EXTERNAL_ACCOUNT,
   DELETE_EXTERNAL_ACCOUNT,
@@ -14,14 +13,13 @@ import {
 } from "../actions/types";
 
 const initialState = {
+  // boolean
   isLoggedIn: false,
   // array of objects
   emailAddresses: [],
-  // array of strings
-  recoveryPhrases: [],
   // array of objects
-  nativeAccount: {},
-  // object
+  permissionedAccounts: [],
+  // single object
   contractAccount: {},
   // array of objects
   externalAccounts: []
@@ -65,23 +63,13 @@ const emailsReducer = (state = initialState.emailAddresses, action) => {
   }
 };
 
-const recoveryPhrasesReducer = (
-  state = initialState.recoveryPhrases,
+const permissionedAccountsReducer = (
+  state = initialState.permissionedAccounts,
   action
 ) => {
   switch (action.type) {
-    case ADD_RECOVERY_PHRASE:
+    case ADD_PERMISSIONED_ACCOUNT:
       return [...state, ...action.payload];
-
-    default:
-      return state;
-  }
-};
-
-const nativeAccountReducer = (state = initialState.nativeAccount, action) => {
-  switch (action.type) {
-    case SET_NATIVE_ACCOUNT:
-      return (state = action.payload);
 
     default:
       return state;
@@ -134,8 +122,7 @@ const externalAccountsReducer = (
 export default combineReducers({
   isLoggedIn: isLoggedInReducer,
   emails: emailsReducer,
-  recoveryPhrases: recoveryPhrasesReducer,
-  nativeAccount: nativeAccountReducer,
+  permissionedAccounts: permissionedAccountsReducer,
   contractAccount: contractAccountReducer,
   externalAccounts: externalAccountsReducer
 });
