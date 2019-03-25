@@ -112,7 +112,7 @@ const styles = {
     borderRadius: 4,
     borderWidth: 1,
     marginBottom: 10,
-    paddingVertical: 2
+    padding: 7.5
   },
   checkbox: {
     backgroundColor: colors.darkGrey,
