@@ -10,7 +10,7 @@ import HomeScreen from "../screens/HomeScreen";
 import AccountScreen from "../screens/AccountScreen";
 //import SettingsScreen from "../screens/SettingsScreen";
 import ExternalAccountsScreen from "../screens/ExternalAccountsScreen";
-import UpgradeSecurityScreen from "../screens/UpgradeSecurity";
+import UpgradeSecurityScreen from "../screens/UpgradeSecurityScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
