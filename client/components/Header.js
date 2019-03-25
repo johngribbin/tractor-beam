@@ -19,7 +19,7 @@ function Header(props) {
               })}
         </Text>
         <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
-          ${props.nativeAccount.balance}
+          ${props.contractAccount.balance}
         </Text>
       </View>
     </View>
@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkGrey,
     flex: 1,
     flexDirection: "row",
-    position: "absolute"
+    position: "absolute",
+    top: 0
   },
   appTitle: {
     color: "white",
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index
-    nativeAccount: state.nativeAccount,
+    contractAccount: state.contractAccount,
     emails: state.emails
   };
 };
