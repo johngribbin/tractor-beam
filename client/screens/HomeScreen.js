@@ -46,18 +46,44 @@ class HomeScreen extends Component {
   };
 
   async componentDidMount() {
-    /*  
-    let mnemonicObj = "";
+    let mnemonic =
+      "river question load middle follow pen mix walnut coin powder supply service";
 
-    
-    await axios
-      .post("http://3.17.65.140:8080/generateMnemonic")
-      .then(response => console.log(response))
-      .catch(error => console.log(`error is ${error}`));
+    /*
+    try {
+      let response = await fetch("http://3.17.65.140:8080/generateMnemonic", {
+        mode: "no-cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json"
+        }
+      });
+      const mnemonicObj = JSON.parse(response._bodyText);
+      mnemonic = mnemonicObj.mnemonic;
+    } catch (error) {
+      console.error(error);
+    }
+    */
 
-    console.log(mnemonicObj);
-    
+    // permissionedAccountsReducer tests
+    this.props.addPermissionedAccount([
+      {
+        recoveryPhrase: mnemonic,
+        address: "0x555",
+        balance: 0,
+        linkedContract: "0x321",
+        default: true
+      }
+    ]);
 
+    // contractAccountReducer tests
+    this.props.setContractAccount({
+      address: "0x321",
+      balance: 0,
+      permissionedAddresses: ["0x123"]
+    });
+
+    /*
     //isLoggedInReducer tests
     this.props.logIn();
     
@@ -79,45 +105,15 @@ class HomeScreen extends Component {
     ]);
 
     this.props.setDefaultEmail("bob@cryptoexpert.com");
-    
-
-    /*
     this.props.deleteEmail("bob@gmail.com");
     
-
-
-    
-
-    /*
+    // mnemonic creatior tests
     const mnemonicWallet = Wallet.fromMnemonic(mnemonic);
     console.log(`mnemonic is ${mnemonicWallet.mnemonic}`);
     console.log(`private key is ${mnemonicWallet.privateKey}`);
     console.log(`address is ${mnemonicWallet.address}`);
-    */
-    let mnemonic =
-      "youth retire wise sense garbage range pause desk question narrow spin cliff";
-
-    // nativeAccountReducer tests
-    this.props.addPermissionedAccount([
-      {
-        recoveryPhrase: mnemonic,
-        address: "0x123",
-        balance: 0,
-        linkedContract: "0x321",
-        default: true
-      }
-    ]);
-
-    // contractAccountReducer tests
-    this.props.setContractAccount({
-      address: "0x321",
-      balance: 0,
-      permissionedAddresses: ["0x123"]
-    });
-
+    
     // externalAccountsReducer tests
-
-    /*
     this.props.addExternalAccount([
       {
         name: "Coinbase",
@@ -132,9 +128,8 @@ class HomeScreen extends Component {
     ]);
 
     this.props.setDefaultExternalAccount("Coinbase");
-
+    this.props.deleteExternalAccount("Balance");
     */
-    //this.props.deleteExternalAccount("Balance");
   }
 
   /*
