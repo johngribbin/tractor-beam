@@ -2,6 +2,7 @@ import React from "react";
 import { View, ScrollView, StyleSheet, Text } from "react-native";
 import {
   colors,
+  smallText,
   headlineText,
   mediumText,
   mediumTextBold,
