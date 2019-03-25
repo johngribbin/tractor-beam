@@ -3,21 +3,19 @@ import { View, Image, Text, StyleSheet } from "react-native";
 import AltButton from "../components/AltButton";
 
 import { colors, smallText } from "../constants";
-
 import { connect } from "react-redux";
 
-function LinkExternalAccount(props) {
-  const { recoveryPhrases } = props;
-  console.log(recoveryPhrases);
+function UpgradeSecurity(props) {
+  const { permissionedAccounts } = props;
 
   return (
-    <View style={styles.linkExternalAccountContainer}>
+    <View style={styles.componentContainer}>
       <Image
         style={styles.image}
         source={require("../assets/images/SecuritySymbol.png")}
       />
       <AltButton title={"UPGRADE SECURITY"} />
-      {recoveryPhrases.length === 1 ? (
+      {permissionedAccounts.length === 1 ? (
         <Text style={{ ...smallText, ...styles.message }}>
           you haven't upgraded security yet
         </Text>
@@ -27,7 +25,7 @@ function LinkExternalAccount(props) {
 }
 
 const styles = StyleSheet.create({
-  linkExternalAccountContainer: {
+  componentContainer: {
     alignItems: "center",
     display: "flex",
     marginBottom: 20
@@ -43,11 +41,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    recoveryPhrases: state.recoveryPhrases
+    permissionedAccounts: state.permissionedAccounts
   };
 };
 
 export default connect(
   mapStateToProps,
   null
-)(LinkExternalAccount);
+)(UpgradeSecurity);
