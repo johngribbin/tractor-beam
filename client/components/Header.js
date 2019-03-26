@@ -1,26 +1,43 @@
 import React from "react";
 import { colors, largeText, largeTextBold } from "../constants/";
-import { StyleSheet, View, Text, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  StatusBar,
+  TouchableHighlight
+} from "react-native";
 import { connect } from "react-redux";
 
 function Header(props) {
+  const { navigate } = props.navigation;
+
   return (
     <View style={styles.headerContainer}>
       <StatusBar barStyle="light-content" />
-      <Text style={{ ...largeTextBold, ...styles.appTitle }}>TRACTOR BEAM</Text>
+      <TouchableHighlight onPress={() => navigate("Home")}>
+        <Text style={{ ...largeTextBold, ...styles.appTitle }}>
+          TRACTOR BEAM
+        </Text>
+      </TouchableHighlight>
+
       <View style={styles.balanceWrapper}>
-        <Text style={{ ...largeText, ...styles.balanceText }}>
-          {props.emails.length === 0
-            ? `YOUR ACCOUNT `
-            : props.emails.map(email => {
-                if (email.default === true) {
-                  return `${email.address.substr(0, 11)}... `;
-                }
-              })}
-        </Text>
-        <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
-          ${props.contractAccount.balance}
-        </Text>
+        <TouchableHighlight onPress={() => navigate("Account")}>
+          <View>
+            <Text style={{ ...largeText, ...styles.balanceText }}>
+              {props.emails.length === 0
+                ? `YOUR ACCOUNT `
+                : props.emails.map(email => {
+                    if (email.default === true) {
+                      return `${email.address.substr(0, 11)}... `;
+                    }
+                  })}
+            </Text>
+            <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
+              ${props.contractAccount.balance}
+            </Text>
+          </View>
+        </TouchableHighlight>
       </View>
     </View>
   );
@@ -45,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 3,
     display: "flex",
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-between",
     padding: 10,
     paddingTop: 40
