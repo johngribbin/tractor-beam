@@ -28,7 +28,8 @@ class NewExternalAccountForm extends Component {
         {
           name: this.state.accountNickname,
           address: this.state.accountAddress,
-          default: false
+          default: false,
+          revealedAddress: false
         }
       ]);
     }
