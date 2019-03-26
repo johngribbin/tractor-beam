@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { colors, largeText, smallTextItalic } from "../constants";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import { colors, largeText, smallTextItalic, mediumText } from "../constants";
 import ArrowIcon from "./ArrowIcon";
 
-import { addPermissionedAccount } from "../redux/actions/index";
+import { revealRecoveryPhrase } from "../redux/actions/index";
 import { connect } from "react-redux";
 
 class RecoveryPhrasesDropdown extends Component {
@@ -18,7 +18,7 @@ class RecoveryPhrasesDropdown extends Component {
   };
 
   _renderRecoveryPhrases = () => {
-    const { permissionedAccounts } = this.props;
+    const { permissionedAccounts, revealRecoveryPhrase } = this.props;
 
     return permissionedAccounts.map(account => {
       return (
@@ -28,19 +28,25 @@ class RecoveryPhrasesDropdown extends Component {
             {". "}
           </Text>
           <Text style={styles.phrase}>
-            {account.recoveryPhrase.substr(0, 15)}
+            {account.revealedRecoveryPhrase
+              ? account.recoveryPhrase
+              : account.recoveryPhrase.substr(0, 15)}
           </Text>
-          <Text style={{ ...smallTextItalic, ...styles.revealText }}>
-            reveal
-          </Text>
+          <TouchableHighlight
+            onPress={() => revealRecoveryPhrase(account.recoveryPhrase)}
+          >
+            <Text style={{ ...smallTextItalic, ...styles.revealText }}>
+              reveal
+            </Text>
+          </TouchableHighlight>
         </View>
       );
     });
   };
 
-  _addRecoveryPhrase = () => {};
-
   render() {
+    const { permissionedAccounts } = this.props;
+
     return (
       <View style={styles.componentContainer}>
         <View style={styles.titleContainer}>
@@ -52,6 +58,12 @@ class RecoveryPhrasesDropdown extends Component {
             onPress={this._toggleDropdown}
           />
         </View>
+        {permissionedAccounts.length === 1 ? (
+          <Text style={mediumText}>
+            You currently have one recovery phrase. You should have at least
+            two.
+          </Text>
+        ) : null}
         {this.state.isOpen ? this._renderRecoveryPhrases() : null}
       </View>
     );
@@ -67,7 +79,9 @@ const styles = StyleSheet.create({
   addressContainer: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center"
+    flexWrap: "wrap",
+    alignItems: "center",
+    marginTop: 10
   },
   title: {
     color: colors.orange
@@ -75,10 +89,12 @@ const styles = StyleSheet.create({
   number: {},
   phrase: {
     backgroundColor: "white",
+    marginRight: 5,
     padding: 5
   },
   revealText: {
-    color: colors.orange
+    color: colors.orange,
+    marginTop: 5
   }
 });
 
@@ -90,8 +106,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addPermissionedAccount: account => {
-      dispatch(addPermissionedAccount(account));
+    revealRecoveryPhrase: recoveryPhrase => {
+      dispatch(revealRecoveryPhrase(recoveryPhrase));
     }
   };
 };
