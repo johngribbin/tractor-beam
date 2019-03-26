@@ -5,10 +5,13 @@ import {
   SET_DEFAULT_EMAIL,
   DELETE_EMAIL,
   ADD_PERMISSIONED_ACCOUNT,
+  REVEAL_RECOVERY_PHRASE,
   SET_CONTRACT_ACCOUNT,
   ADD_EXTERNAL_ACCOUNT,
   SET_DEFAULT_EXTERNAL_ACCOUNT,
-  DELETE_EXTERNAL_ACCOUNT
+  REVEAL_EXTERNAL_ACCOUNT_ADDRESS,
+  DELETE_EXTERNAL_ACCOUNT,
+  REVEAL_CONTRACT_ADDRESS
 } from "./types";
 
 // action creators for isLoggedInReducer
@@ -54,10 +57,24 @@ export const addPermissionedAccount = account => {
   };
 };
 
+export const revealRecoveryPhrase = recoveryPhrase => {
+  return {
+    type: REVEAL_RECOVERY_PHRASE,
+    payload: recoveryPhrase
+  };
+};
+
 // action creators for contractAccountReducer
 export const setContractAccount = account => {
   return {
     type: SET_CONTRACT_ACCOUNT,
+    payload: account
+  };
+};
+
+export const revealContractAddress = account => {
+  return {
+    type: REVEAL_CONTRACT_ADDRESS,
     payload: account
   };
 };
@@ -73,6 +90,13 @@ export const addExternalAccount = account => {
 export const setDefaultExternalAccount = accountName => {
   return {
     type: SET_DEFAULT_EXTERNAL_ACCOUNT,
+    payload: accountName
+  };
+};
+
+export const revealExternalAccountAddress = accountName => {
+  return {
+    type: REVEAL_EXTERNAL_ACCOUNT_ADDRESS,
     payload: accountName
   };
 };

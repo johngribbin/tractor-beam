@@ -6,10 +6,13 @@ import {
   SET_DEFAULT_EMAIL,
   DELETE_EMAIL,
   ADD_PERMISSIONED_ACCOUNT,
+  REVEAL_RECOVERY_PHRASE,
   ADD_EXTERNAL_ACCOUNT,
   SET_DEFAULT_EXTERNAL_ACCOUNT,
+  REVEAL_EXTERNAL_ACCOUNT_ADDRESS,
   DELETE_EXTERNAL_ACCOUNT,
-  SET_CONTRACT_ACCOUNT
+  SET_CONTRACT_ACCOUNT,
+  REVEAL_CONTRACT_ADDRESS
 } from "../actions/types";
 
 const initialState = {
@@ -29,8 +32,10 @@ const isLoggedInReducer = (state = initialState.isLoggedIn, action) => {
   switch (action.type) {
     case LOG_IN:
       return (state = true);
+
     case LOG_OUT:
       return (state = false);
+
     default:
       return state;
   }
@@ -71,6 +76,19 @@ const permissionedAccountsReducer = (
     case ADD_PERMISSIONED_ACCOUNT:
       return [...state, ...action.payload];
 
+    case REVEAL_RECOVERY_PHRASE:
+      return state.map(account => {
+        if (account.recoveryPhrase === action.payload) {
+          return {
+            ...account,
+            revealedRecoveryPhrase: !account.revealedRecoveryPhrase
+          };
+        } else
+          return {
+            ...account
+          };
+      });
+
     default:
       return state;
   }
@@ -83,6 +101,12 @@ const contractAccountReducer = (
   switch (action.type) {
     case SET_CONTRACT_ACCOUNT:
       return (state = action.payload);
+
+    case REVEAL_CONTRACT_ADDRESS:
+      return {
+        ...state,
+        revealedAddress: !state.revealedAddress
+      };
 
     default:
       return state;
@@ -108,6 +132,19 @@ const externalAccountsReducer = (
           return {
             ...account,
             default: true
+          };
+      });
+
+    case REVEAL_EXTERNAL_ACCOUNT_ADDRESS:
+      return state.map(account => {
+        if (account.name === action.payload) {
+          return {
+            ...account,
+            revealedAddress: !account.revealedAddress
+          };
+        } else
+          return {
+            ...account
           };
       });
 
