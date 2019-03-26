@@ -72,18 +72,37 @@ class HomeScreen extends Component {
         address: "0x555",
         balance: 0,
         linkedContract: "0x321",
-        default: true
+        default: true,
+        revealedRecoveryPhrase: false
       }
     ]);
 
-    // contractAccountReducer tests
+    // contractAccountReducer tests - need to addPermissionedAddress action creator!!
     this.props.setContractAccount({
       address: "0x321",
       balance: 0,
-      permissionedAddresses: ["0x123"]
+      permissionedAddresses: ["0x123"],
+      revealedAddress: false
     });
 
     /*
+    // externalAccountsReducer
+    this.props.addExternalAccount([
+      {
+        name: "Coinbase",
+        address: "0x111",
+        default: false,
+        revealedAddress: false
+      },
+      {
+        name: "Kraken",
+        address: "0x222",
+        default: false,
+        revealedAddress: false
+      }
+    ]);
+
+
     //isLoggedInReducer tests
     this.props.logIn();
     
@@ -168,11 +187,10 @@ class HomeScreen extends Component {
   */
 
   render() {
-    const { isLoggedIn } = this.props;
-
     return (
       <View style={styles.homeContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
+          {/* Renders the signup/signin form if the users is not logged in*/}
           <ClaimGift />
 
           {/*
@@ -325,17 +343,6 @@ const styles = StyleSheet.create({
   */
 });
 
-// Add this function to every component
-const mapStateToProps = state => {
-  //console.log(state);
-
-  return {
-    // key name should match name of key for the reducer in combineReducers function in /reducer/index
-    isLoggedIn: state.isLoggedIn,
-    nativeAccount: state.nativeAccount
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     logIn: () => {
@@ -372,6 +379,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(HomeScreen);

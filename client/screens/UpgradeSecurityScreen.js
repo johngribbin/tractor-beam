@@ -1,9 +1,18 @@
 import React from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight
+} from "react-native";
 import { colors, headlineText, mediumText } from "../constants";
 
 import Header from "../components/Header";
 import RecoveryPhrasesDropdown from "../components/RecoveryPhrasesDropdown";
+import MainButton from "../components/MainButton";
+
+import { addPermissionedAccount } from "../redux/actions";
 
 import { connect } from "react-redux";
 
@@ -12,11 +21,30 @@ class UpgradeSecurityScreen extends React.Component {
     header: props => <Header {...props} />
   };
 
+  _addRecoveryPhrase = () => {
+    this.props.addPermissionedAccount([
+      {
+        recoveryPhrase:
+          "drink repeat slam kite elephant dutch split eight giggle attract enjoy knock battle steak armor",
+        address: "0x222",
+        balance: 0,
+        linkedContract: "0x321",
+        default: false,
+        revealedRecoveryPhrase: false
+      }
+    ]);
+  };
+
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.accountContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.linkText}>{`< `}BACK TO YOUR ACCOUNT</Text>
+          <TouchableHighlight onPress={() => navigate("Account")}>
+            <Text style={styles.linkText}>{`< `}BACK TO YOUR ACCOUNT</Text>
+          </TouchableHighlight>
+
           <Text style={headlineText}>UPGRADE SECURITY</Text>
 
           <View style={styles.messageContainer}>
@@ -30,7 +58,14 @@ class UpgradeSecurityScreen extends React.Component {
               account type as soon as possible.
             </Text>
           </View>
-          <RecoveryPhrasesDropdown />
+          <View style={styles.dropdownContainer}>
+            <RecoveryPhrasesDropdown />
+            <MainButton
+              style={styles.button}
+              title={"+ ADD MORE"}
+              onPress={this._addRecoveryPhrase}
+            />
+          </View>
         </ScrollView>
       </View>
     );
@@ -60,16 +95,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 20,
     paddingBottom: 20
+  },
+  dropdownContainer: {
+    borderBottomColor: colors.lightGrey,
+    borderBottomWidth: 1,
+    paddingBottom: 20
+  },
+  button: {
+    marginTop: 20
   }
 });
 
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => {
   return {
-    externalAccounts: state.externalAccounts
+    addPermissionedAccount: account => {
+      dispatch(addPermissionedAccount(account));
+    }
   };
 };
 
 export default connect(
-  mapStateToProps,
-  null
+  null,
+  mapDispatchToProps
 )(UpgradeSecurityScreen);

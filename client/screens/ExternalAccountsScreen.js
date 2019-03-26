@@ -1,5 +1,11 @@
-import React from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import React, { Component } from "react";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight
+} from "react-native";
 import {
   colors,
   headlineText,
@@ -14,18 +20,22 @@ import NewExternalAccountForm from "../components/NewExternalAccountForm";
 
 import { connect } from "react-redux";
 
-class ExternalAccountsScreen extends React.Component {
+class ExternalAccountsScreen extends Component {
   static navigationOptions = {
     header: props => <Header {...props} />
   };
 
   render() {
     const { externalAccounts } = this.props;
+    const { navigate } = this.props.navigation;
 
     return (
       <View style={styles.accountContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.linkText}>{`< `}BACK TO YOUR ACCOUNT</Text>
+          <TouchableHighlight onPress={() => navigate("Account")}>
+            <Text style={styles.linkText}>{`< `}BACK TO YOUR ACCOUNT</Text>
+          </TouchableHighlight>
+
           <Text style={headlineText}>LINK EXTERNAL ACCOUNT</Text>
 
           <View style={styles.messageContainer}>

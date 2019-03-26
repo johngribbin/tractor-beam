@@ -1,5 +1,11 @@
 import React from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight
+} from "react-native";
 import {
   colors,
   smallText,
@@ -15,6 +21,7 @@ import UpgradeSecurity from "../components/UpgradeSecurity";
 //import { ExpoLinksView } from "@expo/samples";
 
 import { connect } from "react-redux";
+import { revealContractAddress } from "../redux/actions";
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -23,6 +30,7 @@ class AccountScreen extends React.Component {
 
   render() {
     const { emails, contractAccount } = this.props;
+    const { navigate } = this.props.navigation;
 
     return (
       <View style={styles.accountContainer}>
@@ -64,15 +72,23 @@ class AccountScreen extends React.Component {
 
           <View style={styles.contractAccountInfoContainer}>
             <Text style={mediumTextBold}>Account Address</Text>
-            <Text style={mediumText}> {contractAccount.address}...</Text>
-            <Text style={{ ...smallTextItalic, ...styles.changeText }}>
-              reveal
+            <Text style={mediumText}>
+              {contractAccount.revealedAddress
+                ? contractAccount.address
+                : `${contractAccount.address.substr(0, 3)}...`}
             </Text>
+            <TouchableHighlight
+              onPress={() => this.props.revealContractAddress(contractAccount)}
+            >
+              <Text style={{ ...smallTextItalic, ...styles.changeText }}>
+                reveal
+              </Text>
+            </TouchableHighlight>
           </View>
 
           <View style={styles.buttonContainer}>
-            <LinkExternalAccount />
-            <UpgradeSecurity />
+            <LinkExternalAccount onPress={() => navigate("ExternalAccounts")} />
+            <UpgradeSecurity onPress={() => navigate("UpgradeSecurity")} />
           </View>
         </ScrollView>
       </View>
@@ -137,7 +153,15 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    revealContractAddress: account => {
+      dispatch(revealContractAddress(account));
+    }
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(AccountScreen);
