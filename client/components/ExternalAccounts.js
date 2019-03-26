@@ -1,13 +1,14 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 
 import { colors, smallTextItalic, mediumText, largeText } from "../constants";
 
+import { revealExternalAccountAddress } from "../redux/actions";
 import { connect } from "react-redux";
 
-function ExternalAccounts(props) {
+class ExternalAccounts extends Component {
   _renderExternalAccounts = () => {
-    const { externalAccounts } = props;
+    const { externalAccounts, revealExternalAccountAddress } = this.props;
 
     return externalAccounts.map(externalAccount => (
       <View style={styles.accountContainer} key={externalAccount.address}>
@@ -28,31 +29,35 @@ function ExternalAccounts(props) {
           }}
         >
           <View style={styles.addressContainer}>
-            <Text>{externalAccount.address.substr(0, 5)}...</Text>
+            <Text>
+              {externalAccount.revealedAddress
+                ? externalAccount.address
+                : `${externalAccount.address.substr(0, 5)}...`}
+            </Text>
           </View>
-          <Text style={{ ...smallTextItalic, ...styles.revealText }}>
-            reveal
-          </Text>
+          <TouchableHighlight
+            onPress={() => revealExternalAccountAddress(externalAccount.name)}
+          >
+            <Text style={{ ...smallTextItalic, ...styles.revealText }}>
+              reveal
+            </Text>
+          </TouchableHighlight>
         </View>
       </View>
     ));
   };
 
-  return (
-    <View style={styles.componentContainer}>
-      <Text style={{ ...mediumText, ...styles.message }}>
-        Currently linked external accounts:
-      </Text>
-      {this._renderExternalAccounts()}
-    </View>
-  );
+  render() {
+    return (
+      <View style={styles.componentContainer}>
+        <Text style={{ ...mediumText, ...styles.message }}>
+          Currently linked external accounts:
+        </Text>
+        {this._renderExternalAccounts()}
+      </View>
+    );
+  }
 }
-
-const mapStateToProps = state => {
-  return {
-    externalAccounts: state.externalAccounts
-  };
-};
 
 const styles = StyleSheet.create({
   componentContainer: {
@@ -96,7 +101,20 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state => {
+  return {
+    externalAccounts: state.externalAccounts
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    revealExternalAccountAddress: accountName =>
+      dispatch(revealExternalAccountAddress(accountName))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(ExternalAccounts);
