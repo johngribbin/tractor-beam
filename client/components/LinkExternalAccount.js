@@ -7,7 +7,7 @@ import { colors, smallText } from "../constants";
 import { connect } from "react-redux";
 
 function LinkExternalAccount(props) {
-  const { externalAccounts } = props;
+  const { externalAccounts, onPress } = props;
 
   return (
     <View style={styles.linkExternalAccountContainer}>
@@ -16,7 +16,7 @@ function LinkExternalAccount(props) {
           style={styles.image}
           source={require("../assets/images/LinkSymbol.png")}
         />
-        <AltButton title={"LINK EXTERNAL ACCOUNT"} />
+        <AltButton onPress={onPress} title={"LINK EXTERNAL ACCOUNT"} />
         {externalAccounts.length === 0 ? (
           <Text style={{ ...smallText, ...styles.message }}>
             you haven't linked an external account yet
