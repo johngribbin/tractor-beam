@@ -15,16 +15,20 @@ function Header(props) {
   return (
     <View style={styles.headerContainer}>
       <StatusBar barStyle="light-content" />
-      <TouchableHighlight onPress={() => navigate("Home")}>
-        <Text style={{ ...largeTextBold, ...styles.appTitle }}>
-          TRACTOR BEAM
-        </Text>
-      </TouchableHighlight>
+
+      <View style={styles.titleWrapper}>
+        <TouchableHighlight onPress={() => navigate("Home")}>
+          <Text style={{ ...largeTextBold, ...styles.appTitle }}>
+            TRACTOR BEAM
+          </Text>
+        </TouchableHighlight>
+      </View>
 
       <View style={styles.balanceWrapper}>
         <TouchableHighlight onPress={() => navigate("Account")}>
           <View>
-            <Text style={{ ...largeText, ...styles.balanceText }}>
+            {/*
+              <Text style={{ ...largeText, ...styles.balanceText }}>
               {props.emails.length === 0
                 ? `YOUR ACCOUNT `
                 : props.emails.map(email => {
@@ -33,6 +37,7 @@ function Header(props) {
                     }
                   })}
             </Text>
+            */}
             <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
               ${props.contractAccount.balance}
             </Text>
@@ -51,19 +56,24 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0
   },
+  titleWrapper: {
+    display: "flex",
+    flex: 5
+  },
   appTitle: {
+    alignSelf: "center",
     color: "white",
-    flex: 2,
+    flex: 1,
     padding: 10,
     paddingTop: 40
   },
   balanceWrapper: {
     backgroundColor: colors.orange,
-    flex: 3,
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    flex: 2,
+    //display: "flex",
+    //flexDirection: "row",
+    //flexWrap: "wrap",
+    //justifyContent: "space-between",
     padding: 10,
     paddingTop: 40
   },
@@ -71,6 +81,7 @@ const styles = StyleSheet.create({
     color: "white"
   },
   balanceValue: {
+    alignSelf: "center",
     color: "white"
   }
 });
