@@ -7,6 +7,7 @@ import {
 
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
+import SignupScreen from "../screens/SignupScreen";
 import AccountScreen from "../screens/AccountScreen";
 import ExternalAccountsScreen from "../screens/ExternalAccountsScreen";
 import UpgradeSecurityScreen from "../screens/UpgradeSecurityScreen";
@@ -28,6 +29,10 @@ HomeStack.navigationOptions = {
     />
   )
 };
+
+export const SignupStack = createStackNavigator({
+  SignUp: SignupScreen
+});
 
 const AccountStack = createStackNavigator({
   Account: AccountScreen
