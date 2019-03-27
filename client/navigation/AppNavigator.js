@@ -2,6 +2,7 @@ import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import {
   ExternalAccountsStack,
+  SignupStack,
   UpgradeSecurityStack
 } from "./MainTabNavigator";
 
@@ -12,6 +13,7 @@ export default createAppContainer(
     // You could add another route here for authentication.
     // Read more at https://reactnavigation.org/docs/en/auth-flow.html
     Main: MainTabNavigator,
+    Signup: SignupStack,
     ExternalAccounts: ExternalAccountsStack,
     UpgradeSecurity: UpgradeSecurityStack
   })
