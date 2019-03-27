@@ -187,11 +187,13 @@ class HomeScreen extends Component {
   */
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.homeContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {/* Renders the signup/signin form if the users is not logged in*/}
-          <ClaimGift />
+          <ClaimGift navigate={navigate} />
 
           {/*
             <View style={styles.getStartedContainer}>
