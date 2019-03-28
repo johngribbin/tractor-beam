@@ -72,13 +72,15 @@ class AccountScreen extends React.Component {
 
           <View style={styles.contractAccountInfoContainer}>
             <Text style={mediumTextBold}>Account Address</Text>
-            <Text style={mediumText}>
+            <Text style={{ ...mediumText, ...styles.contractAccountAddress }}>
               {contractAccount.revealedAddress
                 ? contractAccount.address
                 : `${contractAccount.address.substr(0, 3)}...`}
             </Text>
             <TouchableHighlight
-              onPress={() => this.props.revealContractAddress(contractAccount)}
+              onPress={() =>
+                this.props.revealContractAddress(contractAccount.Address)
+              }
             >
               <Text style={{ ...smallTextItalic, ...styles.changeText }}>
                 reveal
@@ -135,8 +137,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     display: "flex",
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-between",
     marginBottom: 40
+  },
+  contractAccountAddress: {
+    margin: 5
   },
   buttonContainer: {
     display: "flex",
