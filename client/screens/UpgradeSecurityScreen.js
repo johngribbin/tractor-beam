@@ -12,6 +12,9 @@ import Header from "../components/Header";
 import RecoveryPhrasesDropdown from "../components/RecoveryPhrasesDropdown";
 import MainButton from "../components/MainButton";
 
+//import "ethers/dist/shims.js";
+import { Wallet } from "ethers";
+
 import { addPermissionedAccount } from "../redux/actions";
 
 import { connect } from "react-redux";
@@ -21,14 +24,31 @@ class UpgradeSecurityScreen extends React.Component {
     header: props => <Header {...props} />
   };
 
-  _addRecoveryPhrase = () => {
+  _addRecoveryPhrase = async () => {
+    let mnemonic = "";
+
+    try {
+      let response = await fetch("http://3.17.65.140:8080/generateMnemonic", {
+        mode: "no-cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json"
+        }
+      });
+      const mnemonicObj = JSON.parse(response._bodyText);
+      mnemonic = mnemonicObj.mnemonic;
+    } catch (error) {
+      consolelog(error);
+    }
+
+    const permissionedAccount = await Wallet.fromMnemonic(mnemonic);
+
     this.props.addPermissionedAccount([
       {
-        recoveryPhrase:
-          "drink repeat slam kite elephant dutch split eight giggle attract enjoy knock battle steak armor",
-        address: "0x222",
+        recoveryPhrase: permissionedAccount.mnemonic,
+        address: permissionedAccount.address,
         balance: 0,
-        linkedContract: "0x321",
+        linkedContract: this.props.contractAccount.address,
         default: false,
         revealedRecoveryPhrase: false
       }
@@ -106,6 +126,14 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state => {
+  console.log(state);
+
+  return {
+    contractAccount: state.contractAccount
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     addPermissionedAccount: account => {
@@ -115,6 +143,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(UpgradeSecurityScreen);
