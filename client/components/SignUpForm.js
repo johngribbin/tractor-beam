@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { colors, mediumTextBold } from "../constants";
+import { colors, smallText, mediumTextBold } from "../constants";
 import { View, Text, TextInput } from "react-native";
 import MainButton from "../components/MainButton";
 import { addEmail, logIn } from "../redux/actions";
@@ -55,7 +55,9 @@ class SignUpForm extends Component {
               placeholder="E-mail"
             />
             {touched.email && errors.email && (
-              <Text style={{ fontSize: 10, color: "red" }}>{errors.email}</Text>
+              <Text style={{ ...smallText, ...styles.error }}>
+                {errors.email}
+              </Text>
             )}
             <Text style={{ ...mediumTextBold, ...styles.label }}>Password</Text>
             <TextInput
@@ -67,7 +69,7 @@ class SignUpForm extends Component {
               secureTextEntry={true}
             />
             {touched.password && errors.password && (
-              <Text style={{ fontSize: 10, color: "red" }}>
+              <Text style={{ ...smallText, ...styles.error }}>
                 {errors.password}
               </Text>
             )}
@@ -98,6 +100,10 @@ const styles = {
     borderWidth: 1,
     marginBottom: 10,
     padding: 7.5
+  },
+  error: {
+    color: "red",
+    marginBottom: 5
   },
   button: {
     marginTop: 10
