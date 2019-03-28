@@ -12,10 +12,11 @@ import AccountScreen from "../screens/AccountScreen";
 import ExternalAccountsScreen from "../screens/ExternalAccountsScreen";
 import UpgradeSecurityScreen from "../screens/UpgradeSecurityScreen";
 
-const HomeStack = createStackNavigator({
+export const HomeStack = createStackNavigator({
   Home: HomeScreen
 });
 
+/*
 HomeStack.navigationOptions = {
   tabBarLabel: "Home",
   tabBarIcon: ({ focused }) => (
@@ -29,15 +30,17 @@ HomeStack.navigationOptions = {
     />
   )
 };
+*/
 
 export const SignupStack = createStackNavigator({
   SignUp: SignupScreen
 });
 
-const AccountStack = createStackNavigator({
+export const AccountStack = createStackNavigator({
   Account: AccountScreen
 });
 
+/*
 AccountStack.navigationOptions = {
   tabBarLabel: "Account",
   tabBarIcon: ({ focused }) => (
@@ -47,6 +50,7 @@ AccountStack.navigationOptions = {
     />
   )
 };
+*/
 
 export const ExternalAccountsStack = createStackNavigator({
   ExternalAccounts: ExternalAccountsScreen
@@ -56,7 +60,9 @@ export const UpgradeSecurityStack = createStackNavigator({
   UpgradeSecurity: UpgradeSecurityScreen
 });
 
+/*
 export default createBottomTabNavigator({
   HomeStack,
   AccountStack
 });
+*/
