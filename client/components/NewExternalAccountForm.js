@@ -20,7 +20,7 @@ class NewExternalAccountForm extends Component {
           accountAddress: "",
           checked: false
         }}
-        onSubmit={values => {
+        onSubmit={(values, formikHelpers) => {
           this.props.addExternalAccount([
             {
               name: values.accountNickname,
@@ -33,6 +33,8 @@ class NewExternalAccountForm extends Component {
           if (values.checked) {
             this.props.setDefaultExternalAccount(values.accountNickname);
           }
+
+          formikHelpers.resetForm();
         }}
         validationSchema={yup.object().shape({
           accountNickname: yup.string().required(),
@@ -47,7 +49,8 @@ class NewExternalAccountForm extends Component {
           touched,
           isValid,
           setFieldValue,
-          handleSubmit
+          handleSubmit,
+          resetForm
         }) => (
           <View style={styles.componentWrapper}>
             <View style={styles.formWrapper}>
@@ -108,7 +111,9 @@ class NewExternalAccountForm extends Component {
                 }
                 title={"LINK ACCOUNT"}
                 disabled={!isValid}
-                onPress={() => handleSubmit()}
+                onPress={() => {
+                  handleSubmit();
+                }}
               />
             </View>
           </View>

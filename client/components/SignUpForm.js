@@ -12,7 +12,7 @@ class SignUpForm extends Component {
     return (
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={values => {
+        onSubmit={(values, formikHelpers) => {
           // add the email to state object
           this.props.addEmail([
             {
@@ -22,6 +22,10 @@ class SignUpForm extends Component {
           ]);
           // switch isLoggedIn state property to true
           this.props.logIn();
+
+          // reset form to inital values
+          formikHelpers.resetForm();
+
           // navigate user back to home
           this.props.navigate("Home");
         }}
@@ -43,7 +47,8 @@ class SignUpForm extends Component {
           setFieldTouched,
           touched,
           isValid,
-          handleSubmit
+          handleSubmit,
+          resetForm
         }) => (
           <View style={styles.formContainer}>
             <Text style={{ ...mediumTextBold, ...styles.label }}>Email</Text>
