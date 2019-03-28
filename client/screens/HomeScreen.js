@@ -64,7 +64,7 @@ class HomeScreen extends Component {
   };
 
   async componentDidMount() {
-    // only ran when home page mounts for first time
+    // only ran when home page mounts for first time and doesnt have a default permissionedAccount and linked contractAccount
     if (this.props.permissionedAccounts.length === 0) {
       const permissionedAccount = await this._createAccount();
       const contractAccount = await this._createAccount();
@@ -89,16 +89,18 @@ class HomeScreen extends Component {
         revealedAddress: false
       });
 
-      // emailReducer tests
+      /*
+      //emailReducer tests
       this.props.addEmail([
         {
           address: "bob@cryptonoob.com",
           default: true
         }
       ]);
-
+      
       //isLoggedInReducer tests
       this.props.logIn();
+      */
     }
 
     /*
