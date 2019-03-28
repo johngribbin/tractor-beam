@@ -46,10 +46,8 @@ class HomeScreen extends Component {
   };
 
   async componentDidMount() {
-    let mnemonic =
-      "river question load middle follow pen mix walnut coin powder supply service";
+    let mnemonic = "";
 
-    /*
     try {
       let response = await fetch("http://3.17.65.140:8080/generateMnemonic", {
         mode: "no-cors",
@@ -63,7 +61,6 @@ class HomeScreen extends Component {
     } catch (error) {
       console.error(error);
     }
-    */
 
     // permissionedAccountsReducer tests
     this.props.addPermissionedAccount([
