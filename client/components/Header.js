@@ -24,10 +24,11 @@ function Header(props) {
         </TouchableHighlight>
       </View>
 
-      <View style={styles.balanceWrapper}>
-        <TouchableHighlight onPress={() => navigate("Account")}>
-          <View>
-            {/*
+      {props.isLoggedIn ? (
+        <View style={styles.balanceWrapper}>
+          <TouchableHighlight onPress={() => navigate("Account")}>
+            <View>
+              {/*
               <Text style={{ ...largeText, ...styles.balanceText }}>
               {props.emails.length === 0
                 ? `YOUR ACCOUNT `
@@ -38,12 +39,13 @@ function Header(props) {
                   })}
             </Text>
             */}
-            <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
-              ${props.contractAccount.balance}
-            </Text>
-          </View>
-        </TouchableHighlight>
-      </View>
+              <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
+                ${props.contractAccount.balance}
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -91,7 +93,8 @@ const mapStateToProps = state => {
   return {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index
     contractAccount: state.contractAccount,
-    emails: state.emails
+    emails: state.emails,
+    isLoggedIn: state.isLoggedIn
   };
 };
 
