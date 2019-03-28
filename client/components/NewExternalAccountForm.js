@@ -1,18 +1,124 @@
 import React, { Component } from "react";
 import { CheckBox } from "react-native-elements";
-
 import { connect } from "react-redux";
-
-import { colors, largeText } from "../constants";
+import { colors, smallText, largeTextBold, mediumTextBold } from "../constants";
 import { View, Text, TextInput } from "react-native";
-
 import MainButton from "../components/MainButton";
-
 import {
   addExternalAccount,
   setDefaultExternalAccount
 } from "../redux/actions";
+import { Formik } from "formik";
+import * as yup from "yup";
 
+class NewExternalAccountForm extends Component {
+  render() {
+    return (
+      <Formik
+        initialValues={{
+          accountNickname: "",
+          accountAddress: "",
+          checked: false
+        }}
+        onSubmit={values => {
+          this.props.addExternalAccount([
+            {
+              name: values.accountNickname,
+              address: values.accountAddress,
+              default: false,
+              revealedAddress: false
+            }
+          ]);
+
+          if (values.checked) {
+            this.props.setDefaultExternalAccount(values.accountNickname);
+          }
+        }}
+        validationSchema={yup.object().shape({
+          accountNickname: yup.string().required(),
+          accountAddress: yup.string().required()
+        })}
+      >
+        {({
+          values,
+          handleChange,
+          errors,
+          setFieldTouched,
+          touched,
+          isValid,
+          setFieldValue,
+          handleSubmit
+        }) => (
+          <View style={styles.componentWrapper}>
+            <View style={styles.formWrapper}>
+              <Text style={{ ...styles.header, ...largeTextBold }}>
+                New External Account
+              </Text>
+
+              <Text style={{ ...styles.label, ...mediumTextBold }}>
+                Account Nickname
+              </Text>
+              <TextInput
+                value={values.accountNickname}
+                onChangeText={handleChange("accountNickname")}
+                onBlur={() => setFieldTouched("accountNickname")}
+                style={styles.textInput}
+                placeholder="Example: Bob's Coinbase"
+              />
+              {touched.accountNickname && errors.accountNickname && (
+                <Text style={{ ...smallText, ...styles.error }}>
+                  {errors.accountNickname}
+                </Text>
+              )}
+
+              <Text style={{ ...styles.label, ...mediumTextBold }}>
+                Account Address
+              </Text>
+              <TextInput
+                value={values.accountAddress}
+                onChangeText={handleChange("accountAddress")}
+                onBlur={() => setFieldTouched("accountAddress")}
+                style={styles.textInput}
+                placeholder="Example: 0x1f7439..."
+              />
+              {touched.accountAddress && errors.accountAddress && (
+                <Text style={{ ...smallText, ...styles.error }}>
+                  {errors.accountAddress}
+                </Text>
+              )}
+
+              <CheckBox
+                title="Make default external account"
+                containerStyle={styles.checkbox}
+                checked={values.checked}
+                fontFamily={"barlow-regular"}
+                textStyle={{ color: "white" }}
+                onPress={() => {
+                  if (!values.checked) {
+                    setFieldValue("checked", true);
+                  } else setFieldValue("checked", false);
+                }}
+              />
+
+              <MainButton
+                style={
+                  values.accountNickname && values.accountAddress
+                    ? {}
+                    : styles.button
+                }
+                title={"LINK ACCOUNT"}
+                disabled={!isValid}
+                onPress={() => handleSubmit()}
+              />
+            </View>
+          </View>
+        )}
+      </Formik>
+    );
+  }
+}
+
+/*
 class NewExternalAccountForm extends Component {
   state = {
     accountNickname: "",
@@ -24,66 +130,14 @@ class NewExternalAccountForm extends Component {
     // when user has provided nicname and address, add to store
     if (this.state.accountNickname && this.state.accountAddress) {
       // add email to app state and set to default email
-      this.props.addExternalAccount([
-        {
-          name: this.state.accountNickname,
-          address: this.state.accountAddress,
-          default: false,
-          revealedAddress: false
-        }
-      ]);
-    }
-
-    if (this.state.checked) {
-      this.props.setDefaultExternalAccount(this.state.accountNickname);
-    }
+      
   };
 
   render() {
-    return (
-      <View style={styles.componentWrapper}>
-        <View style={styles.formWrapper}>
-          <Text style={{ ...styles.header, ...largeText }}>
-            New External Account
-          </Text>
-
-          <Text style={styles.label}>New Account Nickname</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Example: Bob's Coinbase"
-            onChangeText={accountNickname => this.setState({ accountNickname })}
-          />
-
-          <Text style={styles.label}>Account Address</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Example: 0x1f7439..."
-            onChangeText={accountAddress => this.setState({ accountAddress })}
-          />
-
-          <CheckBox
-            title="Make default external account"
-            containerStyle={styles.checkbox}
-            checked={this.state.checked}
-            fontFamily={"barlow-regular"}
-            textStyle={{ color: "white" }}
-            onPress={() => this.setState({ checked: !this.state.checked })}
-          />
-
-          <MainButton
-            style={
-              this.state.accountNickname && this.state.accountAddress
-                ? {}
-                : styles.button
-            }
-            title={"LINK ACCOUNT"}
-            onPress={this._submitForm}
-          />
-        </View>
-      </View>
-    );
+    return 
   }
 }
+*/
 
 const styles = {
   componentWrapper: {
@@ -102,7 +156,7 @@ const styles = {
   },
   header: {
     color: "white",
-    paddingBottom: 10
+    marginBottom: 20
   },
   label: {
     color: "white"
@@ -115,14 +169,16 @@ const styles = {
     marginBottom: 10,
     padding: 7.5
   },
+  error: {
+    color: "red",
+    marginBottom: 5
+  },
   checkbox: {
     backgroundColor: colors.darkGrey,
     borderColor: colors.darkGrey,
     marginBottom: 10
   },
-  button: {
-    opacity: 0.5
-  }
+  button: {}
 };
 
 const mapDispatchToProps = dispatch => {
