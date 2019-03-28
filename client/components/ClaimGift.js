@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
 
 // Add this function to every component
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index
     isLoggedIn: state.isLoggedIn
