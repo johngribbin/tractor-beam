@@ -1,23 +1,9 @@
 import React, { Component } from "react";
-
 import { colors } from "../constants/";
-
 import Header from "../components/Header";
 import ClaimGift from "../components/ClaimGift";
 
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Button
-} from "react-native";
-import { WebBrowser } from "expo";
-
-import { MonoText } from "../components/StyledText";
+import { ScrollView, StyleSheet, View, AsyncStorage } from "react-native";
 
 import "ethers/dist/shims.js";
 import { Wallet } from "ethers";
@@ -64,32 +50,72 @@ class HomeScreen extends Component {
   };
 
   async componentDidMount() {
-    // only ran when home page mounts for first time and doesnt have a default permissionedAccount and linked contractAccount
-    if (this.props.permissionedAccounts.length === 0) {
+    // if no permissionedAccount is found in local storage and in local app state
+    if ((await AsyncStorage.getItem("permissionedAccount")) === null) {
       const permissionedAccount = await this._createAccount();
       const contractAccount = await this._createAccount();
 
-      // permissionedAccountsReducer tests
-      this.props.addPermissionedAccount([
-        {
-          recoveryPhrase: permissionedAccount.mnemonic,
-          address: permissionedAccount.address,
-          balance: 0,
-          linkedContract: contractAccount.address,
-          default: true,
-          revealedRecoveryPhrase: false
-        }
-      ]);
+      const permissionedAccountObj = {
+        recoveryPhrase: permissionedAccount.mnemonic,
+        address: permissionedAccount.address,
+        balance: 0,
+        linkedContract: contractAccount.address,
+        default: true,
+        revealedRecoveryPhrase: false
+      };
 
-      // contractAccountReducer tests - need to addPermissionedAddress action creator!!
-      this.props.setContractAccount({
+      const contractAccountObj = {
         address: contractAccount.address,
         balance: 0,
         permissionedAddresses: [permissionedAccount.address],
         revealedAddress: false
-      });
+      };
 
-      /*
+      // permissionedAccountsReducer tests
+      this.props.addPermissionedAccount([permissionedAccountObj]);
+
+      // contractAccountReducer tests - need to addPermissionedAddress action creator!!
+      this.props.setContractAccount(contractAccountObj);
+
+      // set em
+      try {
+        await AsyncStorage.setItem(
+          "permissionedAccount",
+          JSON.stringify(permissionedAccountObj)
+        );
+        await AsyncStorage.setItem(
+          "contractAccount",
+          JSON.stringify(contractAccountObj)
+        );
+      } catch (error) {
+        console.log(error);
+      }
+
+      console.log(
+        "permissionedAccount and contractAccount added to local storage"
+      );
+      // this block is only ran in event that user doesnt have permissionedAccount found in local storage or in the app state
+    } else if (this.props.permissionedAccounts.length === 0) {
+      let permissionedAccountString = await AsyncStorage.getItem(
+        "permissionedAccount"
+      );
+      let contractAccountString = await AsyncStorage.getItem("contractAccount");
+
+      const permissionedAccount = JSON.parse(permissionedAccountString);
+      const contractAccount = JSON.parse(contractAccountString);
+
+      // permissionedAccountsReducer tests
+      this.props.addPermissionedAccount([permissionedAccount]);
+
+      // contractAccountReducer tests - need to addPermissionedAddress action creator!!
+      this.props.setContractAccount(contractAccount);
+
+      console.log(
+        "permissionedAccount and contractAccount taken from local storage and added to app state"
+      );
+    }
+
+    /*
       //emailReducer tests
       this.props.addEmail([
         {
@@ -101,7 +127,6 @@ class HomeScreen extends Component {
       //isLoggedInReducer tests
       this.props.logIn();
       */
-    }
 
     /*
     // externalAccountsReducer
@@ -192,7 +217,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(state);
+  //console.log(state);
 
   return {
     permissionedAccounts: state.permissionedAccounts
