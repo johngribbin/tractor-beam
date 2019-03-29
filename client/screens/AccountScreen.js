@@ -18,10 +18,12 @@ import {
 import Header from "../components/Header";
 import LinkExternalAccount from "../components/LinkExternalAccount";
 import UpgradeSecurity from "../components/UpgradeSecurity";
+import RevaelButton from "../components/RevealButton";
 //import { ExpoLinksView } from "@expo/samples";
 
 import { connect } from "react-redux";
 import { revealContractAddress } from "../redux/actions";
+import RevealButton from "../components/RevealButton";
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -77,15 +79,12 @@ class AccountScreen extends React.Component {
                 ? contractAccount.address
                 : `${contractAccount.address.substr(0, 3)}...`}
             </Text>
-            <TouchableHighlight
+            <RevealButton
               onPress={() =>
                 this.props.revealContractAddress(contractAccount.Address)
               }
-            >
-              <Text style={{ ...smallTextItalic, ...styles.changeText }}>
-                reveal
-              </Text>
-            </TouchableHighlight>
+              revealed={contractAccount.revealedAddress}
+            />
           </View>
 
           <View style={styles.buttonContainer}>
@@ -142,7 +141,8 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
   contractAccountAddress: {
-    margin: 5
+    margin: 5,
+    marginLeft: 0
   },
   buttonContainer: {
     display: "flex",

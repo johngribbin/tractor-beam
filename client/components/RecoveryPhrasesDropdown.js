@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
-import { colors, largeText, smallTextItalic, mediumText } from "../constants";
+import { StyleSheet, View, Text } from "react-native";
+import { colors, largeText, mediumText } from "../constants";
 import ArrowIcon from "./ArrowIcon";
+import RevealButton from "../components/RevealButton";
 
 import { revealRecoveryPhrase } from "../redux/actions/index";
 import { connect } from "react-redux";
@@ -32,13 +33,11 @@ class RecoveryPhrasesDropdown extends Component {
               ? account.recoveryPhrase
               : account.recoveryPhrase.substr(0, 15)}
           </Text>
-          <TouchableHighlight
+          <RevealButton
+            textStyle={styles.revealText}
             onPress={() => revealRecoveryPhrase(account.recoveryPhrase)}
-          >
-            <Text style={{ ...smallTextItalic, ...styles.revealText }}>
-              reveal
-            </Text>
-          </TouchableHighlight>
+            revealed={account.revealedRecoveryPhrase}
+          />
         </View>
       );
     });
@@ -93,7 +92,6 @@ const styles = StyleSheet.create({
     padding: 5
   },
   revealText: {
-    color: colors.orange,
     marginTop: 5
   }
 });

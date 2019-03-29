@@ -74,8 +74,7 @@ class UpgradeSecurityScreen extends React.Component {
               protected from hacks your account will be.
               {"\n"}
               {"\n"}
-              We recommend adding more recovery phrases and changing your
-              account type as soon as possible.
+              We recommend adding more recovery phrases.
             </Text>
           </View>
           <View style={styles.dropdownContainer}>

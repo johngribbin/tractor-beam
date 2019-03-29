@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import RevealButton from "../components/RevealButton";
 
 import { colors, smallTextItalic, mediumText, largeText } from "../constants";
 
@@ -35,13 +36,11 @@ class ExternalAccounts extends Component {
                 : `${externalAccount.address.substr(0, 5)}...`}
             </Text>
           </View>
-          <TouchableHighlight
+          <RevealButton
             onPress={() => revealExternalAccountAddress(externalAccount.name)}
-          >
-            <Text style={{ ...smallTextItalic, ...styles.revealText }}>
-              reveal
-            </Text>
-          </TouchableHighlight>
+            revealed={externalAccount.revealedAddress}
+            textStyle={styles.revealText}
+          />
         </View>
       </View>
     ));
@@ -96,7 +95,6 @@ const styles = StyleSheet.create({
     display: "flex"
   },
   revealText: {
-    color: colors.orange,
     marginLeft: 5
   }
 });
