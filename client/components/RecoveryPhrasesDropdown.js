@@ -3,8 +3,14 @@ import { StyleSheet, View, Text } from "react-native";
 import { colors, largeText, mediumText } from "../constants";
 import ArrowIcon from "./ArrowIcon";
 import RevealButton from "../components/RevealButton";
+import MainButton from "../components/MainButton";
 
-import { revealRecoveryPhrase } from "../redux/actions/index";
+import { Wallet } from "ethers";
+
+import {
+  revealRecoveryPhrase,
+  addPermissionedAccount
+} from "../redux/actions/index";
 import { connect } from "react-redux";
 
 class RecoveryPhrasesDropdown extends Component {
@@ -16,6 +22,40 @@ class RecoveryPhrasesDropdown extends Component {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }));
+  };
+
+  _addRecoveryPhrase = async () => {
+    let mnemonic = "";
+
+    try {
+      let response = await fetch(
+        "https://kenanoneal.com:8080/generateMnemonic",
+        {
+          mode: "no-cors",
+          method: "POST",
+          headers: {
+            Accept: "application/json"
+          }
+        }
+      );
+      const mnemonicObj = JSON.parse(response._bodyText);
+      mnemonic = mnemonicObj.mnemonic;
+    } catch (error) {
+      console.log(error);
+    }
+
+    const permissionedAccount = await Wallet.fromMnemonic(mnemonic);
+
+    this.props.addPermissionedAccount([
+      {
+        recoveryPhrase: permissionedAccount.mnemonic,
+        address: permissionedAccount.address,
+        balance: 0,
+        linkedContract: this.props.contractAccount.address,
+        default: false,
+        revealedRecoveryPhrase: false
+      }
+    ]);
   };
 
   _renderRecoveryPhrases = () => {
@@ -45,6 +85,7 @@ class RecoveryPhrasesDropdown extends Component {
 
   render() {
     const { permissionedAccounts } = this.props;
+    console.log(permissionedAccounts);
 
     return (
       <View style={styles.componentContainer}>
@@ -64,6 +105,13 @@ class RecoveryPhrasesDropdown extends Component {
           </Text>
         ) : null}
         {this.state.isOpen ? this._renderRecoveryPhrases() : null}
+        {this.state.isOpen ? (
+          <MainButton
+            style={styles.button}
+            title={"+ ADD MORE"}
+            onPress={this._addRecoveryPhrase}
+          />
+        ) : null}
       </View>
     );
   }
@@ -93,6 +141,9 @@ const styles = StyleSheet.create({
   },
   revealText: {
     marginTop: 5
+  },
+  button: {
+    marginTop: 20
   }
 });
 
@@ -106,6 +157,9 @@ const mapDispatchToProps = dispatch => {
   return {
     revealRecoveryPhrase: recoveryPhrase => {
       dispatch(revealRecoveryPhrase(recoveryPhrase));
+    },
+    addPermissionedAccount: account => {
+      dispatch(addPermissionedAccount(account));
     }
   };
 };
