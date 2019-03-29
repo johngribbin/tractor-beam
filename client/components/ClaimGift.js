@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 
 import GiftIcon from "../components/GiftIcon";
@@ -19,17 +19,13 @@ class ClaimGift extends Component {
 
   render() {
     return (
-      <View style={styles.claimGiftContainer}>
+      <View>
         <GiftIcon giftMessage={"Someone sent you a gift!"} />
         <MainButton title={"CLAIM GIFT!"} onPress={this._claimGift} />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  claimGiftContainer: {}
-});
 
 // Add this function to every component
 const mapStateToProps = state => {
