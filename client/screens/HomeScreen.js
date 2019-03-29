@@ -32,13 +32,16 @@ class HomeScreen extends Component {
     let mnemonic = "";
 
     try {
-      let response = await fetch("http://3.17.65.140:8080/generateMnemonic", {
-        mode: "no-cors",
-        method: "POST",
-        headers: {
-          Accept: "application/json"
+      let response = await fetch(
+        "https://kenanoneal.com:8080/generateMnemonic",
+        {
+          mode: "no-cors",
+          method: "POST",
+          headers: {
+            Accept: "application/json"
+          }
         }
-      });
+      );
       const mnemonicObj = JSON.parse(response._bodyText);
       mnemonic = mnemonicObj.mnemonic;
     } catch (error) {
@@ -50,6 +53,9 @@ class HomeScreen extends Component {
   };
 
   async componentDidMount() {
+    //isLoggedInReducer tests
+    this.props.logIn();
+
     // if no permissionedAccount is found in local storage and in local app state
     if ((await AsyncStorage.getItem("permissionedAccount")) === null) {
       const permissionedAccount = await this._createAccount();
@@ -209,9 +215,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.mainBackground
   },
   contentContainer: {
-    alignItems: "center",
     display: "flex",
     justifyContent: "center",
+    padding: 10,
     paddingTop: 200
   }
 });
