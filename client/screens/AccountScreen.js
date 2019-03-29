@@ -73,11 +73,13 @@ class AccountScreen extends React.Component {
           ) : null}
 
           <View style={styles.contractAccountInfoContainer}>
-            <Text style={mediumTextBold}>Account Address</Text>
+            <Text style={{ ...mediumTextBold, ...styles.accountAddressText }}>
+              Account Address
+            </Text>
             <Text style={{ ...mediumText, ...styles.contractAccountAddress }}>
               {contractAccount.revealedAddress
                 ? contractAccount.address
-                : `${contractAccount.address.substr(0, 3)}...`}
+                : `${contractAccount.address.substr(0, 5)}...`}
             </Text>
             <RevealButton
               onPress={() =>
@@ -135,14 +137,18 @@ const styles = StyleSheet.create({
   contractAccountInfoContainer: {
     alignItems: "center",
     display: "flex",
+    flex: 1,
     flexDirection: "row",
-    flexWrap: "wrap",
     justifyContent: "space-between",
-    marginBottom: 40
+    marginBottom: 40,
+    width: "100%"
+  },
+  contractAddressText: {
+    flex: 1
   },
   contractAccountAddress: {
-    margin: 5,
-    marginLeft: 0
+    flex: 1,
+    padding: 5
   },
   buttonContainer: {
     display: "flex",

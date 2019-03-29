@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { StyleSheet, View, Text } from "react-native";
 import { colors, largeText, mediumText } from "../constants";
 import ArrowIcon from "./ArrowIcon";
@@ -7,11 +8,7 @@ import MainButton from "../components/MainButton";
 
 import { Wallet } from "ethers";
 
-import {
-  revealRecoveryPhrase,
-  addPermissionedAccount
-} from "../redux/actions/index";
-import { connect } from "react-redux";
+import { revealRecoveryPhrase, addPermissionedAccount } from "../redux/actions";
 
 class RecoveryPhrasesDropdown extends Component {
   state = {
@@ -24,7 +21,7 @@ class RecoveryPhrasesDropdown extends Component {
     }));
   };
 
-  _addRecoveryPhrase = async () => {
+  _createAccount = async () => {
     let mnemonic = "";
 
     try {
@@ -41,21 +38,28 @@ class RecoveryPhrasesDropdown extends Component {
       const mnemonicObj = JSON.parse(response._bodyText);
       mnemonic = mnemonicObj.mnemonic;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
-    const permissionedAccount = await Wallet.fromMnemonic(mnemonic);
+    const account = await Wallet.fromMnemonic(mnemonic);
+    return account;
+  };
 
-    this.props.addPermissionedAccount([
-      {
-        recoveryPhrase: permissionedAccount.mnemonic,
-        address: permissionedAccount.address,
-        balance: 0,
-        linkedContract: this.props.contractAccount.address,
-        default: false,
-        revealedRecoveryPhrase: false
-      }
-    ]);
+  _addRecoveryPhrase = async () => {
+    console.log("hello from the method");
+
+    const permissionedAccount = await this._createAccount();
+
+    const permissionedAccountObj = {
+      recoveryPhrase: permissionedAccount.mnemonic,
+      address: permissionedAccount.address,
+      balance: 0,
+      linkedContract: contractAccount.address,
+      default: false,
+      revealedRecoveryPhrase: false
+    };
+
+    this.props.addPermissionedAccount([permissionedAccountObj]);
   };
 
   _renderRecoveryPhrases = () => {
@@ -68,16 +72,20 @@ class RecoveryPhrasesDropdown extends Component {
             {permissionedAccounts.indexOf(account) + 1}
             {". "}
           </Text>
-          <Text style={styles.phrase}>
-            {account.revealedRecoveryPhrase
-              ? account.recoveryPhrase
-              : account.recoveryPhrase.substr(0, 15)}
-          </Text>
-          <RevealButton
-            textStyle={styles.revealText}
-            onPress={() => revealRecoveryPhrase(account.recoveryPhrase)}
-            revealed={account.revealedRecoveryPhrase}
-          />
+          <View style={styles.phraseContainer}>
+            <Text style={styles.phrase}>
+              {account.revealedRecoveryPhrase
+                ? account.recoveryPhrase
+                : account.recoveryPhrase.substr(0, 15)}
+            </Text>
+          </View>
+          <View>
+            <RevealButton
+              textStyle={styles.revealText}
+              onPress={() => revealRecoveryPhrase(account.recoveryPhrase)}
+              revealed={account.revealedRecoveryPhrase}
+            />
+          </View>
         </View>
       );
     });
@@ -85,7 +93,6 @@ class RecoveryPhrasesDropdown extends Component {
 
   render() {
     const { permissionedAccounts } = this.props;
-    console.log(permissionedAccounts);
 
     return (
       <View style={styles.componentContainer}>
@@ -126,22 +133,24 @@ const styles = StyleSheet.create({
   addressContainer: {
     display: "flex",
     flexDirection: "row",
-    flexWrap: "wrap",
     alignItems: "center",
     marginTop: 10
   },
   title: {
     color: colors.orange
   },
-  number: {},
+  phraseContainer: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap"
+  },
   phrase: {
     backgroundColor: "white",
     marginRight: 5,
     padding: 5
   },
-  revealText: {
-    marginTop: 5
-  },
+  revealText: {},
   button: {
     marginTop: 20
   }
