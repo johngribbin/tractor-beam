@@ -153,8 +153,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
     contractAccount: state.contractAccount,
     emails: state.emails

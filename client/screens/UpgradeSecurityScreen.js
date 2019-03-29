@@ -10,49 +10,12 @@ import { colors, headlineText, mediumText } from "../constants";
 
 import Header from "../components/Header";
 import RecoveryPhrasesDropdown from "../components/RecoveryPhrasesDropdown";
-import MainButton from "../components/MainButton";
-
-//import "ethers/dist/shims.js";
-import { Wallet } from "ethers";
-
-import { addPermissionedAccount } from "../redux/actions";
 
 import { connect } from "react-redux";
 
 class UpgradeSecurityScreen extends React.Component {
   static navigationOptions = {
     header: props => <Header {...props} />
-  };
-
-  _addRecoveryPhrase = async () => {
-    let mnemonic = "";
-
-    try {
-      let response = await fetch("http://3.17.65.140:8080/generateMnemonic", {
-        mode: "no-cors",
-        method: "POST",
-        headers: {
-          Accept: "application/json"
-        }
-      });
-      const mnemonicObj = JSON.parse(response._bodyText);
-      mnemonic = mnemonicObj.mnemonic;
-    } catch (error) {
-      consolelog(error);
-    }
-
-    const permissionedAccount = await Wallet.fromMnemonic(mnemonic);
-
-    this.props.addPermissionedAccount([
-      {
-        recoveryPhrase: permissionedAccount.mnemonic,
-        address: permissionedAccount.address,
-        balance: 0,
-        linkedContract: this.props.contractAccount.address,
-        default: false,
-        revealedRecoveryPhrase: false
-      }
-    ]);
   };
 
   render() {
@@ -79,11 +42,6 @@ class UpgradeSecurityScreen extends React.Component {
           </View>
           <View style={styles.dropdownContainer}>
             <RecoveryPhrasesDropdown />
-            <MainButton
-              style={styles.button}
-              title={"+ ADD MORE"}
-              onPress={this._addRecoveryPhrase}
-            />
           </View>
         </ScrollView>
       </View>
@@ -119,29 +77,16 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.lightGrey,
     borderBottomWidth: 1,
     paddingBottom: 20
-  },
-  button: {
-    marginTop: 20
   }
 });
 
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
     contractAccount: state.contractAccount
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addPermissionedAccount: account => {
-      dispatch(addPermissionedAccount(account));
-    }
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(UpgradeSecurityScreen);
