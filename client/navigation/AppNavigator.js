@@ -1,24 +1,28 @@
 import React from "react";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import {
-  HomeStack,
-  AccountStack,
-  ExternalAccountsStack,
-  SignupStack,
-  UpgradeSecurityStack
-} from "./MainTabNavigator";
+import { createAppContainer, createStackNavigator } from "react-navigation";
 
-//import MainTabNavigator from "./MainTabNavigator";
+import Header from "../components/Header";
+import HomeScreen from "../screens/HomeScreen";
+import SignupScreen from "../screens/SignupScreen";
+import AccountScreen from "../screens/AccountScreen";
+import ExternalAccountsScreen from "../screens/ExternalAccountsScreen";
+import UpgradeSecurityScreen from "../screens/UpgradeSecurityScreen";
 
 export default createAppContainer(
-  createSwitchNavigator({
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-    Home: HomeStack,
-    Account: AccountStack,
-    //Main: MainTabNavigator,
-    Signup: SignupStack,
-    ExternalAccounts: ExternalAccountsStack,
-    UpgradeSecurity: UpgradeSecurityStack
-  })
+  createStackNavigator(
+    {
+      Home: HomeScreen,
+      SignUp: SignupScreen,
+      Account: AccountScreen,
+      ExternalAccounts: ExternalAccountsScreen,
+      UpgradeSecurity: UpgradeSecurityScreen
+    },
+    {
+      initialRouteName: "Home",
+      /* The header config from HomeScreen is now here */
+      defaultNavigationOptions: {
+        header: props => <Header {...props} />
+      }
+    }
+  )
 );
