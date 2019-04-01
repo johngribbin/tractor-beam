@@ -6,10 +6,7 @@ import ArrowIcon from "./ArrowIcon";
 import RevealButton from "../components/RevealButton";
 import MainButton from "../components/MainButton";
 
-import {
-  revealRecoveryPhrase,
-  addPermissionedAccountTwo
-} from "../redux/actions";
+import { revealRecoveryPhrase, addPermissionedAccount } from "../redux/actions";
 
 class RecoveryPhrasesDropdown extends Component {
   state = {
@@ -52,7 +49,7 @@ class RecoveryPhrasesDropdown extends Component {
   };
 
   render() {
-    const { permissionedAccounts } = this.props;
+    const { permissionedAccounts, addPermissionedAccount } = this.props;
 
     return (
       <View style={styles.componentContainer}>
@@ -61,7 +58,7 @@ class RecoveryPhrasesDropdown extends Component {
             Recovery Phrases{" "}
           </Text>
           <ArrowIcon
-            arrowType={this.state.isOpen ? "down" : "up"}
+            arrowType={this.state.isOpen ? "up" : "down"}
             onPress={this._toggleDropdown}
           />
         </View>
@@ -76,7 +73,7 @@ class RecoveryPhrasesDropdown extends Component {
           <MainButton
             style={styles.button}
             title={"+ ADD MORE"}
-            onPress={this.props.addPermissionedAccountTwo}
+            onPress={addPermissionedAccount}
           />
         ) : null}
       </View>
@@ -124,8 +121,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   revealRecoveryPhrase,
-
-  addPermissionedAccountTwo
+  addPermissionedAccount
 };
 
 export default connect(
