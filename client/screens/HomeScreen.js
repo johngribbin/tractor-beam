@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { colors } from "../constants/";
-import Header from "../components/Header";
 import ClaimGift from "../components/ClaimGift";
+import MainButton from "../components/MainButton";
 
-import { ScrollView, StyleSheet, View, AsyncStorage } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+
+import configureStore from "../redux/configureStore";
 
 import { connect } from "react-redux";
 import {
@@ -20,81 +22,20 @@ import {
 } from "../redux/actions";
 
 class HomeScreen extends Component {
-  async componentDidMount() {
-    //isLoggedInReducer tests
-    this.props.logIn();
+  componentDidMount() {
+    const {
+      permissionedAccounts,
+      addPermissionedAccount,
+      setContractAccount
+    } = this.props;
 
-    /*
-    const testAccount = await this._createAccount();
-    console.log(`mnemonic is ${testAccount.mnemonic}`);
-    console.log(`private key is ${testAccount.privateKey}`);
-    console.log(`address is ${testAccount.address}`);
-    */
-
-    // if no permissionedAccount is found in local storage and in local app state
-    if ((await AsyncStorage.getItem("permissionedAccount")) === null) {
-      const permissionedAccount = await this._createAccount();
-      const contractAccount = await this._createAccount();
-
-      const permissionedAccountObj = {
-        recoveryPhrase: permissionedAccount.mnemonic,
-        address: permissionedAccount.address,
-        balance: 0,
-        linkedContract: contractAccount.address,
-        default: true,
-        revealedRecoveryPhrase: false
-      };
-
-      const contractAccountObj = {
-        address: contractAccount.address,
-        balance: 0,
-        permissionedAddresses: [permissionedAccount.address],
-        revealedAddress: false
-      };
-
-      // permissionedAccountsReducer tests
-      this.props.addPermissionedAccount([permissionedAccountObj]);
-
-      // contractAccountReducer tests - need to addPermissionedAddress action creator!!
-      this.props.setContractAccount(contractAccountObj);
-
-      // set em
-      try {
-        await AsyncStorage.setItem(
-          "permissionedAccount",
-          JSON.stringify(permissionedAccountObj)
-        );
-        await AsyncStorage.setItem(
-          "contractAccount",
-          JSON.stringify(contractAccountObj)
-        );
-      } catch (error) {
-        console.log(error);
-      }
-
-      console.log(
-        "permissionedAccount and contractAccount added to local storage"
-      );
-      // this block is only ran in event that user doesnt have permissionedAccount found in local storage or in the app state
-    } else if (this.props.permissionedAccounts.length === 0) {
-      let permissionedAccountString = await AsyncStorage.getItem(
-        "permissionedAccount"
-      );
-      let contractAccountString = await AsyncStorage.getItem("contractAccount");
-
-      const permissionedAccount = JSON.parse(permissionedAccountString);
-      const contractAccount = JSON.parse(contractAccountString);
-
-      // permissionedAccountsReducer tests
-      this.props.addPermissionedAccount([permissionedAccount]);
-
-      // contractAccountReducer tests - need to addPermissionedAddress action creator!!
-      this.props.setContractAccount(contractAccount);
-
-      console.log(
-        "permissionedAccount and contractAccount taken from local storage and added to app state"
-      );
+    // called these function first time app is loaded
+    if (permissionedAccounts.length === 0) {
+      addPermissionedAccount();
+      setContractAccount();
     }
+
+    //this.props.logIn();
 
     /*
       //emailReducer tests
@@ -108,7 +49,6 @@ class HomeScreen extends Component {
       //isLoggedInReducer tests
       this.props.logIn();
       */
-
     /*
     // externalAccountsReducer
     this.props.addExternalAccount([
@@ -171,6 +111,16 @@ class HomeScreen extends Component {
     */
   }
 
+  _clearLocalStorage = () => {
+    const { persistor } = configureStore();
+
+    try {
+      persistor.purge();
+    } catch (err) {
+      console.log(`The error is: ${err}`);
+    }
+  };
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -179,6 +129,11 @@ class HomeScreen extends Component {
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <ClaimGift navigate={navigate} />
         </ScrollView>
+        <MainButton
+          style={styles.clearLocalStorageButton}
+          title={"CLEAR LOCAL STORAGE!"}
+          onPress={this._clearLocalStorage}
+        />
       </View>
     );
   }
@@ -194,6 +149,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
     paddingTop: 200
+  },
+  clearLocalStorageButton: {
+    bottom: 15,
+    left: 15,
+    position: "absolute"
   }
 });
 
