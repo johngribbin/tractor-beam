@@ -6,9 +6,10 @@ import ArrowIcon from "./ArrowIcon";
 import RevealButton from "../components/RevealButton";
 import MainButton from "../components/MainButton";
 
-import { Wallet } from "ethers";
-
-import { revealRecoveryPhrase, addPermissionedAccount } from "../redux/actions";
+import {
+  revealRecoveryPhrase,
+  addPermissionedAccountTwo
+} from "../redux/actions";
 
 class RecoveryPhrasesDropdown extends Component {
   state = {
@@ -19,47 +20,6 @@ class RecoveryPhrasesDropdown extends Component {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }));
-  };
-
-  _createAccount = async () => {
-    let mnemonic = "";
-
-    try {
-      let response = await fetch(
-        "https://kenanoneal.com:8080/generateMnemonic",
-        {
-          mode: "no-cors",
-          method: "POST",
-          headers: {
-            Accept: "application/json"
-          }
-        }
-      );
-      const mnemonicObj = JSON.parse(response._bodyText);
-      mnemonic = mnemonicObj.mnemonic;
-    } catch (error) {
-      console.error(error);
-    }
-
-    const account = await Wallet.fromMnemonic(mnemonic);
-    return account;
-  };
-
-  _addRecoveryPhrase = async () => {
-    console.log("hello from the method");
-
-    const permissionedAccount = await this._createAccount();
-
-    const permissionedAccountObj = {
-      recoveryPhrase: permissionedAccount.mnemonic,
-      address: permissionedAccount.address,
-      balance: 0,
-      linkedContract: contractAccount.address,
-      default: false,
-      revealedRecoveryPhrase: false
-    };
-
-    this.props.addPermissionedAccount([permissionedAccountObj]);
   };
 
   _renderRecoveryPhrases = () => {
@@ -116,7 +76,7 @@ class RecoveryPhrasesDropdown extends Component {
           <MainButton
             style={styles.button}
             title={"+ ADD MORE"}
-            onPress={this._addRecoveryPhrase}
+            onPress={this.props.addPermissionedAccountTwo}
           />
         ) : null}
       </View>
@@ -162,15 +122,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    revealRecoveryPhrase: recoveryPhrase => {
-      dispatch(revealRecoveryPhrase(recoveryPhrase));
-    },
-    addPermissionedAccount: account => {
-      dispatch(addPermissionedAccount(account));
-    }
-  };
+const mapDispatchToProps = {
+  revealRecoveryPhrase,
+
+  addPermissionedAccountTwo
 };
 
 export default connect(

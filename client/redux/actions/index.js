@@ -1,3 +1,5 @@
+import { Wallet } from "ethers";
+
 import {
   LOG_IN,
   LOG_OUT,
@@ -11,7 +13,8 @@ import {
   SET_DEFAULT_EXTERNAL_ACCOUNT,
   REVEAL_EXTERNAL_ACCOUNT_ADDRESS,
   DELETE_EXTERNAL_ACCOUNT,
-  REVEAL_CONTRACT_ADDRESS
+  REVEAL_CONTRACT_ADDRESS,
+  GENERATING_MNEMONIC
 } from "./types";
 
 // action creators for isLoggedInReducer
@@ -55,6 +58,56 @@ export const addPermissionedAccount = account => {
     type: ADD_PERMISSIONED_ACCOUNT,
     payload: account
   };
+};
+
+const generatingMnemonic = bool => {
+  return {
+    type: GENERATING_MNEMONIC,
+    payload: bool
+  };
+};
+
+export const addPermissionedAccountTwo = () => async (dispatch, getState) => {
+  // dispatch(generatingMnemonic(true));
+
+  let mnemonic = "";
+
+  try {
+    let response = await fetch("https://kenanoneal.com:8080/generateMnemonic", {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        Accept: "application/json"
+      }
+    });
+    const mnemonicObj = JSON.parse(response._bodyText);
+    mnemonic = mnemonicObj.mnemonic;
+  } catch (error) {
+    console.error(error);
+  }
+
+  const account = await Wallet.fromMnemonic(mnemonic);
+
+  const accountObj = [
+    {
+      recoveryPhrase: account.mnemonic,
+      address: account.address,
+      balance: 0,
+      linkedContract: "",
+      default: false,
+      revealedRecoveryPhrase: false
+    }
+  ];
+
+  //dispatch(addPermissionedAccount([accountObj]));
+  console.log("hello");
+
+  return {
+    type: ADD_PERMISSIONED_ACCOUNT,
+    payload: accountObj
+  };
+
+  // dispatch(generatingMnemonic(false));
 };
 
 export const revealRecoveryPhrase = recoveryPhrase => {

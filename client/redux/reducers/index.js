@@ -12,7 +12,8 @@ import {
   REVEAL_EXTERNAL_ACCOUNT_ADDRESS,
   DELETE_EXTERNAL_ACCOUNT,
   SET_CONTRACT_ACCOUNT,
-  REVEAL_CONTRACT_ADDRESS
+  REVEAL_CONTRACT_ADDRESS,
+  GENERATING_MNEMONIC
 } from "../actions/types";
 
 const initialState = {
@@ -25,7 +26,9 @@ const initialState = {
   // single object
   contractAccount: {},
   // array of objects
-  externalAccounts: []
+  externalAccounts: [],
+  // boolean
+  generatingMnemonic: false
 };
 
 const isLoggedInReducer = (state = initialState.isLoggedIn, action) => {
@@ -93,6 +96,8 @@ const permissionedAccountsReducer = (
       return state;
   }
 };
+
+// add generatingMnemonic reducer
 
 const contractAccountReducer = (
   state = initialState.contractAccount,
@@ -163,3 +168,7 @@ export default combineReducers({
   contractAccount: contractAccountReducer,
   externalAccounts: externalAccountsReducer
 });
+
+// app reducer
+// user reducer
+// contract reducer
