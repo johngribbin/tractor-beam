@@ -26,9 +26,11 @@ import { revealContractAddress } from "../redux/actions";
 import RevealButton from "../components/RevealButton";
 
 class AccountScreen extends React.Component {
+  /*
   static navigationOptions = {
     header: props => <Header {...props} />
   };
+  */
 
   render() {
     const { emails, contractAccount } = this.props;

@@ -21,9 +21,11 @@ import NewExternalAccountForm from "../components/NewExternalAccountForm";
 import { connect } from "react-redux";
 
 class ExternalAccountsScreen extends Component {
+  /*
   static navigationOptions = {
     header: props => <Header {...props} />
   };
+  */
 
   render() {
     const { externalAccounts } = this.props;

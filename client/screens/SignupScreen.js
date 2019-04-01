@@ -5,10 +5,12 @@ import Header from "../components/Header";
 import SignUpForm from "../components/SignUpForm";
 
 export default class SignupScreen extends Component {
+  /*
   static navigationOptions = {
     header: props => <Header {...props} />,
     title: "SignupScreen"
   };
+  */
 
   render() {
     const { navigate } = this.props.navigation;

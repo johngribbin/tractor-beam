@@ -23,11 +23,13 @@ import {
 } from "../redux/actions";
 
 class HomeScreen extends Component {
+  /*
   static navigationOptions = {
     header: props => <Header {...props} />,
     title: "Home"
   };
-
+  */
+  /*
   _createAccount = async () => {
     let mnemonic = "";
 
@@ -51,10 +53,18 @@ class HomeScreen extends Component {
     const account = await Wallet.fromMnemonic(mnemonic);
     return account;
   };
+  */
 
   async componentDidMount() {
     //isLoggedInReducer tests
     this.props.logIn();
+
+    /*
+    const testAccount = await this._createAccount();
+    console.log(`mnemonic is ${testAccount.mnemonic}`);
+    console.log(`private key is ${testAccount.privateKey}`);
+    console.log(`address is ${testAccount.address}`);
+    */
 
     // if no permissionedAccount is found in local storage and in local app state
     if ((await AsyncStorage.getItem("permissionedAccount")) === null) {
@@ -223,8 +233,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  //console.log(state);
-
   return {
     permissionedAccounts: state.permissionedAccounts
   };

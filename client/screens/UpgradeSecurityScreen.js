@@ -14,9 +14,11 @@ import RecoveryPhrasesDropdown from "../components/RecoveryPhrasesDropdown";
 import { connect } from "react-redux";
 
 class UpgradeSecurityScreen extends React.Component {
+  /*
   static navigationOptions = {
     header: props => <Header {...props} />
   };
+  */
 
   render() {
     const { navigate } = this.props.navigation;
