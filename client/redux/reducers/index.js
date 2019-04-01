@@ -168,7 +168,3 @@ export default combineReducers({
   contractAccount: contractAccountReducer,
   externalAccounts: externalAccountsReducer
 });
-
-// app reducer
-// user reducer
-// contract reducer
