@@ -52,14 +52,6 @@ export const deleteEmail = emailAddress => {
   };
 };
 
-// action creators for nativeAccountReducer
-export const addPermissionedAccount = account => {
-  return {
-    type: ADD_PERMISSIONED_ACCOUNT,
-    payload: account
-  };
-};
-
 const generatingMnemonic = bool => {
   return {
     type: GENERATING_MNEMONIC,
@@ -67,11 +59,14 @@ const generatingMnemonic = bool => {
   };
 };
 
-export const addPermissionedAccountTwo = () => async (dispatch, getState) => {
-  // dispatch(generatingMnemonic(true));
+export const addPermissionedAccount = () => async (dispatch, getState) => {
+  //dispatch(generatingMnemonic(true));
 
   let mnemonic = "";
 
+  // endpoint for email is /email
+  // send { “email”: “”, “payload”: “”}
+  // payload for now is recovery phrase
   try {
     let response = await fetch("https://kenanoneal.com:8080/generateMnemonic", {
       mode: "no-cors",
@@ -88,26 +83,21 @@ export const addPermissionedAccountTwo = () => async (dispatch, getState) => {
 
   const account = await Wallet.fromMnemonic(mnemonic);
 
-  const accountObj = [
-    {
-      recoveryPhrase: account.mnemonic,
-      address: account.address,
-      balance: 0,
-      linkedContract: "",
-      default: false,
-      revealedRecoveryPhrase: false
-    }
-  ];
-
-  //dispatch(addPermissionedAccount([accountObj]));
-  console.log("hello");
-
-  return {
-    type: ADD_PERMISSIONED_ACCOUNT,
-    payload: accountObj
+  const accountObj = {
+    recoveryPhrase: account.mnemonic,
+    address: account.address,
+    balance: 0,
+    linkedContract: "",
+    default: false,
+    revealedRecoveryPhrase: false
   };
 
-  // dispatch(generatingMnemonic(false));
+  dispatch({
+    type: ADD_PERMISSIONED_ACCOUNT,
+    payload: [accountObj]
+  });
+
+  //dispatch(generatingMnemonic(false));
 };
 
 export const revealRecoveryPhrase = recoveryPhrase => {
