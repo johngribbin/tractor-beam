@@ -6,16 +6,35 @@ import GiftIcon from "../components/GiftIcon";
 import MainButton from "../components/MainButton";
 
 import { logIn } from "../redux/actions";
+import { ethers } from "ethers";
 
 class ClaimGift extends Component {
-  _claimGift = () => {
+  _claimGift = async () => {
+    const { isLoggedIn, contractAccount } = this.props;
+
     // if user is not logged in
-    if (!this.props.isLoggedIn) {
+    if (!isLoggedIn) {
       this.props.navigate("SignUp");
     }
     // if user is logged in
     else {
-      console.log("you are logged in!");
+      try {
+        let response = await fetch("https://kenanoneal.com:8080/claimGift", {
+          mode: "no-cors",
+          method: "POST",
+          headers: {
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            address: contractAccount.address
+          })
+        });
+        const valueObj = JSON.parse(response._bodyText);
+        console.log(ethers.utils.formatEther(valueObj.value._hex));
+        //ethers.utils.formatEther
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -33,7 +52,8 @@ class ClaimGift extends Component {
 const mapStateToProps = state => {
   return {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.isLoggedIn,
+    contractAccount: state.contractAccount
   };
 };
 
