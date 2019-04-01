@@ -1,5 +1,5 @@
 import React from "react";
-import { colors, largeText, largeTextBold } from "../constants/";
+import { colors, largeTextBold } from "../constants/";
 import {
   StyleSheet,
   View,

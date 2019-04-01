@@ -115,15 +115,9 @@ const styles = {
   }
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addEmail: email => {
-      dispatch(addEmail(email));
-    },
-    logIn: () => {
-      dispatch(logIn());
-    }
-  };
+const mapDispatchToProps = {
+  addEmail,
+  logIn
 };
 
 export default connect(

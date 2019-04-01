@@ -5,9 +5,6 @@ import ClaimGift from "../components/ClaimGift";
 
 import { ScrollView, StyleSheet, View, AsyncStorage } from "react-native";
 
-import "ethers/dist/shims.js";
-import { Wallet } from "ethers";
-
 import { connect } from "react-redux";
 import {
   logIn,
@@ -23,38 +20,6 @@ import {
 } from "../redux/actions";
 
 class HomeScreen extends Component {
-  /*
-  static navigationOptions = {
-    header: props => <Header {...props} />,
-    title: "Home"
-  };
-  */
-  /*
-  _createAccount = async () => {
-    let mnemonic = "";
-
-    try {
-      let response = await fetch(
-        "https://kenanoneal.com:8080/generateMnemonic",
-        {
-          mode: "no-cors",
-          method: "POST",
-          headers: {
-            Accept: "application/json"
-          }
-        }
-      );
-      const mnemonicObj = JSON.parse(response._bodyText);
-      mnemonic = mnemonicObj.mnemonic;
-    } catch (error) {
-      console.error(error);
-    }
-
-    const account = await Wallet.fromMnemonic(mnemonic);
-    return account;
-  };
-  */
-
   async componentDidMount() {
     //isLoggedInReducer tests
     this.props.logIn();
@@ -233,44 +198,24 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log(state);
+
   return {
     permissionedAccounts: state.permissionedAccounts
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logIn: () => {
-      dispatch(logIn());
-    },
-    logOut: () => {
-      dispatch(logOut());
-    },
-    addEmail: email => {
-      dispatch(addEmail(email));
-    },
-    setDefaultEmail: emailAddress => {
-      dispatch(setDefaultEmail(emailAddress));
-    },
-    deleteEmail: emailAddress => {
-      dispatch(deleteEmail(emailAddress));
-    },
-    addPermissionedAccount: account => {
-      dispatch(addPermissionedAccount(account));
-    },
-    setContractAccount: account => {
-      dispatch(setContractAccount(account));
-    },
-    addExternalAccount: account => {
-      dispatch(addExternalAccount(account));
-    },
-    setDefaultExternalAccount: accountName => {
-      dispatch(setDefaultExternalAccount(accountName));
-    },
-    deleteExternalAccount: accountName => {
-      dispatch(deleteExternalAccount(accountName));
-    }
-  };
+const mapDispatchToProps = {
+  logIn,
+  logOut,
+  addEmail,
+  setDefaultEmail,
+  deleteEmail,
+  addPermissionedAccount,
+  setContractAccount,
+  addExternalAccount,
+  setDefaultExternalAccount,
+  deleteExternalAccount
 };
 
 export default connect(

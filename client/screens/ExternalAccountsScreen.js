@@ -6,27 +6,14 @@ import {
   Text,
   TouchableHighlight
 } from "react-native";
-import {
-  colors,
-  headlineText,
-  mediumText,
-  mediumTextBold,
-  smallText
-} from "../constants";
+import { colors, headlineText, mediumText } from "../constants";
 
-import Header from "../components/Header";
 import ExternalAccounts from "../components/ExternalAccounts";
 import NewExternalAccountForm from "../components/NewExternalAccountForm";
 
 import { connect } from "react-redux";
 
 class ExternalAccountsScreen extends Component {
-  /*
-  static navigationOptions = {
-    header: props => <Header {...props} />
-  };
-  */
-
   render() {
     const { externalAccounts } = this.props;
     const { navigate } = this.props.navigation;

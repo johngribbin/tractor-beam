@@ -186,15 +186,9 @@ const styles = {
   button: {}
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addExternalAccount: externalAccount => {
-      dispatch(addExternalAccount(externalAccount));
-    },
-    setDefaultExternalAccount: accountName => {
-      dispatch(setDefaultExternalAccount(accountName));
-    }
-  };
+const mapDispatchToProps = {
+  addExternalAccount,
+  setDefaultExternalAccount
 };
 
 export default connect(

@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableHighlight, View, Image } from "react-native";
+import { TouchableHighlight, Image } from "react-native";
 
 export default function ArrowIcon(props) {
   const { arrowType, onPress } = props;

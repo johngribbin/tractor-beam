@@ -1,37 +1,21 @@
 import React from "react";
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableHighlight
-} from "react-native";
+import { View, ScrollView, StyleSheet, Text } from "react-native";
 import {
   colors,
   smallText,
   headlineText,
   mediumText,
-  mediumTextBold,
-  smallTextItalic
+  mediumTextBold
 } from "../constants";
 
-import Header from "../components/Header";
 import LinkExternalAccount from "../components/LinkExternalAccount";
 import UpgradeSecurity from "../components/UpgradeSecurity";
-import RevaelButton from "../components/RevealButton";
-//import { ExpoLinksView } from "@expo/samples";
 
 import { connect } from "react-redux";
 import { revealContractAddress } from "../redux/actions";
 import RevealButton from "../components/RevealButton";
 
 class AccountScreen extends React.Component {
-  /*
-  static navigationOptions = {
-    header: props => <Header {...props} />
-  };
-  */
-
   render() {
     const { emails, contractAccount } = this.props;
     const { navigate } = this.props.navigation;
@@ -39,10 +23,6 @@ class AccountScreen extends React.Component {
     return (
       <View style={styles.accountContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links 
-        <ExpoLinksView />
-        */}
           <Text style={headlineText}>YOUR ACCOUNT</Text>
           <Text style={headlineText}>
             {`$ `}
@@ -167,12 +147,8 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    revealContractAddress: account => {
-      dispatch(revealContractAddress(account));
-    }
-  };
+const mapDispatchToProps = {
+  revealContractAddress
 };
 
 export default connect(

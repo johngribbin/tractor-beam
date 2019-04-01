@@ -105,11 +105,8 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    revealExternalAccountAddress: accountName =>
-      dispatch(revealExternalAccountAddress(accountName))
-  };
+const mapDispatchToProps = {
+  revealExternalAccountAddress
 };
 
 export default connect(

@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import GiftIcon from "../components/GiftIcon";
 import MainButton from "../components/MainButton";
 
+import { logIn } from "../redux/actions";
+
 class ClaimGift extends Component {
   _claimGift = () => {
     // if user is not logged in
@@ -35,12 +37,8 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logIn: () => {
-      dispatch(logIn());
-    }
-  };
+const mapDispatchToProps = {
+  logIn
 };
 
 export default connect(
