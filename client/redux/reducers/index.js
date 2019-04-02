@@ -13,12 +13,21 @@ import {
   DELETE_EXTERNAL_ACCOUNT,
   SET_CONTRACT_ACCOUNT,
   REVEAL_CONTRACT_ADDRESS,
-  GENERATING_MNEMONIC
+  GENERATING_MNEMONIC,
+  UPDATING_CONTRACT_BALANCE,
+  UPDATE_CONTRACT_BALANCE
 } from "../actions/types";
 
 const initialState = {
+  app: {
+    generatingMnemonic: false,
+    updatedContractBalance: true
+  },
+  user: {
+    isLoggedIn: false
+  },
   // boolean
-  isLoggedIn: false,
+
   // array of objects
   emailAddresses: [],
   // array of objects
@@ -26,18 +35,39 @@ const initialState = {
   // single object
   contractAccount: {},
   // array of objects
-  externalAccounts: [],
-  // boolean
-  generatingMnemonic: false
+  externalAccounts: []
 };
 
-const isLoggedInReducer = (state = initialState.isLoggedIn, action) => {
+const appReducer = (state = initialState.app, action) => {
+  switch (action.type) {
+    case GENERATING_MNEMONIC:
+      return {
+        ...state,
+        generatingMnemonic: action.payload
+      };
+    case UPDATING_CONTRACT_BALANCE:
+      return {
+        ...state,
+        updatedContractBalance: action.payload
+      };
+    default:
+      return state;
+  }
+};
+
+const userReducer = (state = initialState.user, action) => {
   switch (action.type) {
     case LOG_IN:
-      return (state = true);
+      return {
+        ...state,
+        isLoggedIn: action.payload
+      };
 
     case LOG_OUT:
-      return (state = false);
+      return {
+        ...state,
+        isLoggedIn: action.payload
+      };
 
     default:
       return state;
@@ -113,6 +143,12 @@ const contractAccountReducer = (
         revealedAddress: !state.revealedAddress
       };
 
+    case UPDATE_CONTRACT_BALANCE:
+      return {
+        ...state,
+        balance: action.payload
+      };
+
     default:
       return state;
   }
@@ -162,7 +198,8 @@ const externalAccountsReducer = (
 };
 
 export default combineReducers({
-  isLoggedIn: isLoggedInReducer,
+  app: appReducer,
+  user: userReducer,
   emails: emailsReducer,
   permissionedAccounts: permissionedAccountsReducer,
   contractAccount: contractAccountReducer,

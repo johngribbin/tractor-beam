@@ -1,4 +1,7 @@
 import { Wallet } from "ethers";
+import { ethers } from "ethers";
+let provider = ethers.getDefaultProvider("rinkeby");
+//import { getBalance } from "../../helpers/getBalance";
 
 import {
   LOG_IN,
@@ -14,23 +17,31 @@ import {
   REVEAL_EXTERNAL_ACCOUNT_ADDRESS,
   DELETE_EXTERNAL_ACCOUNT,
   REVEAL_CONTRACT_ADDRESS,
+  UPDATE_CONTRACT_BALANCE,
+  UPDATING_CONTRACT_BALANCE,
   GENERATING_MNEMONIC
 } from "./types";
 
-// action creators for isLoggedInReducer
+/* --------------------
+action creators for userReducer
+-------------------- */
 export const logIn = () => {
   return {
-    type: LOG_IN
+    type: LOG_IN,
+    payload: true
   };
 };
 
 export const logOut = () => {
   return {
-    type: LOG_OUT
+    type: LOG_OUT,
+    payload: false
   };
 };
 
-// action creator for emailAddressesReducer
+/* --------------------
+action creators for emailAddressesReducer
+-------------------- */
 export const addEmail = email => {
   return {
     type: ADD_EMAIL,
@@ -52,15 +63,29 @@ export const deleteEmail = emailAddress => {
   };
 };
 
-const generatingMnemonic = bool => {
+/* -------------------- 
+action creators for appReducer
+-------------------- */
+export const generatingMnemonic = bool => {
   return {
     type: GENERATING_MNEMONIC,
     payload: bool
   };
 };
 
+export const updatingContractBalance = bool => {
+  return {
+    type: UPDATING_CONTRACT_BALANCE,
+    payload: bool
+  };
+};
+
+/* --------------------
+action creators for permissionedAccountsReducer
+-------------------- */
 export const addPermissionedAccount = () => async (dispatch, getState) => {
   //dispatch(generatingMnemonic(true));
+
   let mnemonic = "";
 
   try {
@@ -103,7 +128,9 @@ export const revealRecoveryPhrase = recoveryPhrase => {
   };
 };
 
-// action creators for contractAccountReducer
+/* --------------------
+action creators for contractAccountReducer
+-------------------- */
 export const setContractAccount = () => async (dispatch, getState) => {
   let mnemonic = "";
 
@@ -136,6 +163,27 @@ export const setContractAccount = () => async (dispatch, getState) => {
   });
 };
 
+export const updateContractBalance = () => async (dispatch, getState) => {
+  //dispatch(updatingContractBalance(true));
+  const { contractAccount } = getState();
+
+  const newBalance = await provider
+    .getBalance(contractAccount.address)
+    .then(bigNumber => {
+      // balance is a BigNumber (in wei); format is as a string (in ether)
+      return ethers.utils.formatEther(bigNumber);
+    });
+
+  //const newBalance = await getBalance(contractAccount.address);
+
+  dispatch({
+    type: UPDATE_CONTRACT_BALANCE,
+    payload: Number(newBalance)
+  });
+
+  //dispatch(updatingContractBalance(false));
+};
+
 export const revealContractAddress = account => {
   return {
     type: REVEAL_CONTRACT_ADDRESS,
@@ -143,7 +191,9 @@ export const revealContractAddress = account => {
   };
 };
 
-// action creator for externalAccountsReducer
+/* --------------------
+action creator for externalAccountsReducer
+-------------------- */
 export const addExternalAccount = account => {
   return {
     type: ADD_EXTERNAL_ACCOUNT,
