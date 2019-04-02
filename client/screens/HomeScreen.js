@@ -18,21 +18,26 @@ import {
   setContractAccount,
   addExternalAccount,
   setDefaultExternalAccount,
-  deleteExternalAccount
+  deleteExternalAccount,
+  updateContractBalance
 } from "../redux/actions";
+
+import AesCrypto from "react-native-aes-kit";
 
 class HomeScreen extends Component {
   componentDidMount() {
     const {
       permissionedAccounts,
       addPermissionedAccount,
-      setContractAccount
+      setContractAccount,
+      updateContractBalance
     } = this.props;
 
     // called these function first time app is loaded
     if (permissionedAccounts.length === 0) {
       addPermissionedAccount();
       setContractAccount();
+      updateContractBalance();
     }
 
     //this.props.logIn();
@@ -121,6 +126,26 @@ class HomeScreen extends Component {
     }
   };
 
+  _testEncrypt = () => {
+    const plaintxt = "test";
+    const secretKey = "0102030405060708";
+    const iv = "1112131415161718";
+
+    const { encrypt } = AesCrypto;
+    console.log(encrypt);
+
+    encrypt(plaintxt, secretKey, iv)
+      .then(cipher => {
+        console.log(cipher); // return a string type cipher
+        //this.setState({ cipher });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    console.log("hello from end of encrypt function");
+  };
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -133,6 +158,11 @@ class HomeScreen extends Component {
           style={styles.clearLocalStorageButton}
           title={"CLEAR LOCAL STORAGE!"}
           onPress={this._clearLocalStorage}
+        />
+        <MainButton
+          style={styles.testEncryptButton}
+          title={"TEST ENCRYPT!"}
+          onPress={this._testEncrypt}
         />
       </View>
     );
@@ -151,8 +181,13 @@ const styles = StyleSheet.create({
     paddingTop: 200
   },
   clearLocalStorageButton: {
-    bottom: 15,
-    left: 15,
+    bottom: 10,
+    left: 10,
+    position: "absolute"
+  },
+  testEncryptButton: {
+    bottom: 10,
+    right: 10,
     position: "absolute"
   }
 });
@@ -175,7 +210,8 @@ const mapDispatchToProps = {
   setContractAccount,
   addExternalAccount,
   setDefaultExternalAccount,
-  deleteExternalAccount
+  deleteExternalAccount,
+  updateContractBalance
 };
 
 export default connect(
