@@ -5742,6 +5742,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-aes-kit@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-aes-kit/-/react-native-aes-kit-1.0.2.tgz#0f07024bec87659ff1032f4d7cbf6b2c3620f126"
+  integrity sha1-DwcCS+yHZZ/xAy9NfL9rLDYg8SY=
+
 react-native-branch@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
