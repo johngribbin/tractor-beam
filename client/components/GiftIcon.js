@@ -1,5 +1,5 @@
 import React from "react";
-import { colors, mediumTextBold } from "../constants/";
+import { mediumTextBold } from "../constants/";
 import { StyleSheet, View, Text, Image } from "react-native";
 
 import { connect } from "react-redux";
