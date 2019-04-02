@@ -24,7 +24,7 @@ function Header(props) {
         </TouchableHighlight>
       </View>
 
-      {props.isLoggedIn ? (
+      {props.isLoggedIn === true ? (
         <View style={styles.balanceWrapper}>
           <TouchableHighlight onPress={() => navigate("Account")}>
             <View>
@@ -40,7 +40,10 @@ function Header(props) {
             </Text>
             */}
               <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
-                ${props.contractAccount.balance}
+                {typeof props.contractAccount.balance === "number" ||
+                typeof props.contractAccount.balance === "string"
+                  ? `$${props.contractAccount.balance}`
+                  : null}
               </Text>
             </View>
           </TouchableHighlight>
@@ -94,7 +97,7 @@ const mapStateToProps = state => {
     // key name should match name of key for the reducer in combineReducers function in /reducer/index
     contractAccount: state.contractAccount,
     emails: state.emails,
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn
   };
 };
 
