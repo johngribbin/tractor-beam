@@ -6,13 +6,15 @@ import MainButton from "../components/MainButton";
 import { addEmail, logIn } from "../redux/actions";
 import { Formik } from "formik";
 import * as yup from "yup";
+//import AesCrypto from "react-native-aes-kit";
+//const AesCrypto = require("react-native-aes-kit");
 
 class SignUpForm extends Component {
   render() {
     return (
       <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={(values, formikHelpers) => {
+        initialValues={{ email: "bob@crypto.com", password: "123456789" }}
+        onSubmit={async (values, formikHelpers) => {
           // add the email to state object
           this.props.addEmail([
             {
@@ -20,6 +22,7 @@ class SignUpForm extends Component {
               default: true
             }
           ]);
+
           // switch isLoggedIn state property to true
           this.props.logIn();
 
@@ -54,6 +57,7 @@ class SignUpForm extends Component {
             <Text style={{ ...mediumTextBold, ...styles.label }}>Email</Text>
             <TextInput
               style={styles.textInput}
+              //value={"bob@crypto.com"}
               value={values.email}
               onChangeText={handleChange("email")}
               onBlur={() => setFieldTouched("email")}
@@ -67,6 +71,7 @@ class SignUpForm extends Component {
             <Text style={{ ...mediumTextBold, ...styles.label }}>Password</Text>
             <TextInput
               style={styles.textInput}
+              //value={"0101010101010101001"}
               value={values.password}
               onChangeText={handleChange("password")}
               placeholder="Password"
