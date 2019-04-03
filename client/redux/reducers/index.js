@@ -20,16 +20,14 @@ import {
 
 const initialState = {
   app: {
-    generatingMnemonic: false,
-    updatedContractBalance: true
+    isGeneratingMnemonic: false,
+    isUpdatingContractBalance: false
   },
   user: {
-    isLoggedIn: false
+    isLoggedIn: false,
+    // array of objects
+    emailAddresses: []
   },
-  // boolean
-
-  // array of objects
-  emailAddresses: [],
   // array of objects
   permissionedAccounts: [],
   // single object
@@ -43,12 +41,12 @@ const appReducer = (state = initialState.app, action) => {
     case GENERATING_MNEMONIC:
       return {
         ...state,
-        generatingMnemonic: action.payload
+        isGeneratingMnemonic: action.payload
       };
     case UPDATING_CONTRACT_BALANCE:
       return {
         ...state,
-        updatedContractBalance: action.payload
+        isUpdatingContractBalance: action.payload
       };
     default:
       return state;
@@ -69,32 +67,29 @@ const userReducer = (state = initialState.user, action) => {
         isLoggedIn: action.payload
       };
 
-    default:
-      return state;
-  }
-};
-
-const emailsReducer = (state = initialState.emailAddresses, action) => {
-  switch (action.type) {
     case ADD_EMAIL:
-      return [...state, ...action.payload];
+      return {
+        ...state,
+        emailAddresses: [...state.emailAddresses, ...action.payload]
+      };
 
     case SET_DEFAULT_EMAIL:
-      return state.map(email => {
-        if (email.address !== action.payload) {
-          return {
-            ...email,
-            default: false
-          };
-        } else
-          return {
-            ...email,
-            default: true
-          };
-      });
+      return {
+        ...state,
+        emailAddresses: state.emailAddresses.map(emailObj =>
+          emailObj.address === action.payload
+            ? { ...emailObj, default: true }
+            : { ...emailObj, default: false }
+        )
+      };
 
     case DELETE_EMAIL:
-      return state.filter(email => email.address !== action.payload);
+      return {
+        ...state,
+        emailAddresses: state.emailAddresses.filter(
+          email => email.address !== action.payload
+        )
+      };
 
     default:
       return state;
@@ -126,8 +121,6 @@ const permissionedAccountsReducer = (
       return state;
   }
 };
-
-// add generatingMnemonic reducer
 
 const contractAccountReducer = (
   state = initialState.contractAccount,
@@ -200,7 +193,6 @@ const externalAccountsReducer = (
 export default combineReducers({
   app: appReducer,
   user: userReducer,
-  emails: emailsReducer,
   permissionedAccounts: permissionedAccountsReducer,
   contractAccount: contractAccountReducer,
   externalAccounts: externalAccountsReducer
