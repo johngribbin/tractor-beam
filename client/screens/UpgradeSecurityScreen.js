@@ -19,7 +19,10 @@ class UpgradeSecurityScreen extends React.Component {
     return (
       <View style={styles.accountContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <TouchableHighlight onPress={() => navigate("Account")}>
+          <TouchableHighlight
+            underlayColor="none"
+            onPress={() => navigate("Account")}
+          >
             <Text style={styles.linkText}>{`< `}BACK TO YOUR ACCOUNT</Text>
           </TouchableHighlight>
 
@@ -28,7 +31,7 @@ class UpgradeSecurityScreen extends React.Component {
           <View style={styles.messageContainer}>
             <Text style={mediumText}>
               You may upgrade your security settings at any point in your
-              gift-claiming journet, but the sooner you do it, the more
+              gift-claiming journey, but the sooner you do it, the more
               protected from hacks your account will be.
               {"\n"}
               {"\n"}

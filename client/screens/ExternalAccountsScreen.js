@@ -21,7 +21,10 @@ class ExternalAccountsScreen extends Component {
     return (
       <View style={styles.accountContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <TouchableHighlight onPress={() => navigate("Account")}>
+          <TouchableHighlight
+            underlayColor="none"
+            onPress={() => navigate("Account")}
+          >
             <Text style={styles.linkText}>{`< `}BACK TO YOUR ACCOUNT</Text>
           </TouchableHighlight>
 
