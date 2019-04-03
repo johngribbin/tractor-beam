@@ -11,39 +11,32 @@ import { connect } from "react-redux";
 
 function Header(props) {
   const { navigate } = props.navigation;
+  const { isLoggedIn, contractAccount } = props;
 
   return (
     <View style={styles.headerContainer}>
       <StatusBar barStyle="light-content" />
 
       <View style={styles.titleWrapper}>
-        <TouchableHighlight onPress={() => navigate("Home")}>
+        <TouchableHighlight
+          underlayColor="none"
+          onPress={() => navigate("Home")}
+        >
           <Text style={{ ...largeTextBold, ...styles.appTitle }}>
             TRACTOR BEAM
           </Text>
         </TouchableHighlight>
       </View>
 
-      {props.isLoggedIn === true ? (
+      {isLoggedIn === true ? (
         <View style={styles.balanceWrapper}>
-          <TouchableHighlight onPress={() => navigate("Account")}>
+          <TouchableHighlight
+            underlayColor="none"
+            onPress={() => navigate("Account")}
+          >
             <View>
-              {/*
-              <Text style={{ ...largeText, ...styles.balanceText }}>
-              {props.emails.length === 0
-                ? `YOUR ACCOUNT `
-                : props.emails.map(email => {
-                    if (email.default === true) {
-                      return `${email.address.substr(0, 11)}... `;
-                    }
-                  })}
-            </Text>
-            */}
               <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
-                {typeof props.contractAccount.balance === "number" ||
-                typeof props.contractAccount.balance === "string"
-                  ? `$${props.contractAccount.balance}`
-                  : null}
+                ${contractAccount.balance}
               </Text>
             </View>
           </TouchableHighlight>
@@ -75,10 +68,6 @@ const styles = StyleSheet.create({
   balanceWrapper: {
     backgroundColor: colors.orange,
     flex: 2,
-    //display: "flex",
-    //flexDirection: "row",
-    //flexWrap: "wrap",
-    //justifyContent: "space-between",
     padding: 10,
     paddingTop: 40
   },
@@ -94,9 +83,7 @@ const styles = StyleSheet.create({
 // Add this function to every component
 const mapStateToProps = state => {
   return {
-    // key name should match name of key for the reducer in combineReducers function in /reducer/index
     contractAccount: state.contractAccount,
-    emails: state.emails,
     isLoggedIn: state.user.isLoggedIn
   };
 };
