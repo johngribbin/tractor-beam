@@ -9,8 +9,8 @@ const middleware = [ReduxThunk];
 
 const persistConfig = {
   key: "root",
-  storage
-  //blacklist: ["permissionedAccount", "contractAccount"]
+  storage,
+  blacklist: ["app"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
