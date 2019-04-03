@@ -46,12 +46,13 @@ class ClaimGift extends Component {
             valueObj.value._hex
           )} just added to contract balance!`
         );
-        updatingContractBalance();
 
+        updatingContractBalance(true);
+        // in 16 seconds, query the contrat address balance on rinkeby network
         setTimeout(() => {
           updateContractBalance();
-        }, 5000);
-        updatingContractBalance(true);
+          updatingContractBalance(false);
+        }, 16000);
       } catch (error) {
         console.error(error);
       }
@@ -59,11 +60,11 @@ class ClaimGift extends Component {
   };
 
   render() {
-    const { updatedContractBalance } = this.props;
+    const { isUpdatingContractBalance } = this.props;
     return (
       <View>
         <GiftIcon giftMessage={"Someone sent you a gift!"} />
-        {!updatedContractBalance ? (
+        {isUpdatingContractBalance ? (
           <ActivityIndicator size="large" color={colors.orange} />
         ) : (
           <MainButton title={"CLAIM GIFT!"} onPress={this._claimGift} />
@@ -77,7 +78,7 @@ const mapStateToProps = state => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     contractAccount: state.contractAccount,
-    updatedContractBalance: state.app.updatedContractBalance
+    isUpdatingContractBalance: state.app.isUpdatingContractBalance
   };
 };
 
