@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { colors, smallText, mediumTextBold } from "../constants";
 import { View, Text, TextInput } from "react-native";
 import MainButton from "../components/MainButton";
-import { addEmail, logIn } from "../redux/actions";
+import { addEmail, setDefaultEmail, logIn } from "../redux/actions";
 import { Formik } from "formik";
 import * as yup from "yup";
 //import AesCrypto from "react-native-aes-kit";
@@ -14,14 +14,17 @@ class SignUpForm extends Component {
     return (
       <Formik
         initialValues={{ email: "bob@crypto.com", password: "123456789" }}
-        onSubmit={async (values, formikHelpers) => {
+        onSubmit={(values, formikHelpers) => {
           // add the email to state object
           this.props.addEmail([
             {
               address: values.email,
-              default: true
+              default: false
             }
           ]);
+
+          // set email address to deafult
+          this.props.setDefaultEmail(values.email);
 
           // switch isLoggedIn state property to true
           this.props.logIn();
@@ -122,6 +125,7 @@ const styles = {
 
 const mapDispatchToProps = {
   addEmail,
+  setDefaultEmail,
   logIn
 };
 
