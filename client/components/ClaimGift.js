@@ -60,10 +60,16 @@ class ClaimGift extends Component {
   };
 
   render() {
-    const { isUpdatingContractBalance } = this.props;
+    const { isUpdatingContractBalance, contractAccount } = this.props;
     return (
       <View>
-        <GiftIcon giftMessage={"Someone sent you a gift!"} />
+        <GiftIcon
+          giftMessage={
+            contractAccount.balance === 0
+              ? "Someone sent you a gift!"
+              : "You received your first gift!"
+          }
+        />
         {isUpdatingContractBalance ? (
           <ActivityIndicator size="large" color={colors.orange} />
         ) : (
