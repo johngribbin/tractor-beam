@@ -5,10 +5,15 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { connect } from "react-redux";
 
 function GiftIcon(props) {
+  const { contractAccount } = props;
   return (
     <View style={styles.giftContainer}>
       <Image
-        source={require("../assets/images/GiftBlack.png")}
+        source={
+          contractAccount.balance === 0
+            ? require("../assets/images/GiftBlack.png")
+            : require("../assets/images/GiftPink.png")
+        }
         style={styles.giftImage}
       />
       <Text style={{ ...mediumTextBold, ...styles.giftMessage }}>
@@ -31,7 +36,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { nativeAccount: state.nativeAccount };
+  return {
+    contractAccount: state.contractAccount
+  };
 };
 
 export default connect(mapStateToProps)(GiftIcon);
