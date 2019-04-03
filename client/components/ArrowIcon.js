@@ -5,7 +5,7 @@ export default function ArrowIcon(props) {
   const { arrowType, onPress } = props;
 
   return (
-    <TouchableHighlight onPress={onPress}>
+    <TouchableHighlight underlayColor="none" onPress={onPress}>
       <Image
         source={
           arrowType === "up"
