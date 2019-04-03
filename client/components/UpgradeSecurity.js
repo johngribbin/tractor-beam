@@ -10,25 +10,30 @@ function UpgradeSecurity(props) {
 
   return (
     <View style={styles.componentContainer}>
-      <Image
-        style={styles.image}
-        source={require("../assets/images/SecuritySymbol.png")}
-      />
-      <AltButton title={"UPGRADE SECURITY"} onPress={onPress} />
-      {permissionedAccounts.length === 1 ? (
-        <Text style={{ ...smallText, ...styles.message }}>
-          you haven't upgraded security yet
-        </Text>
-      ) : null}
+      <View style={styles.contentContainer}>
+        <Image
+          style={styles.image}
+          source={require("../assets/images/SecuritySymbol.png")}
+        />
+        <AltButton title={"UPGRADE SECURITY"} onPress={onPress} />
+        {permissionedAccounts.length === 1 ? (
+          <Text style={{ ...smallText, ...styles.message }}>
+            you haven't upgraded security yet
+          </Text>
+        ) : null}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   componentContainer: {
+    flex: 0.5
+  },
+  contentContainer: {
     alignItems: "center",
     display: "flex",
-    marginBottom: 20
+    padding: 5
   },
   image: {
     marginBottom: 10

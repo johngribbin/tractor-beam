@@ -1,5 +1,11 @@
 import React from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight
+} from "react-native";
 import {
   colors,
   smallText,
@@ -23,6 +29,12 @@ class AccountScreen extends React.Component {
     return (
       <View style={styles.accountContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
+          <TouchableHighlight
+            underlayColor="none"
+            onPress={() => navigate("Home")}
+          >
+            <Text style={styles.linkText}>{`< `}BACK TO HOME</Text>
+          </TouchableHighlight>
           <Text style={headlineText}>YOUR ACCOUNT</Text>
           <Text style={headlineText}>
             {`$ `}
@@ -92,6 +104,11 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 110
   },
+  linkText: {
+    color: colors.orange,
+    fontSize: 14,
+    lineHeight: 15
+  },
   emailInfoContainer: {
     alignItems: "center",
     borderTopColor: colors.lightGrey,
@@ -135,15 +152,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
+    flex: 1,
     flexWrap: "wrap",
-    justifyContent: "space-around"
+    justifyContent: "space-between"
   }
 });
 
 const mapStateToProps = state => {
   return {
     contractAccount: state.contractAccount,
-    emails: state.emails
+    emails: state.user.emailAddresses
   };
 };
 
