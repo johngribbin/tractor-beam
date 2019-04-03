@@ -53,7 +53,7 @@ class RecoveryPhrasesDropdown extends Component {
       permissionedAccounts,
       addPermissionedAccount,
       // a boolean used to conditionally render the button in dropdown
-      generatingMnemonic
+      isGeneratingMnemonic
     } = this.props;
 
     return (
@@ -76,14 +76,15 @@ class RecoveryPhrasesDropdown extends Component {
 
         {this.state.isOpen ? this._renderRecoveryPhrases() : null}
 
-        {this.state.isOpen && !generatingMnemonic ? (
+        {this.state.isOpen && !isGeneratingMnemonic ? (
           <MainButton
             style={styles.button}
             title={"+ ADD MORE"}
             onPress={addPermissionedAccount}
           />
         ) : null}
-        {this.state.isOpen && generatingMnemonic ? (
+
+        {this.state.isOpen && isGeneratingMnemonic ? (
           <MainButton style={styles.button} title={"...LOADING"} />
         ) : null}
       </View>
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    generatingMnemonic: state.app.generatingMnemonic,
+    isGeneratingMnemonic: state.app.isGeneratingMnemonic,
     permissionedAccounts: state.permissionedAccounts
   };
 };
