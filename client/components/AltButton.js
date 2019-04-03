@@ -6,6 +6,7 @@ export default function MainButton(props) {
   return (
     <View>
       <TouchableHighlight
+        underlayColor="none"
         style={
           props.style ? { ...styles.button, ...props.style } : styles.button
         }
@@ -22,12 +23,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: colors.orange,
     borderWidth: 5,
-    /*
-    shadowOpacity: 0.75,
-    shadowRadius: 5,
-    shadowColor: colors.lightGrey,
-    shadowOffset: { height: 0, width: 0 },
-    */
     padding: 10
   },
   buttonText: {
