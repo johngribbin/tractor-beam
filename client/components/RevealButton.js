@@ -4,7 +4,7 @@ import { smallTextItalic, colors } from "../constants";
 
 export default function RevealButton({ textStyle, revealed, onPress }) {
   return (
-    <TouchableHighlight onPress={onPress}>
+    <TouchableHighlight underlayColor="none" onPress={onPress}>
       {!revealed ? (
         <Text style={{ ...textStyle, ...smallTextItalic, ...styles.button }}>
           reveal
