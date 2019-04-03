@@ -6,6 +6,7 @@ export default function MainButton(props) {
   return (
     <View style={styles.componentWrapper}>
       <TouchableHighlight
+        underlayColor="none"
         style={
           props.style ? { ...styles.button, ...props.style } : styles.button
         }
