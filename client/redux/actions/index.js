@@ -84,7 +84,7 @@ export const updatingContractBalance = bool => {
 action creators for permissionedAccountsReducer
 -------------------- */
 export const addPermissionedAccount = () => async (dispatch, getState) => {
-  //dispatch(generatingMnemonic(true));
+  dispatch(generatingMnemonic(true));
 
   let mnemonic = "";
 
@@ -118,7 +118,7 @@ export const addPermissionedAccount = () => async (dispatch, getState) => {
     payload: [accountObj]
   });
 
-  //dispatch(generatingMnemonic(false));
+  dispatch(generatingMnemonic(false));
 };
 
 export const revealRecoveryPhrase = recoveryPhrase => {
@@ -164,7 +164,7 @@ export const setContractAccount = () => async (dispatch, getState) => {
 };
 
 export const updateContractBalance = () => async (dispatch, getState) => {
-  //dispatch(updatingContractBalance(true));
+  // dispatch(updatingContractBalance(true));
   const { contractAccount } = getState();
 
   const newBalance = await provider
@@ -173,8 +173,6 @@ export const updateContractBalance = () => async (dispatch, getState) => {
       // balance is a BigNumber (in wei); format is as a string (in ether)
       return ethers.utils.formatEther(bigNumber);
     });
-
-  //const newBalance = await getBalance(contractAccount.address);
 
   dispatch({
     type: UPDATE_CONTRACT_BALANCE,
