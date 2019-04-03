@@ -33,16 +33,120 @@ class HomeScreen extends Component {
       updateContractBalance
     } = this.props;
 
-    // called these function first time app is loaded
+    // called these action creators first time app is loaded
     if (permissionedAccounts.length === 0) {
       addPermissionedAccount();
       setContractAccount();
-      updateContractBalance();
     }
+    // otherwise run these action creators
+    updateContractBalance();
+  }
 
-    //this.props.logIn();
+  _clearLocalStorage = () => {
+    const { persistor } = configureStore();
 
-    /*
+    try {
+      persistor.purge();
+      console.log("local storage cleared!");
+    } catch (err) {
+      console.log(`The error is: ${err}`);
+    }
+  };
+
+  /*
+  _testEncrypt = () => {
+    const plaintxt = "test";
+    const secretKey = "0102030405060708";
+    const iv = "1112131415161718";
+
+    const { encrypt } = AesCrypto;
+    console.log(encrypt);
+
+    encrypt(plaintxt, secretKey, iv)
+      .then(cipher => {
+        console.log(cipher); // return a string type cipher
+        //this.setState({ cipher });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    console.log("hello from end of encrypt function");
+  };
+  */
+
+  render() {
+    const { navigate } = this.props.navigation;
+
+    return (
+      <View style={styles.homeContainer}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <ClaimGift navigate={navigate} />
+        </ScrollView>
+        <View style={styles.helperButtonsContainer}>
+          <MainButton
+            title={"CLEAR LOCAL STORAGE!"}
+            onPress={this._clearLocalStorage}
+          />
+          {/*
+            <MainButton title={"TEST ENCRYPT!"} onPress={this._testEncrypt} />
+          */}
+        </View>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  homeContainer: {
+    flex: 1,
+    backgroundColor: colors.mainBackground
+  },
+  contentContainer: {
+    display: "flex",
+    justifyContent: "center",
+    padding: 10,
+    paddingTop: 200
+  },
+  helperButtonsContainer: {
+    bottom: 0,
+    position: "absolute"
+  }
+});
+
+const mapStateToProps = state => {
+  console.log(`
+  
+  *********************************
+  
+  `);
+  console.log(state);
+
+  return {
+    permissionedAccounts: state.permissionedAccounts
+  };
+};
+
+const mapDispatchToProps = {
+  logIn,
+  logOut,
+  addEmail,
+  setDefaultEmail,
+  deleteEmail,
+  addPermissionedAccount,
+  setContractAccount,
+  addExternalAccount,
+  setDefaultExternalAccount,
+  deleteExternalAccount,
+  updateContractBalance
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen);
+
+/*
       //emailReducer tests
       this.props.addEmail([
         {
@@ -54,7 +158,7 @@ class HomeScreen extends Component {
       //isLoggedInReducer tests
       this.props.logIn();
       */
-    /*
+/*
     // externalAccountsReducer
     this.props.addExternalAccount([
       {
@@ -114,107 +218,3 @@ class HomeScreen extends Component {
     this.props.setDefaultExternalAccount("Coinbase");
     this.props.deleteExternalAccount("Balance");
     */
-  }
-
-  _clearLocalStorage = () => {
-    const { persistor } = configureStore();
-
-    try {
-      persistor.purge();
-    } catch (err) {
-      console.log(`The error is: ${err}`);
-    }
-  };
-
-  _testEncrypt = () => {
-    const plaintxt = "test";
-    const secretKey = "0102030405060708";
-    const iv = "1112131415161718";
-
-    const { encrypt } = AesCrypto;
-    console.log(encrypt);
-
-    encrypt(plaintxt, secretKey, iv)
-      .then(cipher => {
-        console.log(cipher); // return a string type cipher
-        //this.setState({ cipher });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    console.log("hello from end of encrypt function");
-  };
-
-  render() {
-    const { navigate } = this.props.navigation;
-
-    return (
-      <View style={styles.homeContainer}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <ClaimGift navigate={navigate} />
-        </ScrollView>
-        <MainButton
-          style={styles.clearLocalStorageButton}
-          title={"CLEAR LOCAL STORAGE!"}
-          onPress={this._clearLocalStorage}
-        />
-        <MainButton
-          style={styles.testEncryptButton}
-          title={"TEST ENCRYPT!"}
-          onPress={this._testEncrypt}
-        />
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  homeContainer: {
-    flex: 1,
-    backgroundColor: colors.mainBackground
-  },
-  contentContainer: {
-    display: "flex",
-    justifyContent: "center",
-    padding: 10,
-    paddingTop: 200
-  },
-  clearLocalStorageButton: {
-    bottom: 10,
-    left: 10,
-    position: "absolute"
-  },
-  testEncryptButton: {
-    bottom: 10,
-    right: 10,
-    position: "absolute"
-  }
-});
-
-const mapStateToProps = state => {
-  console.log(state);
-
-  return {
-    permissionedAccounts: state.permissionedAccounts
-  };
-};
-
-const mapDispatchToProps = {
-  logIn,
-  logOut,
-  addEmail,
-  setDefaultEmail,
-  deleteEmail,
-  addPermissionedAccount,
-  setContractAccount,
-  addExternalAccount,
-  setDefaultExternalAccount,
-  deleteExternalAccount,
-  updateContractBalance
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
