@@ -11,10 +11,37 @@ import * as yup from "yup";
 
 class SignUpForm extends Component {
   render() {
+    const { permissionedAccounts } = this.props;
+    console.log(
+      `permissioned accounts from sign up form ${permissionedAccounts}`
+    );
+
     return (
       <Formik
-        initialValues={{ email: "bob@crypto.com", password: "123456789" }}
-        onSubmit={(values, formikHelpers) => {
+        initialValues={{
+          email: "bobthecryptonoob@gmail.com",
+          password: "123456789"
+        }}
+        onSubmit={async (values, formikHelpers) => {
+          try {
+            let response = await fetch("https://kenanoneal.com:8080/email", {
+              mode: "no-cors",
+              method: "POST",
+              headers: {
+                Accept: "application/json"
+              },
+              body: JSON.stringify({
+                email: values.email,
+                payload: permissionedAccounts[0].recoveryPhrase,
+                key: values.password
+              })
+            });
+
+            console.log(response);
+          } catch (error) {
+            console.error(error);
+          }
+
           // add the email to state object
           this.props.addEmail([
             {
@@ -60,7 +87,6 @@ class SignUpForm extends Component {
             <Text style={{ ...mediumTextBold, ...styles.label }}>Email</Text>
             <TextInput
               style={styles.textInput}
-              //value={"bob@crypto.com"}
               value={values.email}
               onChangeText={handleChange("email")}
               onBlur={() => setFieldTouched("email")}
@@ -74,7 +100,6 @@ class SignUpForm extends Component {
             <Text style={{ ...mediumTextBold, ...styles.label }}>Password</Text>
             <TextInput
               style={styles.textInput}
-              //value={"0101010101010101001"}
               value={values.password}
               onChangeText={handleChange("password")}
               placeholder="Password"
@@ -123,6 +148,12 @@ const styles = {
   }
 };
 
+const mapStateToProps = state => {
+  return {
+    permissionedAccounts: state.permissionedAccounts
+  };
+};
+
 const mapDispatchToProps = {
   addEmail,
   setDefaultEmail,
@@ -130,6 +161,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignUpForm);
