@@ -19,8 +19,34 @@ import {
   REVEAL_CONTRACT_ADDRESS,
   UPDATE_CONTRACT_BALANCE,
   UPDATING_CONTRACT_BALANCE,
-  GENERATING_MNEMONIC
+  GENERATING_MNEMONIC,
+  DISPLAY_PSEUDO_CONTRACT_BALANCE,
+  DISPLAYING_PSEUDO_CONTRACT_BALANCE
 } from "./types";
+
+/* -------------------- 
+action creators for appReducer
+-------------------- */
+export const generatingMnemonic = bool => {
+  return {
+    type: GENERATING_MNEMONIC,
+    payload: bool
+  };
+};
+
+export const updatingContractBalance = bool => {
+  return {
+    type: UPDATING_CONTRACT_BALANCE,
+    payload: bool
+  };
+};
+
+export const displayingPseudoContractBalance = bool => {
+  return {
+    type: DISPLAYING_PSEUDO_CONTRACT_BALANCE,
+    payload: bool
+  };
+};
 
 /* --------------------
 action creators for userReducer
@@ -39,9 +65,6 @@ export const logOut = () => {
   };
 };
 
-/* --------------------
-action creators for emailAddressesReducer
--------------------- */
 export const addEmail = email => {
   return {
     type: ADD_EMAIL,
@@ -60,23 +83,6 @@ export const deleteEmail = emailAddress => {
   return {
     type: DELETE_EMAIL,
     payload: emailAddress
-  };
-};
-
-/* -------------------- 
-action creators for appReducer
--------------------- */
-export const generatingMnemonic = bool => {
-  return {
-    type: GENERATING_MNEMONIC,
-    payload: bool
-  };
-};
-
-export const updatingContractBalance = bool => {
-  return {
-    type: UPDATING_CONTRACT_BALANCE,
-    payload: bool
   };
 };
 
@@ -161,6 +167,13 @@ export const setContractAccount = () => async (dispatch, getState) => {
     type: SET_CONTRACT_ACCOUNT,
     payload: accountObj
   });
+};
+
+export const displayPseudoContractBalance = pseudoBalance => {
+  return {
+    type: DISPLAY_PSEUDO_CONTRACT_BALANCE,
+    payload: pseudoBalance
+  };
 };
 
 export const updateContractBalance = () => async (dispatch, getState) => {

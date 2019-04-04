@@ -10,9 +10,9 @@ function GiftIcon(props) {
     <View style={styles.giftContainer}>
       <Image
         source={
-          contractAccount.balance === 0
-            ? require("../assets/images/GiftBlack.png")
-            : require("../assets/images/GiftPink.png")
+          contractAccount.balance === 0.1
+            ? require("../assets/images/GiftPink.png")
+            : require("../assets/images/GiftBlack.png")
         }
         style={styles.giftImage}
       />

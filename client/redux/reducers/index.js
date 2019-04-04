@@ -15,13 +15,16 @@ import {
   REVEAL_CONTRACT_ADDRESS,
   GENERATING_MNEMONIC,
   UPDATING_CONTRACT_BALANCE,
-  UPDATE_CONTRACT_BALANCE
+  UPDATE_CONTRACT_BALANCE,
+  DISPLAYING_PSEUDO_CONTRACT_BALANCE,
+  DISPLAY_PSEUDO_CONTRACT_BALANCE
 } from "../actions/types";
 
 const initialState = {
   app: {
     isGeneratingMnemonic: false,
-    isUpdatingContractBalance: false
+    isUpdatingContractBalance: false,
+    isDisplayingPseudoContractBalance: false
   },
   user: {
     isLoggedIn: false,
@@ -43,10 +46,17 @@ const appReducer = (state = initialState.app, action) => {
         ...state,
         isGeneratingMnemonic: action.payload
       };
+
     case UPDATING_CONTRACT_BALANCE:
       return {
         ...state,
         isUpdatingContractBalance: action.payload
+      };
+
+    case DISPLAYING_PSEUDO_CONTRACT_BALANCE:
+      return {
+        ...state,
+        isDisplayingPseudoContractBalance: action.payload
       };
     default:
       return state;
@@ -134,6 +144,12 @@ const contractAccountReducer = (
       return {
         ...state,
         revealedAddress: !state.revealedAddress
+      };
+
+    case DISPLAY_PSEUDO_CONTRACT_BALANCE:
+      return {
+        ...state,
+        balance: action.payload
       };
 
     case UPDATE_CONTRACT_BALANCE:
