@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { connect } from "react-redux";
 
 import GiftIcon from "../components/GiftIcon";
@@ -16,6 +16,26 @@ import "ethers/dist/shims.js";
 import { ethers } from "ethers";
 
 class ClaimGift extends Component {
+  _securityAlert = () => {
+    Alert.alert(
+      "Bump up your security",
+      "Would you like to add more security to your account?",
+      [
+        {
+          text: "Ask me later"
+        },
+        {
+          text: "Ok!",
+          onPress: () => this.props.navigate("UpgradeSecurity"),
+          style: "cancel"
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  _fetchGift = () => {};
+
   _claimGift = async () => {
     const {
       isLoggedIn,
@@ -23,7 +43,8 @@ class ClaimGift extends Component {
       displayPseudoContractBalance,
       displayingPseudoContractBalance,
       updatingContractBalance,
-      updateContractBalance
+      updateContractBalance,
+      permissionedAccounts
     } = this.props;
 
     // if user is not logged in
@@ -43,16 +64,25 @@ class ClaimGift extends Component {
             address: contractAccount.address
           })
         });
+
         const valueObj = JSON.parse(response._bodyText);
-        const valueAdded = ethers.utils.formatEther(valueObj.value._hex);
-        console.log(`${valueAdded} just added to contract balance!`);
+
+        const valueAdded = Number(
+          ethers.utils.formatEther(valueObj.value._hex)
+        );
 
         updatingContractBalance(true);
 
         const pseudoContractBalance =
           Number(contractAccount.balance) + Number(valueAdded);
+
         displayPseudoContractBalance(pseudoContractBalance);
+
         displayingPseudoContractBalance(true);
+
+        if (pseudoContractBalance >= 0.2 && permissionedAccounts.length === 1) {
+          this._securityAlert();
+        }
 
         // in 20 seconds, query the contrat address balance on rinkeby network
         setTimeout(() => {
@@ -90,6 +120,7 @@ class ClaimGift extends Component {
 const mapStateToProps = state => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    permissionedAccounts: state.permissionedAccounts,
     contractAccount: state.contractAccount,
     isUpdatingContractBalance: state.app.isUpdatingContractBalance
   };
