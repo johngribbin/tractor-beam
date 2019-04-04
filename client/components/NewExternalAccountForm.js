@@ -52,8 +52,8 @@ class NewExternalAccountForm extends Component {
           handleSubmit,
           resetForm
         }) => (
-          <View style={styles.componentWrapper}>
-            <View style={styles.formWrapper}>
+          <View style={styles.componentContainer}>
+            <View style={styles.formContainer}>
               <Text style={{ ...styles.header, ...largeTextBold }}>
                 New External Account
               </Text>
@@ -123,29 +123,8 @@ class NewExternalAccountForm extends Component {
   }
 }
 
-/*
-class NewExternalAccountForm extends Component {
-  state = {
-    accountNickname: "",
-    accountAddress: "",
-    checked: false
-  };
-
-  _submitForm = () => {
-    // when user has provided nicname and address, add to store
-    if (this.state.accountNickname && this.state.accountAddress) {
-      // add email to app state and set to default email
-      
-  };
-
-  render() {
-    return 
-  }
-}
-*/
-
 const styles = {
-  componentWrapper: {
+  componentContainer: {
     alignItems: "center",
     backgroundColor: colors.darkGrey,
     borderRadius: 5,
@@ -153,7 +132,7 @@ const styles = {
     flex: 1,
     padding: 5
   },
-  formWrapper: {
+  formContainer: {
     flex: 1,
     paddingBottom: 30,
     paddingTop: 10,
