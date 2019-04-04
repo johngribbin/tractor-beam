@@ -7,6 +7,7 @@ import SignupScreen from "../screens/SignupScreen";
 import AccountScreen from "../screens/AccountScreen";
 import ExternalAccountsScreen from "../screens/ExternalAccountsScreen";
 import UpgradeSecurityScreen from "../screens/UpgradeSecurityScreen";
+import TransfersScreen from "../screens/TransfersScreen";
 
 export default createAppContainer(
   createStackNavigator(
@@ -15,10 +16,11 @@ export default createAppContainer(
       SignUp: SignupScreen,
       Account: AccountScreen,
       ExternalAccounts: ExternalAccountsScreen,
-      UpgradeSecurity: UpgradeSecurityScreen
+      UpgradeSecurity: UpgradeSecurityScreen,
+      Transfers: TransfersScreen
     },
     {
-      initialRouteName: "Home",
+      initialRouteName: "Transfers",
       /* The header config from HomeScreen is now here */
       defaultNavigationOptions: {
         header: props => <Header {...props} />

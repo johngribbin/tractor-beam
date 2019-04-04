@@ -22,12 +22,52 @@ import { revealContractAddress } from "../redux/actions";
 import RevealButton from "../components/RevealButton";
 
 class AccountScreen extends React.Component {
+  _renderEmailInfo = () => (
+    <View>
+      <View style={styles.emailInfoContainer}>
+        <Text style={mediumTextBold}>Email</Text>
+        <Text>
+          {this.props.emails.map(email => {
+            if (email.default === true) {
+              return email.address;
+            }
+          })}
+        </Text>
+        <Text style={{ ...smallText, ...styles.changeText }}>change</Text>
+      </View>
+      <View style={styles.passwordInfoContainer}>
+        <Text style={mediumTextBold}>Password</Text>
+        <Text>*************</Text>
+        <Text style={{ ...smallText, ...styles.changeText }}>change</Text>
+      </View>
+    </View>
+  );
+
+  _renderContractAccountInfo = () => (
+    <View style={styles.contractAccountInfoContainer}>
+      <Text style={{ ...mediumTextBold, ...styles.accountAddressText }}>
+        Account Address
+      </Text>
+      <Text style={{ ...mediumText, ...styles.contractAccountAddress }}>
+        {this.props.contractAccount.revealedAddress
+          ? this.props.contractAccount.address
+          : `${this.props.contractAccount.address.substr(0, 5)}...`}
+      </Text>
+      <RevealButton
+        onPress={() =>
+          this.props.revealContractAddress(this.props.contractAccount.Address)
+        }
+        revealed={this.props.contractAccount.revealedAddress}
+      />
+    </View>
+  );
+
   render() {
-    const { emails, contractAccount } = this.props;
+    const { contractAccount } = this.props;
     const { navigate } = this.props.navigation;
 
     return (
-      <View style={styles.accountContainer}>
+      <View style={styles.componentContainer}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <TouchableHighlight
             underlayColor="none"
@@ -36,52 +76,24 @@ class AccountScreen extends React.Component {
             <Text style={styles.linkText}>{`< `}BACK TO HOME</Text>
           </TouchableHighlight>
           <Text style={headlineText}>YOUR ACCOUNT</Text>
-          <Text style={headlineText}>
-            {`$ `}
-            {contractAccount.balance}
-          </Text>
-
-          {emails.length ? (
-            <View>
-              <View style={styles.emailInfoContainer}>
-                <Text style={mediumTextBold}>Email</Text>
-                <Text>
-                  {emails.map(email => {
-                    if (email.default === true) {
-                      return email.address;
-                    }
-                  })}
-                </Text>
-                <Text style={{ ...smallText, ...styles.changeText }}>
-                  change
-                </Text>
-              </View>
-              <View style={styles.passwordInfoContainer}>
-                <Text style={mediumTextBold}>Password</Text>
-                <Text>*************</Text>
-                <Text style={{ ...smallText, ...styles.changeText }}>
-                  change
-                </Text>
-              </View>
-            </View>
-          ) : null}
-
-          <View style={styles.contractAccountInfoContainer}>
-            <Text style={{ ...mediumTextBold, ...styles.accountAddressText }}>
-              Account Address
+          <View style={styles.balanceContainer}>
+            <Text style={headlineText}>
+              {`$ `}
+              {contractAccount.balance}
             </Text>
-            <Text style={{ ...mediumText, ...styles.contractAccountAddress }}>
-              {contractAccount.revealedAddress
-                ? contractAccount.address
-                : `${contractAccount.address.substr(0, 5)}...`}
-            </Text>
-            <RevealButton
-              onPress={() =>
-                this.props.revealContractAddress(contractAccount.Address)
-              }
-              revealed={contractAccount.revealedAddress}
-            />
+            <TouchableHighlight
+              underlayColor="none"
+              onPress={() => navigate("Transfers")}
+            >
+              <Text style={{ ...smallText, ...styles.transferText }}>
+                transfer
+              </Text>
+            </TouchableHighlight>
           </View>
+
+          {this._renderEmailInfo()}
+
+          {this._renderContractAccountInfo()}
 
           <View style={styles.buttonContainer}>
             <LinkExternalAccount onPress={() => navigate("ExternalAccounts")} />
@@ -94,7 +106,7 @@ class AccountScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  accountContainer: {
+  componentContainer: {
     flex: 1,
     backgroundColor: colors.mainBackground
   },
@@ -109,6 +121,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 15
   },
+  balanceContainer: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  transferText: { color: colors.orange },
   emailInfoContainer: {
     alignItems: "center",
     borderTopColor: colors.lightGrey,
