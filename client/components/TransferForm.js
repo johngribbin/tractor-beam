@@ -1,33 +1,74 @@
 import React, { Component } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Alert } from "react-native";
 import { mediumTextBold, colors } from "../constants";
 import MainButton from "../components/MainButton";
 import { connect } from "react-redux";
 
+import { ethers } from "ethers";
+
 class TransferForm extends Component {
   state = {
+    value: "",
     to: ""
   };
 
+  componentDidMount() {
+    const { externalAccounts } = this.props;
+
+    // load in default external account if they have added one
+    if (externalAccounts.length !== 0) {
+      externalAccounts.map(account => {
+        if (account.default) {
+          this.setState({ to: account.address });
+        }
+      });
+    }
+  }
+
   _handleSend = () => {
-    console.log("hello");
+    const { value, to } = this.state;
+    const { contractAccount } = this.props;
+
+    // insufficient funds error
+    if (value > contractAccount.balance) {
+      Alert.alert(
+        "Error!",
+        "Insufficient funds. Please examine your account balance before attempting to complete this transfer",
+        [
+          {
+            text: "close",
+            onPress: () => this.setState({ value: "" })
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+
+    let provider = ethers.getDefaultProvider("rinkeby");
+    let { privateKey } = contractAccount;
+    let wallet = new ethers.Wallet(privateKey, provider);
+    let sendPromise = wallet.sendTransaction({
+      to: to,
+      value: ethers.utils.parseEther(value)
+    });
+
+    sendPromise.then(tx => {
+      console.log(tx);
+    });
   };
 
   render() {
-    const { to } = this.state;
+    const { value, to } = this.state;
 
     return (
       <View style={styles.componentContainer}>
         <View style={styles.formWrapper}>
-          {/*
-            <Text style={{ ...styles.header, ...largeTextBold }}>Transfer</Text>
-            */}
-
-          <Text style={{ ...styles.label, ...mediumTextBold }}>From</Text>
+          <Text style={{ ...styles.label, ...mediumTextBold }}>Value</Text>
           <TextInput
-            value={this.props.contractAccount.address}
+            value={value}
+            onChangeText={value => this.setState({ value })}
             style={styles.textInput}
-            placeholder="Example: Bob's Coinbase"
+            placeholder=""
           />
 
           <Text style={{ ...styles.label, ...mediumTextBold }}>To</Text>
@@ -35,7 +76,7 @@ class TransferForm extends Component {
             value={to}
             onChangeText={address => this.setState({ to: address })}
             style={styles.textInput}
-            placeholder="Example: 0x1f7439..."
+            placeholder="Enter recipients ethereum address"
           />
 
           <MainButton
@@ -85,7 +126,8 @@ const styles = {
 
 const mapStateToProps = state => {
   return {
-    contractAccount: state.contractAccount
+    contractAccount: state.contractAccount,
+    externalAccounts: state.externalAccounts
   };
 };
 
