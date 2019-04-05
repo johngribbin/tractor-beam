@@ -20,7 +20,7 @@ export default createAppContainer(
       Transfers: TransfersScreen
     },
     {
-      initialRouteName: "Transfers",
+      initialRouteName: "Home",
       /* The header config from HomeScreen is now here */
       defaultNavigationOptions: {
         header: props => <Header {...props} />
