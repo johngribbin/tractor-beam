@@ -23,12 +23,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   button: {
-    borderRadius: 5,
     backgroundColor: colors.orange,
-    shadowOpacity: 0.75,
-    shadowRadius: 5,
-    shadowColor: colors.lightGrey,
-    shadowOffset: { height: 0, width: 0 },
+    borderRadius: 5,
     padding: 10
   },
   buttonText: {
