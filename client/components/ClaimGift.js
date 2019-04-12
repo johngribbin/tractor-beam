@@ -73,10 +73,11 @@ class ClaimGift extends Component {
 
         updatingContractBalance(true);
 
-        const pseudoContractBalance =
-          Number(contractAccount.balance) + Number(valueAdded);
+        const pseudoContractBalance = contractAccount.balance + valueAdded;
 
-        displayPseudoContractBalance(pseudoContractBalance);
+        displayPseudoContractBalance(
+          Math.round(pseudoContractBalance * 10) / 10
+        );
 
         displayingPseudoContractBalance(true);
 
