@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   console.log(`
-  
+
   *********************************
-  
+
   `);
   console.log(state);
 
