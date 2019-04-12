@@ -4,12 +4,20 @@ import { mediumTextBold, colors } from "../constants";
 import MainButton from "../components/MainButton";
 import { connect } from "react-redux";
 
+import {
+  updateContractBalance,
+  updatingContractBalance,
+  displayPseudoContractBalance,
+  displayingPseudoContractBalance
+} from "../redux/actions";
+
 import { ethers } from "ethers";
 
 class TransferForm extends Component {
   state = {
     value: "",
-    to: ""
+    toAddress: "",
+    toName: ""
   };
 
   componentDidMount() {
@@ -19,15 +27,22 @@ class TransferForm extends Component {
     if (externalAccounts.length !== 0) {
       externalAccounts.map(account => {
         if (account.default) {
-          this.setState({ to: account.address });
+          this.setState({ toAddress: account.address });
+          this.setState({ toName: account.name });
         }
       });
     }
   }
 
   _handleSend = () => {
-    const { value, to } = this.state;
-    const { contractAccount } = this.props;
+    const { value, toAddress } = this.state;
+    const {
+      contractAccount,
+      updatingContractBalance,
+      updateContractBalance,
+      displayPseudoContractBalance,
+      displayingPseudoContractBalance
+    } = this.props;
 
     // insufficient funds error
     if (value > contractAccount.balance) {
@@ -43,22 +58,45 @@ class TransferForm extends Component {
         { cancelable: false }
       );
     }
+    updatingContractBalance(true);
 
     let provider = ethers.getDefaultProvider("rinkeby");
     let { privateKey } = contractAccount;
     let wallet = new ethers.Wallet(privateKey, provider);
     let sendPromise = wallet.sendTransaction({
-      to: to,
+      to: toAddress,
       value: ethers.utils.parseEther(value)
     });
 
+    let gasPrice = "";
+
     sendPromise.then(tx => {
       console.log(tx);
+      gasPrice = ethers.utils.formatEther(tx.gasPrice);
     });
+
+    const valueAndGas = value + gasPrice;
+    const pseudoContractBalance = contractAccount.balance - valueAndGas;
+
+    displayPseudoContractBalance(pseudoContractBalance);
+    displayingPseudoContractBalance(true);
+
+    this.setState({
+      value: "",
+      toAddress: ""
+    });
+
+    // in 20 seconds, query the contract address balance on rinkeby network
+    setTimeout(() => {
+      updateContractBalance();
+      displayingPseudoContractBalance(false);
+      updatingContractBalance(false);
+    }, 20000);
   };
 
   render() {
-    const { value, to } = this.state;
+    const { value, toName, toAddress } = this.state;
+    const { isUpdatingContractBalance } = this.props;
 
     return (
       <View style={styles.componentContainer}>
@@ -73,17 +111,24 @@ class TransferForm extends Component {
 
           <Text style={{ ...styles.label, ...mediumTextBold }}>To</Text>
           <TextInput
-            value={to}
-            onChangeText={address => this.setState({ to: address })}
+            value={toName ? toName : toAddress}
+            onChangeText={address => this.setState({ toAddress: address })}
             style={styles.textInput}
             placeholder="Enter recipients ethereum address"
           />
 
-          <MainButton
-            style={styles.button}
-            title={"SEND"}
-            onPress={this._handleSend}
-          />
+          {isUpdatingContractBalance ? (
+            <MainButton
+              style={{ ...styles.button, ...{ opacity: 0.5 } }}
+              title={"...PLEASE WAIT"}
+            />
+          ) : (
+            <MainButton
+              style={styles.button}
+              title={"SEND"}
+              onPress={this._handleSend}
+            />
+          )}
         </View>
       </View>
     );
@@ -127,11 +172,19 @@ const styles = {
 const mapStateToProps = state => {
   return {
     contractAccount: state.contractAccount,
-    externalAccounts: state.externalAccounts
+    externalAccounts: state.externalAccounts,
+    isUpdatingContractBalance: state.app.isUpdatingContractBalance
   };
+};
+
+const mapDispatchToProps = {
+  displayPseudoContractBalance,
+  displayingPseudoContractBalance,
+  updatingContractBalance,
+  updateContractBalance
 };
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(TransferForm);

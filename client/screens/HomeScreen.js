@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(`
+  // console.log(`
 
-  *********************************
+  // *********************************
 
-  `);
-  console.log(state);
+  // `);
+  // console.log(state);
 
   return {
     permissionedAccounts: state.permissionedAccounts
