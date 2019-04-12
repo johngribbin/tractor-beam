@@ -93,6 +93,7 @@ export const addPermissionedAccount = () => async (dispatch, getState) => {
   dispatch(generatingMnemonic(true));
 
   let mnemonic = "";
+  let defaultValue = false;
 
   try {
     let response = await fetch("https://kenanoneal.com:8080/generateMnemonic", {
@@ -110,12 +111,19 @@ export const addPermissionedAccount = () => async (dispatch, getState) => {
 
   const account = await Wallet.fromMnemonic(mnemonic);
 
+  const { permissionedAccounts } = getState();
+
+  // if user doesnt have a permissioned account, set first created one as the default
+  if (permissionedAccounts.length === 0) {
+    defaultValue = true;
+  }
+
   const accountObj = {
     recoveryPhrase: account.mnemonic,
     address: account.address,
     balance: 0,
     linkedContract: "",
-    default: false,
+    default: defaultValue,
     revealedRecoveryPhrase: false
   };
 
