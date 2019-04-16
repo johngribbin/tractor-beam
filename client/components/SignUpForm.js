@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { colors, smallText, mediumTextBold } from "../constants";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import MainButton from "../components/MainButton";
 import { addEmail, setDefaultEmail, logIn } from "../redux/actions";
 import { Formik } from "formik";
@@ -124,7 +124,7 @@ class SignUpForm extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   formContainer: {
     alignSelf: "center",
     flex: 1,
@@ -146,7 +146,7 @@ const styles = {
   button: {
     marginTop: 10
   }
-};
+});
 
 const mapStateToProps = state => {
   return {

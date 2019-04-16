@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Alert } from "react-native";
+import { View, Text, TextInput, Alert, StyleSheet } from "react-native";
 import { mediumTextBold, colors } from "../constants";
 import MainButton from "../components/MainButton";
 import { connect } from "react-redux";
@@ -135,7 +135,7 @@ class TransferForm extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   componentContainer: {
     backgroundColor: colors.darkGrey,
     borderRadius: 5,
@@ -167,7 +167,7 @@ const styles = {
   button: {
     marginTop: 20
   }
-};
+});
 
 const mapStateToProps = state => {
   return {

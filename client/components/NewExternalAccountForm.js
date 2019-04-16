@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { CheckBox } from "react-native-elements";
 import { connect } from "react-redux";
 import { colors, smallText, largeTextBold, mediumTextBold } from "../constants";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import MainButton from "../components/MainButton";
 import {
   addExternalAccount,
@@ -123,7 +123,7 @@ class NewExternalAccountForm extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   componentContainer: {
     alignItems: "center",
     backgroundColor: colors.darkGrey,
@@ -163,7 +163,7 @@ const styles = {
     marginBottom: 10
   },
   button: {}
-};
+});
 
 const mapDispatchToProps = {
   addExternalAccount,
