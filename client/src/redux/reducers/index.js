@@ -13,19 +13,13 @@ import {
   DELETE_EXTERNAL_ACCOUNT,
   SET_CONTRACT_ACCOUNT,
   REVEAL_CONTRACT_ADDRESS,
-  GENERATING_MNEMONIC,
-  UPDATING_CONTRACT_BALANCE,
   UPDATE_CONTRACT_BALANCE,
-  DISPLAYING_PSEUDO_CONTRACT_BALANCE,
   DISPLAY_PSEUDO_CONTRACT_BALANCE
 } from "../actions/types";
 
+import appReducer from "../../app/state/reducer";
+
 const initialState = {
-  app: {
-    isGeneratingMnemonic: false,
-    isUpdatingContractBalance: false,
-    isDisplayingPseudoContractBalance: false
-  },
   user: {
     isLoggedIn: false,
     // array of objects
@@ -37,30 +31,6 @@ const initialState = {
   contractAccount: {},
   // array of objects
   externalAccounts: []
-};
-
-const appReducer = (state = initialState.app, action) => {
-  switch (action.type) {
-    case GENERATING_MNEMONIC:
-      return {
-        ...state,
-        isGeneratingMnemonic: action.payload
-      };
-
-    case UPDATING_CONTRACT_BALANCE:
-      return {
-        ...state,
-        isUpdatingContractBalance: action.payload
-      };
-
-    case DISPLAYING_PSEUDO_CONTRACT_BALANCE:
-      return {
-        ...state,
-        isDisplayingPseudoContractBalance: action.payload
-      };
-    default:
-      return state;
-  }
 };
 
 const userReducer = (state = initialState.user, action) => {

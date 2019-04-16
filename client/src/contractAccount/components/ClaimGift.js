@@ -6,12 +6,16 @@ import GiftIcon from "./GiftIcon";
 import MainButton from "../../app/components/MainButton";
 
 import {
+  updatingContractBalance,
+  displayingPseudoContractBalance
+} from "../../app/state/actions";
+
+import {
   logIn,
   updateContractBalance,
-  updatingContractBalance,
-  displayPseudoContractBalance,
-  displayingPseudoContractBalance
+  displayPseudoContractBalance
 } from "../../redux/actions";
+
 import "ethers/dist/shims.js";
 import { ethers } from "ethers";
 

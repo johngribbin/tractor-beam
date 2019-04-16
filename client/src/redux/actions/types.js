@@ -1,12 +1,6 @@
-// for appreducer
+// for userReducer
 export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
-export const GENERATING_MNEMONIC = "GENERATING_MNEMONIC";
-export const UPDATING_CONTRACT_BALANCE = "UPDATING_CONTRACT_BALANCE";
-export const DISPLAYING_PSEUDO_CONTRACT_BALANCE =
-  "DISPLAYING_PSEUDO_CONTRACT_BALANCE";
-
-// for userReducer
 export const ADD_EMAIL = "ADD_EMAIL";
 export const EDIT_EMAIL = "EDIT_EMAIL";
 export const SET_DEFAULT_EMAIL = "SET_DEFAULT_EMAIL";

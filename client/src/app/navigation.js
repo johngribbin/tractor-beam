@@ -1,13 +1,13 @@
 import React from "react";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 
-import Header from "../components/Header";
-import HomeScreen from "../../views/HomeScreen";
-import SignupScreen from "../../views/SignupScreen";
-import AccountScreen from "../../views/AccountScreen";
-import ExternalAccountsScreen from "../../views/ExternalAccountsScreen";
-import UpgradeSecurityScreen from "../../views/UpgradeSecurityScreen";
-import TransfersScreen from "../../views/TransfersScreen";
+import Header from "./components/Header";
+import HomeScreen from "../views/HomeScreen";
+import SignupScreen from "../views/SignupScreen";
+import AccountScreen from "../views/AccountScreen";
+import ExternalAccountsScreen from "../views/ExternalAccountsScreen";
+import UpgradeSecurityScreen from "../views/UpgradeSecurityScreen";
+import TransfersScreen from "../views/TransfersScreen";
 
 export default createAppContainer(
   createStackNavigator(

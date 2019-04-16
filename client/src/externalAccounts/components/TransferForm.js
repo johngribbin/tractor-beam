@@ -5,10 +5,13 @@ import MainButton from "../../app/components/MainButton";
 import { connect } from "react-redux";
 
 import {
-  updateContractBalance,
   updatingContractBalance,
-  displayPseudoContractBalance,
   displayingPseudoContractBalance
+} from "../../app/state/actions";
+
+import {
+  updateContractBalance,
+  displayPseudoContractBalance
 } from "../../redux/actions";
 
 import { ethers } from "ethers";
