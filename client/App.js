@@ -3,8 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { AppLoading, Asset, Font, Icon } from "expo";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import configureStore from "./redux/configureStore";
-import AppNavigator from "./navigation/AppNavigator";
+import configureStore from "./src/redux/configureStore";
+import AppNavigator from "./src/app/navigation";
 
 const { persistor, store } = configureStore();
 
@@ -18,19 +18,19 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require("./assets/images/GiftBlack.png"),
-        require("./assets/images/LinkSymbol.png"),
-        require("./assets/images/SecuritySymbol.png"),
-        require("./assets/images/DownArrow.png"),
-        require("./assets/images/UpArrow.png")
+        require("./src/app/assets/images/GiftBlack.png"),
+        require("./src/app/assets/images/LinkSymbol.png"),
+        require("./src/app/assets/images/SecuritySymbol.png"),
+        require("./src/app/assets/images/DownArrow.png"),
+        require("./src/app/assets/images/UpArrow.png")
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
 
-        "barlow-regular": require("./assets/fonts/Barlow-Regular.ttf"),
-        "barlow-bold": require("./assets/fonts/Barlow-Bold.ttf"),
-        "barlow-italic": require("./assets/fonts/Barlow-Italic.ttf")
+        "barlow-regular": require("./src/app/assets/fonts/Barlow-Regular.ttf"),
+        "barlow-bold": require("./src/app/assets/fonts/Barlow-Bold.ttf"),
+        "barlow-italic": require("./src/app/assets/fonts/Barlow-Italic.ttf")
       })
     ]);
   };
