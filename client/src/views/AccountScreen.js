@@ -77,10 +77,7 @@ class AccountScreen extends React.Component {
           </TouchableHighlight>
           <Text style={headlineText}>YOUR ACCOUNT</Text>
           <View style={styles.balanceContainer}>
-            <Text style={headlineText}>
-              {`$ `}
-              {contractAccount.balance}
-            </Text>
+            <Text style={headlineText}>TB {contractAccount.balance}</Text>
             <TouchableHighlight
               underlayColor="none"
               onPress={() => navigate("Transfers")}

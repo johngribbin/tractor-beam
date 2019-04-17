@@ -36,7 +36,7 @@ function Header(props) {
           >
             <View>
               <Text style={{ ...largeTextBold, ...styles.balanceValue }}>
-                ${contractAccount.balance}
+                TB {contractAccount.balance}
               </Text>
             </View>
           </TouchableHighlight>
