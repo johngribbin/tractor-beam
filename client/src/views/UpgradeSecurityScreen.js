@@ -31,11 +31,13 @@ class UpgradeSecurityScreen extends React.Component {
           <View style={styles.messageContainer}>
             <Text style={mediumText}>
               You may upgrade your security settings at any point in your
-              gift-claiming journey, but the sooner you do it, the more
-              protected from hacks your account will be.
+              gift-claiming journey. The sooner you do it, the better chance you
+              have of recovering your funds in the event that you lose access to
+              this app or your email account.
               {"\n"}
               {"\n"}
-              We recommend adding more recovery phrases.
+              Please write down any additional recovery phrases you add and keep
+              them somewhere safe.
             </Text>
           </View>
           <View style={styles.dropdownContainer}>
