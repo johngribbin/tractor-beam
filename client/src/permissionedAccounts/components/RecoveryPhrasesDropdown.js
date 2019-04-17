@@ -72,8 +72,7 @@ class RecoveryPhrasesDropdown extends Component {
         </View>
         {permissionedAccounts.length === 1 ? (
           <Text style={mediumText}>
-            You currently have one recovery phrase. You should have at least
-            two.
+            You currently have one recovery phrase. You may wish to add another.
           </Text>
         ) : null}
 
