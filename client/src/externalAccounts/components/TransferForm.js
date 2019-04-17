@@ -37,30 +37,17 @@ class TransferForm extends Component {
     }
   }
 
-  _handleSend = () => {
+  _completePermissionedTransfer = () => {
     const { value, toAddress } = this.state;
+
     const {
       contractAccount,
       updatingContractBalance,
-      updateContractBalance,
-      displayPseudoContractBalance,
-      displayingPseudoContractBalance
+      updateContractBalance
+      // displayPseudoContractBalance,
+      // displayingPseudoContractBalance
     } = this.props;
 
-    // insufficient funds error
-    if (value > contractAccount.balance) {
-      Alert.alert(
-        "Error!",
-        "Insufficient funds. Please examine your account balance before attempting to complete this transfer",
-        [
-          {
-            text: "close",
-            onPress: () => this.setState({ value: "" })
-          }
-        ],
-        { cancelable: false }
-      );
-    }
     updatingContractBalance(true);
 
     let provider = ethers.getDefaultProvider("rinkeby");
@@ -71,18 +58,18 @@ class TransferForm extends Component {
       value: ethers.utils.parseEther(value)
     });
 
-    let gasPrice = "";
+    // let gasPrice = "";
 
     sendPromise.then(tx => {
       console.log(tx);
-      gasPrice = ethers.utils.formatEther(tx.gasPrice);
+      // gasPrice = ethers.utils.formatEther(tx.gasPrice);
     });
 
-    const valueAndGas = value + gasPrice;
-    const pseudoContractBalance = contractAccount.balance - valueAndGas;
+    // const valueAndGas = value + gasPrice;
+    // const pseudoContractBalance = contractAccount.balance - valueAndGas;
 
-    displayPseudoContractBalance(pseudoContractBalance);
-    displayingPseudoContractBalance(true);
+    // displayPseudoContractBalance(pseudoContractBalance);
+    // displayingPseudoContractBalance(true);
 
     this.setState({
       value: "",
@@ -92,9 +79,49 @@ class TransferForm extends Component {
     // in 20 seconds, query the contract address balance on rinkeby network
     setTimeout(() => {
       updateContractBalance();
-      displayingPseudoContractBalance(false);
+      // displayingPseudoContractBalance(false);
       updatingContractBalance(false);
     }, 20000);
+  };
+
+  _handleSend = () => {
+    const { value } = this.state;
+    const { contractAccount } = this.props;
+
+    // insufficient funds error
+    if (value > contractAccount.balance) {
+      Alert.alert(
+        "Error!",
+        "Insufficient funds. Please examine your account balance before attempting to complete this transfer",
+        [
+          {
+            text: "CLOSE",
+            onPress: () => this.setState({ value: "" })
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+
+    Alert.alert(
+      "Notice!",
+      `Currently you don't have any Ether in your wallet to cover the cost of this transfer. 
+      
+      Click OK to give us permission to debit the cost of the transfer from your balance. 
+      
+      Click cancel to add ether to your wallet to complete the transfer`,
+      [
+        {
+          text: "OK",
+          onPress: () => this._completePermissionedTransfer()
+        },
+        {
+          text: "CANCEL",
+          onPress: () => {}
+        }
+      ],
+      { cancelable: false }
+    );
   };
 
   render() {
