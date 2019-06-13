@@ -105,19 +105,19 @@ class TransferForm extends Component {
 
     Alert.alert(
       "Notice!",
-      `Currently you don't have any Ether in your wallet to cover the cost of this transfer. 
+      `Currently you don't have any Ether in your bank to cover the cost of this transfer. 
       
-      Click OK to give us permission to debit the cost of the transfer from your balance. 
-      
-      Click cancel to add ether to your wallet to complete the transfer`,
+      Click OK to give us permission to debit the cost of the transfer from your bank balance. 
+
+      *Note- There is one-time bank creation fee of 0.005 ETH (equivalent to 75 cents) for your very first transfer.
+      `,
       [
         {
           text: "OK",
           onPress: () => this._completePermissionedTransfer()
         },
         {
-          text: "CANCEL",
-          onPress: () => {}
+          text: "CANCEL"
         }
       ],
       { cancelable: false }

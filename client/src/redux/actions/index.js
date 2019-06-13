@@ -142,7 +142,7 @@ export const setContractAccount = () => async (dispatch, getState) => {
   const accountObj = {
     address: account.address,
     balance: 0,
-    permissionedAddresses: ["0x123"],
+    permissionedAddresses: [],
     revealedAddress: false,
     privateKey: account.privateKey
   };
