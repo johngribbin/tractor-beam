@@ -4,9 +4,9 @@
 
 Tractor Beam a React Native prototype to showcase a novel on-boarding experience for Ethereum users that utilizes counterfactual interactions with smart contracts.
 
-This prototype is one of the results of of a period of broad research and development at [ConsenSys Space](https://consensys.space) into how the ethereum blockchain could help to democratize, decentralize and diversify space endeavors
+This prototype is the result of broad research and development at [ConsenSys Space](https://consensys.space) into how [Ethereum](https://ethereum.org/) (and blockchains in general) could help to democratize, decentralize and diversify space endeavors.
 
-More background on the research that led to this prototype can be read here - https://medium.com/crypto-propulsion-laboratory/an-ethereum-developers-guide-to-user-onboarding-97e107d56fe9
+A deeper dive on the research can be found here - https://medium.com/crypto-propulsion-laboratory/an-ethereum-developers-guide-to-user-onboarding-97e107d56fe9
 
 ### Get Started
 
