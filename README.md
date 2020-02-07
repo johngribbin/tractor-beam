@@ -1,6 +1,10 @@
-# Kuiper Mobile DApp
+# Tractor Beam
 
-Open a Terminal window and navigate to a directory which you wish to save the Tractor Beam codebase within. Then copy and paste the following commands, one by one in order, into your Terminal. Press enter after you paste each command to run it.
+https://medium.com/crypto-propulsion-laboratory/an-ethereum-developers-guide-to-user-onboarding-97e107d56fe9
+
+### Get Started
+
+Run the following commands to run the App locally:
 
 ```
 git clone https://github.com/johngribbin/kuiper-mobile-dapp.git tractor_beam
